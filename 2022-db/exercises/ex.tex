@@ -1,0 +1,78 @@
+%\documentclass{...}
+
+\input{./def/yf-formatting}
+
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{latexsym}
+%\usepackage{times}
+
+
+\input{./def/yf-def}
+
+\def\extraspacing{\vspace{4mm} \noindent}
+\newboolean{solver}\setboolean{solver}{true}
+%\newboolean{solver}\setboolean{solver}{false}
+\ifthenelse{\boolean{solver}}{\includecomment{sol}}{\excludecomment{sol}}
+
+\begin{document}
+
+\section*{Exercises} 
+
+By Yufei Tao 
+
+% \begin{center}
+% \fbox{
+% The terms and notions in the following exercises are based on the slides covered in the class.}
+% \end{center}
+
+\extraspacing {\bf Problem 1.} Consider the following dataset, where a red point has label 1 and a white point has label 0:
+\begin{center}
+	\includegraphics[height=50mm]{./artwork/noisy-ds}
+\end{center}
+
+\begin{itemize}
+    \item What is the width of the dataset? 
+    \item What is the value of $k$? Recall that $k$ is the smallest error of a monotone classifier.
+\end{itemize}
+
+
+\begin{sol}
+\extraspacing {\bf Answer:} The width is 1, and $k$ = 3.
+\end{sol}
+
+
+\extraspacing {\bf Problem 2.} Prove: the fractional edge covering number of a triangle must be at least 1.5. 
+
+\begin{sol}
+\extraspacing {\bf Answer:} Let $A, B, C$ be the three vertices of a triangle, and let $w_A, w_B$, $w_C$ be their weights, respectively. We know: 
+\myeqn{
+    w_A + w_B &\ge& 1.5 \nn \\
+    w_B + w_C &\ge& 1.5 \nn \\
+    w_A + w_C &\ge& 1.5. \nn  
+}
+Hence: 
+\myeqn{
+    2(w_A + w_B + w_C) &\ge& 3 \nn  
+}
+which means that $w_A + w_B + w_C$ must be at least 1.5. 
+\end{sol}
+
+\extraspacing {\bf Problem 3.} Prove: a graph $G$ with $m$ edges can contain $O(m^{1.5})$ triangles. 
+
+\begin{sol}
+\extraspacing {\bf Answer:} Call a vertex of $G$ {\em small} if its degree is at most $\sqrt{m}$; otherwise, call it {\em large}. The number of large vertices is at most $2m / \sqrt{m} = 2\sqrt{m}$. We divide the triangles into two types: 
+\myenums{
+    \item At least one vertex $u$ is small, whereas the other vertices $v$ and $w$ can be small or large. There are at most $m^{1.5}$ triangles of this type. First, choose an edge $\set{u,v}$ with (at least) one small vertex $u$; there are $m$ ways to do so. For each $\set{u, v}$, there are at most $\sqrt{m}$ choices of $w$ because $u$ has at most $\sqrt{m}$ neighbors.
+    
+    \item All vertices are large. The number of triangles of this type is clearly $(2\sqrt{m})^3 = 8m^{1.5}$.
+}
+\end{sol}
+
+
+%\bibliographystyle{abbrv}
+%\bibliography{../ref}
+
+\end{document}

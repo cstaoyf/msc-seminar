@@ -1,0 +1,424 @@
+%\documentclass{...}
+
+\input{../def/yf-formatting}
+
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{latexsym}
+%\usepackage{times}
+
+\input{../def/yf-math-def}
+
+\def\dom{\prec}
+\def\T{\mathcal{T}}
+
+\begin{document}
+
+\section*{Lecture 2: Distribution Sweep}
+
+\noindent Yufei Tao \\
+Department of Computer Science and Engineering \\
+Chinese University of Hong Kong \\
+{\em taoyf@cse.cuhk.edu.hk}
+
+\section{The orthogonal segment intersection problem} \label{sec:rb}
+
+In this lecture, we will discuss a powerful technique called {\em distribution
+sweep} which underlies the external memory solutions to many geometry problems.
+We start with the {\em orthogonal segment intersection problem}, where we are
+given a set $R$ of horizontal segments and a set $S$ of vertical segments (all
+in the plane $\real^2$), and need to report all pairs of segments in $R \times
+S$ that intersect each other. Set $N = |R|$ and $T = |S|$. It is easy to see
+that in the extreme case there can be $NT$ pairs in the result set, in which
+case the cost will have to be $\Omega(NT/B)$. We want to do better by making the
+cost sensitive to the result size. As we will see, if $K$ pairs are to be
+output, the problem can be solved in $O(\frac{N}{B} \log_{M/B} \frac{N}{B} +
+\frac{T}{B} \log_{M/B} \frac{T}{B} + K/B)$ I/Os.
+
+\subsection{Algorithms in RAM} \label{sec:rb-ram}
+
+In general, before attacking a problem in the EM model, it would be a
+good idea to think about how the problem could be solved in internal memory.
+After all, by setting $B$ to a constant, an EM algorithm can often be adapted
+to work in RAM as well. So having a peek at what happens in RAM may provide
+some early insight that would be helpful in designing the EM counterpart.
+
+\extraspacing {\bf Plane-sweep.} In RAM, the orthogonal segment intersection
+problem can be easily settled by using the {\em plane-sweep} technique. To see
+the idea, imagine that we have collected the segments in $R$ that intersect a
+vertical $\ell$. Denote by $R(\ell)$ the set of those segments. Assume that
+there is a binary tree $\T(\ell)$ on the y-coordinates of the segments in
+$R(\ell)$. Then, we can efficiently report all the segments in $R$ intersecting
+a vertical segment $s$ with $\ell$ as its supporting line\footnote{In general,
+the supporting line of a curve is a line that passes at least a point on the
+curve, but no two points on the curve fall on different sides of the line.}.
+Specifically, given $s = x \times [y_1, y_2]$, we simply find all the values
+indexed by $\T(\ell)$ covered by $[y_1, y_2]$.
+
+Carrying on the idea forward, we can ``sweep'' $\ell$ from $x = -\infty$ to
+$x = \infty$ and yet maintain $\T(\ell)$ as we go. The maintenance can be
+easily done by inserting (removing) the y-coordinate of a segment $r \in R$
+when $\ell$ hits its left (right) endpoint. Whenever $\ell$ coincides with a
+segment $s \in S$, we search $\T(\ell)$ to report all the segments in $R(\ell)$
+intersecting $s$. It can be verified that all the intersecting pairs
+from $R \times S$ will be reported this way. The above idea can be easily
+implemented in $O(N \log N + T \log T + K)$ time.
+
+\extraspacing {\bf Divide-and-conquer.} The plane-sweep algorithm is neat
+enough for easy understanding, but what is closely related to the distribution
+sweep technique is an alternative divide-and-conquer solution as explained
+below.
+
+Collect all the x-coordinates of the segments in $R \cup S$ into
+$P$ (i.e., a horizontal segment contributes two x-coordinates while a vertical
+one contributes one). Clearly, $|P| = O(N + T)$. Cut the space into two vertical
+{\em slabs} such that half of the x-coordinates in $P$ fall in each slab. In
+other words, the x-coordinate of the dividing line is the median of $P$, which
+can be found in $O(|P|)$ time (using the $k$-selection algorithm in Lecture 1).
+Some horizontal segments may span an entire slab. For example, a segment in the
+form of $(-\infty, x] \times y$ spans the left slab. These segments are of
+special interests to us because, as will be clear shortly, some portions of them
+can be discarded as we recurse downwards.
+
+Sweep a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$.
+When $\ell$ hits the lower endpoint of a segment $s \in S$, put it into
+linked list $L_1$ ($L_2$) if $s$ is in the left (right) slab. If $\ell$ hits
+the upper endpoint of a segment $s \in S$, do nothing. Now consider
+$\ell$ hits a segment $r \in R$. If $r$ spans neither slab, ignore it and
+continue the sweeping. Otherwise, assume that $r$ spans the left slab. Go
+through $L_1$ once, and for segment $s \in L_1$, do the following. If the upper
+endpoint of $s$ is above $\ell$, we know that $s$ intersects $r$ and therefore,
+output the pair. Otherwise, $s$ falls below $\ell$, in which case we discard it
+from $L_1$ because it will not intersect any horizontal segment to be
+encountered by $\ell$ later.
+
+We complete the algorithm by clarifying the recursion part. Partition $S$ into
+$S_1$ and $S_2$ containing the segments in $S$ covered by the left and right
+slabs, respectively. Also, partition $R$ into $R_1$ and $R_2$ as follows. For
+each segment $r \in R$, compute the intersection between $r$ and the left
+(right) slab, and insert the intersection into $R_1$ ($R_2$) if it does not
+span the left (right) slab. Now, recurse on $R_1$ and $S_1$, and then on $R_2$
+and $S_2$. Note that the recursion essentially cuts the slabs into even smaller
+slabs.
+
+Let us analyze the running time of the algorithm. First, we look at how much
+time is needed to process $R$ and $S$ before recursion. For this purpose, we
+will assume that we have sorted in the y-coordinates of the endpoints of the
+segments in $R$ and $S$ (why this assumption does not affect us is left for
+you to figure out). Obviously, processing the lower or upper endpoint of a
+segment $s \in S$ takes constant time. The time of processing a segment $r \in
+R$ is also constant, unless it spans a slab. Interestingly, the total time of
+handling all the slab-spanning segments in $R$ is $O(N + T + K')$, where
+$K'$ is the number of result pairs reported from those segments. The crucial
+observation is that every time we scan $L_1$ (or $L_2$), for each segment $s$
+there, we either discard it or report a pair. The total number of times we
+discard a segment this way is $O(T)$, while the output time is clearly
+$O(K')$.
+
+Finally, let us worry about the recursion. As the number of x-coordinates
+reduces by half each time we recurse, the number of levels in the recursion
+is $O(\log (N + T))$. Another crucial observation is that each segment $r
+\in R$ generates at most 2 copies at each level of the recursion (noticing that
+a slab where $r$ has a copy must contain at least one endpoint of $r$).
+Hence, the total work done at each level of the recursion is $O(N+T)$, plus
+the linear output time. This establishes the overall cost $O(N \log N + T \log T
++ K)$.
+
+\subsection{An I/O-efficient algorithm} \label{sec:rb-em}
+
+Next we adapt the divide-and-conquer algorithm to work in the EM model
+efficiently. Set $n = N/B, t = T/B$ and $m = M/B$. The core of the adaptation is
+to make the recursion depth to be $O(\log_m (n + t))$. We achieve this by
+partitioning the space into $f = \Theta(m)$ slabs $\sigma_1, ..., \sigma_f$ such
+that each slab contains the same number of x-coordinates in $P$ (see the
+definition of $P$ in Section~\ref{sec:rb-ram}) -- this is not entirely trivial,
+and is again left for you to figure out. In addition to achieving the desired
+depth, this value of $f$ also allows us to allocate one memory block to each
+slab, and then, two blocks to act as the input buffer for $R$ and $S$,
+respectively. As in the RAM solution, we move a horizontal line $\ell$ upwards,
+and maintain for each slab $\sigma_i$ a linked list $L_i$. One block of $L_i$
+is kept in memory, while the other blocks are in the disk. Since we always write
+data into the disk in blocks, adding elements into $L_i$ can be done in $O(1/B)$
+I/Os per element. Now, consider $\ell$ hits a horizontal segment $r \in R$. For
+each slab $\sigma_i$ spanned by $r$, scan $L_i$ in the same way as in the RAM
+algorithm, except that when a segment $s$ is found to intersect $r$, we do not
+report the pair immediately but buffer it in an output block, which is flushed
+when it gets full, so that each output pair accounts for only $O(1/B)$ I/Os.
+Remember that at end of the scan, all the segments in $L_i$ have their upper
+endpoints above $\ell$. For recursion, we divide $S$ into $S_1, ..., S_f$ which
+contain the segments of $S$ falling in $\sigma_1, ..., \sigma_f$, respectively.
+Also, create $R_1, ..., R_f$ such that $R_i$ contains a possibly truncated
+segment $r \intr \sigma_i$ for each $r \in R$. Now, we are ready to recurse in
+each slab. The recursion ends when $R$ and $S$ can fit in memory, in which case
+we find all the results in memory directly.
+
+Processing $R$ and $S$ until recursion takes $O(n + t + K'/B)$ I/Os where
+$K'$ is the number of result pairs reported. Given that (i) each segment of $R$
+leaves at most 2 copies at each level of the recursion, and (ii) as mentioned
+before, the recursion depth is $O(\log_m (n + t))$, we conclude that the
+overall running time is $O(n \log_m n + t \log_m t + K/B)$.
+
+\section{The skyline problem (a.k.a.\ the maxima problem)} \label{sec:sky}
+
+In this section, we will use the distribution sweep technique to solve another
+problem. Besides demonstrating this technique in yet another scenario, we will
+also see how this technique can be extended to deal with dimensionality more
+than 2.
+
+The problem of our focus is the {\em skyline problem} defined as
+follows. The input is a set $P$ of $d$-dimensional points in {\em general
+position}, i.e., no two points of $P$ share the same coordinate on any
+dimension. Given a point $p \in \real^d$, denote its $i$-th ($1 \le i \le d$)
+coordinate as $p[i]$. A point $p_1$ is said to {\em dominate} another point
+$p_2$, represented as $p_1 \dom p_2$, if $p_1$ has a smaller coordinate on all
+$d$ dimensions, namely:
+\begin{equation}
+    \textrm{$\forall i = 1, ..., d$, $p_1[i] < p_2[i]$}. \nonumber
+\end{equation}
+The goal is to compute the {\em skyline} of $P$, denoted as $SKY(P)$, which
+includes all the points in $P$ that are not dominated by any other point,
+namely:
+\begin{equation}
+    \textrm{$SKY(P) = \{p \in P \mid \nexists p' \in P$ s.t.\ $p' \dom p\}$.}
+\end{equation}
+
+The skyline problem can be easily solved in linear I/Os in 2d space, provided
+that the points of $P$ have been sorted by their x-coordinates. The problem is
+more interesting for $d \ge 3$. We will give a solution to $d
+= 3$ in Section~\ref{sec:sky-3d}, and then generalize the solution to $d = 4$ in
+Section~\ref{sec:sky-4d}. Our algorithms can in fact be adapted to work
+in any constant dimensionality $d$, but the details are a bit too technical for
+the interests of this course (references are given in the bibliography for
+further readings).
+
+\subsection{3d} \label{sec:sky-3d}
+
+Our algorithm accepts as input a dataset $P$ whose points are sorted in
+ascending order of x-coordinates. If the size $N$ of $P$ is at most $M$ (i.e.,
+the memory capacity), we simply find the skyline of $P$ using a memory-resident
+algorithm. The I/O cost incurred is $O(N/B)$.
+
+\begin{figure*}
+    \centering
+    \includegraphics[height=60mm]{./artwork/3d-merge.eps}
+
+    \figcapup
+    \caption{Illustration of 3d skyline merge. The value of $s$ is 3.
+Only the points already encountered are shown. Points are labeled in ascending
+order of their y-coordinates (which is also the order they are fetched). Point 8
+is the last one seen. Each cross is the projection of a point in the x-y plane.
+$\Sigma(1)$ contains points 2, 3, 7, $\Sigma(2)$ includes 4,
+6, 8, and $\Sigma(3)$ has 5, 1. $\lambda(1), \lambda(2),
+\lambda(3)$ equal the z-coordinate of point 2, 8, 5, respectively. Point 8 does
+not belong to $SKY(P)$ because its z-coordinate is larger than
+$\lambda(1)$ (i.e., it violates Inequality~\ref{eqn:sky-min} on
+$j = 1$).} \label{fig:sky-merge}
+    \figcapdown
+\end{figure*}
+
+In case $N > M$, we divide $P$ into $s = \Theta(M/B)$ partitions $P(1), ...,
+P(s)$ with roughly the same size, such that each point in $P(i)$ has a smaller
+x-coordinate than all points in $P(j)$ for any $1 \le i < j \le s$. As $P$ is
+already sorted on the x-dimension, the partitioning can be done in linear cost,
+while leaving the points of each $P(i)$ sorted in the same way. The next step is
+to obtain the skyline $\Sigma(i)$ of each $P(i)$, i.e., $\Sigma(i) = SKY(P(i))$.
+Since this is identical to solving the original problem (only on a smaller
+dataset), we recursively invoke our algorithm on $P(i)$. Now consider the moment
+when all $\Sigma(i)$ have been returned from recursion. Our algorithm proceeds
+by performing a {\em skyline merge}, which finds the skyline of the union of all
+$\Sigma(i)$, that is, $SKY(\Sigma(1) \cup ... \cup \Sigma(s))$, which is exactly
+$SKY(P)$. We enforce an invariant that, $SKY(P)$ be returned in a disk file
+where the points are sorted in ascending order of y-coordinates (to be used by
+the upper level of recursion, if any). Due to recursion, the invariant implies
+that, the same ordering has been applied to all the $\Sigma(i)$ at hand.
+
+We now elaborate the details of the skyline merge. $SKY(P)$ is empty in the
+outset. $\Sigma(1), ..., \Sigma(s)$ are scanned synchronously in ascending order
+of y-coordinates. In other words, the next point fetched is guaranteed to have
+the lowest y-coordinate among the points of all $\Sigma(i)$ that have not been
+encountered yet. As $s = \Theta(M/B)$, the synchronization can be achieved by
+assigning a block of memory as the input buffer to each $\Sigma(i)$. We maintain
+a value $\lambda(i)$, which equals the minimum z-coordinate of all the points
+that have already been seen from $\Sigma(i)$. If no point from $\Sigma(i)$ has
+been read, $\lambda(i) = \infty$.
+
+We decide whether to include a point $p$ in $SKY(P)$ when $p$ is fetched by the
+synchronous scan. Suppose that $p$ is from $\Sigma(i)$ for some $i$. We add $p$
+to $SKY(P)$ if
+
+\begin{equation}
+    p[3] < \lambda(j), \forall j < i \label{eqn:sky-min}
+\end{equation}
+
+\noindent where $p[3]$ denotes the z-coordinate of $p$. See
+Figure~\ref{fig:sky-merge} for an illustration. The lemma below shows the
+correctness of this rule.
+
+\begin{lemma} \label{lmm:3d}
+    $p \in SKY(P)$ if and only if Inequality~\ref{eqn:sky-min} holds.
+\end{lemma}
+
+\begin{proof}
+    Clearly, $p$ cannot be dominated by any point in $\Sigma(i+1), ...,
+\Sigma(s)$ because $p$ has a smaller x-coordinate than all those points. Let $S$
+be the set of points in $\Sigma(j)$ already scanned before $p$, for any $j < i$.
+No point $p' \in \Sigma(j) \setminus S$ can possibly dominate $p$, as $p$ has a
+lower y-coordinate than $p'$. On the other hand, all points in $S$ dominate $p$
+in the x-y plane. Thus, {\em some} point in $S$ dominates $p$ in $\real^3$ if
+and only if Inequality~\ref{eqn:sky-min} holds.
+\end{proof}
+
+We complete the algorithm description with a note that a single memory block can
+be used as an output buffer, so that the points of $SKY(P)$ can be written to
+the disk in linear I/Os, by the same order they entered $SKY(P)$, namely, in
+ascending order of their y-coordinates. Overall, the skyline merge finishes in
+$O(N/B)$ I/Os.
+
+\extraspacing {\bf Running time.} Denote by $F(N)$ the I/O cost of our algorithm
+on a dataset with cardinality $N$. It is clear from the above discussion that
+
+\begin{equation}
+    F(N) = \left\{
+    \begin{tabular}{ll}
+        $O(N/B)$ & if $N \le M$ \\
+        $s \cdot F(N/s) + G(N)$ & otherwise
+    \end{tabular}\right. \label{eqn:sky-recurrence}
+\end{equation}
+
+\noindent where $G(N) = O(N/B)$ is the cost of a skyline merge. Solving the
+recurrence gives $F(N) = O((N/B) \log_{M/B} (N/B))$.
+
+\extraspacing {\bf Remark.} A main trick used in the above algorithm is {\em
+order alternation}. Notice that the dataset we feed into the next level of
+recursion is sorted by x-coordinates, whereas on return from the recursion, we
+have got a dataset sorted by y-coordinates. This trick is even more important
+in dealing with a 4d dataset, as explained next.
+
+ \subsection{4d} \label{sec:sky-4d}
+
+To find the skyline of a 4d dataset $P$, we proceed as in the 3d algorithm by
+using a smaller $s = \Theta(\sqrt{M/B})$. The only
+difference lies in the way that a skyline merge is performed. Formally, the
+problem we face in a skyline merge can be described as follows. Consider a
+partition $P(1), ..., P(s)$ of $P$ such that each point in $P(i)$ has a smaller
+coordinate on dimension 1 than all points in $P(j)$, for any $1 \le i < j \le
+s$. Equivalently, the data space is divided into $s$ {\em slabs} $\sigma_1(1),
+..., \sigma_1(s)$ by $s-1$ hyper-planes orthogonal to dimension 1 such that
+$P(i) = P \intr \sigma_1(i)$ for all $1 \le i \le s$. We are given the skyline
+$\Sigma_1(i)$ of each $P(i)$, where the points of $\Sigma_1(i)$ are sorted in
+ascending order of their 2nd coordinates. The goal is to compute
+$SKY(\Sigma_1(1) \cup ... \cup \Sigma_1(s))$, which is equivalent to $SKY(P)$.
+Further, the output order is important (for backtracking to the upper level of
+recursion): we want the points of $SKY(P)$ to be returned in ascending order of
+their 2nd coordinates.
+
+The previous subsection solved the problem in 3d space with $O(N/B)$ I/Os where
+$N = |P|$. In 4d space, our objective is to pay only an extra factor of
+$O(\log_{M/B} (N/B))$ in the cost. We fulfill the purpose with an algorithm
+called \texttt{preMerge-4d}, the input of which includes
+\begin{itemize}
+    \item slabs $\sigma_1(1), ..., \sigma_1(s)$
+
+    \item a set $\Pi$ of points sorted in ascending order of their 2nd
+coordinates. $\Pi$ has the property that, if two points $p_1, p_2 \in \Pi$ fall
+in the same slab, they do not dominate each other.
+\end{itemize}
+\texttt{preMerge-4d} returns the points of $SKY(\Pi)$ in ascending order of
+their {\em 3rd} coordinates.
+
+Although stated somewhat differently, the problem settled by
+\texttt{preMerge-4d} is (almost) the same as skyline merge. Notice that $\Pi$
+can be obtained by merging $\Sigma_1(1), ..., \Sigma_1(s)$ in $O(N/B)$ I/Os.
+Moreover, we can sort the points of $SKY(\Pi)$ (output by \texttt{preMerge-4d})
+ascendingly on dimension 2 to fulfill the order requirement of skyline merge,
+which demands another $O((N/B) \log_{M/B} (N/B))$ I/Os.
+
+\extraspacing {\bf Algorithm preMerge-4d.} In case $\Pi$ has at most $M$ points,
+\texttt{preMerge-4d} solves the problem in memory. Otherwise, in $O(|\Pi|/B)$
+I/Os the algorithm divides $\Pi$ into $s$ partitions $\Pi(1), ..., \Pi(s)$ of
+roughly the same size, with the points of $\Pi(i)$ having smaller 2nd
+coordinates than those of $\Pi(j)$ for any $1 \le i < j \le s$. We then invoke
+\texttt{preMerge-4d} recursively on each $\Pi(i)$, feeding the same
+$\{\sigma_1(1), ..., \sigma_1(s)\}$, to calculate $\Sigma_2(i) = SKY(\Pi(i))$.
+Apparently, $SKY(\Pi)$ is equivalent to the skyline of the union of all
+$\Sigma_2(i)$, namely, $SKY(\Pi) = SKY(\Sigma_2(1) \cup ... \cup \Sigma_2(s))$.
+It may appear that we are back to where we started --- this is another skyline
+merge! The crucial difference, however, is that only two dimensions remain
+``unprocessed" (i.e., dimensions 3 and 4). In this case, the problem can be
+solved directly in linear I/Os, by a synchronous scan similar to the one in
+Section~\ref{sec:sky-3d}.
+
+By recursion, the points of each $\Sigma_2(i)$ have been sorted ascendingly on
+dimension 3. This allows us to enumerate the points of $\Sigma_2(1) \cup ...
+\cup \Sigma_2(s)$ in ascending order of their 3rd coordinates, by synchronously
+reading the $\Sigma_2(i)$ of all $i \in [1, s]$. In the meantime, we keep track
+of $s^2$ values $\lambda(i_1, i_2)$ for every pair of $i_1, i_2 \in [1, s]$.
+Specifically, $\lambda(i_1, i_2)$ equals the lowest 4th coordinate of all the
+points in $\sigma_1(i_1) \intr \Sigma_2(i_2)$ that have been scanned so far; or
+$\lambda(i_1, i_2) = \infty$ if no such point exists. Note that the choice of
+$s$ makes it possible to maintain all $\lambda(i_1, i_2)$ in memory, and
+meanwhile, allocate an input buffer to each $\Sigma_2(i)$ so that the
+synchronous scan can be completed in linear I/Os.
+
+$SKY(\Pi)$ is empty at the beginning of the synchronous scan. Let $p$ be the
+next point fetched. Suppose that $p$ falls in $\sigma_1(i_1)$, and is from
+$\Sigma_2(i_2)$, for some $i_1, i_2$. We insert $p$ in $SKY(\Pi)$ if
+
+\begin{equation}
+    p[4] < \lambda(j_1, j_2), \forall j_1 < i_1, j_2 < i_2 \label{eqn:4d-min}
+\end{equation}
+
+\noindent where $p[4]$ is the coordinate of $p$ on dimension 4. An argument
+similar to the proof of Lemma~\ref{lmm:3d} shows that $p \in SKY(\Pi)$ if and
+only if the above inequality holds. Note that checking the inequality happens in
+memory, and incurs no I/O cost. Finally, as the points of $SKY(\Pi)$ enter
+$SKY(\Pi)$ in ascending order of their 3rd coordinates, they can be written to
+the disk in the same order.
+
+\extraspacing {\bf Running time.} Let $H(K)$ be the I/O cost of
+\texttt{preMerge-4d} when $\Pi$ has $K$ points. We have
+
+\begin{equation}
+    H(K) = \left\{
+    \begin{tabular}{ll}
+        $O(K/B)$ & if $K \le M$ \\
+        $s \cdot H(K/s) + O(K/B)$ & otherwise
+    \end{tabular}\right. \nonumber
+\end{equation}
+
+\noindent where $s = \Omega(\sqrt{M/B})$. This recurrence gives $H(K) = O((K/B)
+\log_{M/B} (K/B))$.
+
+Following the notations in Section~\ref{sec:sky-3d}, denote by $G(N)$ the cost
+of a skyline merge when the dataset $P$ has size $N$, and by $F(N)$ the cost of
+our 4d skyline algorithm. $G(N)$ equals $H(N)$ plus the overhead of sorting
+$SKY(P)$. Hence:
+
+\begin{equation}
+    G(N) = O((N/B) \log_{M/B} (N/B)). \nonumber
+\end{equation}
+
+\noindent With the above, we solve the recurrence in
+Equation~\ref{eqn:sky-recurrence} as $F(N) = O((N/B) \log^2_{M/B} (N/B))$.
+
+\section{Bibliography}
+
+The distribution sweep was developed by Goodrich, Tsay, Vengroff and Vitter
+\cite{gtvv93} to solve a number of computational geometry problems. One of
+their results bearing particular interests is that the convex hull of $N$ 3d
+points can be computed in $O(\frac{N}{B} \log_{M/B} \frac{N}{B})$ I/Os. This
+immediately implies that the Voronoi diagram of $N$ planar points can be
+computed with the same cost \cite{gs85}. The 3d skyline algorithm we discussed
+was briefly mentioned in \cite{gtvv93}, and its details first appeared
+in \cite{st11}. The 4d algorithm is due to Sheng and Tao \cite{st11},
+where it is also shown that the $d$-dimensional problem can be solved in
+$O(\frac{N}{B} \log^{d-2}_{M/B} \frac{N}{B})$ I/Os for any fixed $d$.
+
+It is worth mentioning that the plane-sweep technique in RAM (see
+Section~\ref{sec:rb-ram}) can also be adapted to work in external memory. The
+details are rather involved and can be found in \cite{a03}.
+
+\bibliographystyle{abbrv}
+\bibliography{../ref}
+
+\end{document}

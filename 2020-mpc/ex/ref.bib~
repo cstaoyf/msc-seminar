@@ -1,0 +1,4192 @@
+%ver 15 may 2011
+
+    @string{acmcs="ACM Comp. Surv."}
+    @string{acmgis="ACM Symposium on Advances in Geographic Information Systems ({GIS})"}
+    @string{alenex="Workshop on Algorithm Engineering and Experiments ({ALENEX})"}
+    @string{bioinf="{Bioinformatics}"}
+    @string{bit="{BIT}"}
+    @string{cacm="{CACM}"}
+    @string{cccg="CCCG"}
+    @string{cidr="{CIDR}"}
+    @string{cikm="{CIKM}"}
+    @string{cpm="Annual Symp. on Combinatorial Pattern Matching"}
+    @string{crypto="{CRYPTO}"}
+    @string{dcg="Discrete {\&} Computational Geometry"}
+    @string{dexa="{DEXA}"}
+    @string{edbt="{EDBT}"}
+    @string{esa="{ESA}"}
+    @string{focs = "{FOCS}"}
+    @string{foiks="{F}o{IKS}"}
+    @string{acmgis="{GIS}"}
+    @string{icalp="{ICALP}"}
+    @string{icde="{ICDE}"}
+    @string{icdm="{ICDM}"}
+    @string{icdt="{ICDT}"}
+    @string{ideas="{IDEAS}"}
+    @string{ipl="{IPL}"}
+    @string{jacm="{JACM}"}
+    @string{jcss="{JCSS}"}
+    @string{mdm="{MDM}"}
+    @string{mobide="{MobiDE}"}
+    @string{sac="{ACM} Symposium on Applied Computing ({SAC})"}
+    @string{sdm="{SDM}"}
+    @string{siamj="SIAM J. of Comp."}
+    @string{kdd="{SIGKDD}"}
+    @string{pakdd="{PAKDD}"}
+    @string{pami="{PAMI}"}
+    @string{pods="{PODS}"}
+    @string{pvldb="{PVLDB}"}
+    @string{sigmetric="{SIGMETRICS}"}
+    @string{sigmod="{SIGMOD}"}
+    @string{socg="{S}o{CG}"}
+    @string{soda="{SODA}"}
+    @string{ssd="{SSD}"}
+    @string{ssdbm="{SSDBM}"}
+    @string{sstd="{SSTD}"}
+    @string{stoc="{STOC}"}
+    @string{talg="{TALG}"}
+    @string{tcc="{TCC}"}
+    @string{tcs="{Theo. Comp. Sci.}"}
+    @string{tkde="{TKDE}"}
+    @string{tods="{TODS}"}
+    @string{tois="{TOIS}"}
+    @string{tmcs="{TMCS}"}
+    @string{wads="{WADS}"}
+    @string{www="{WWW}"}
+    @string{vldb="{VLDB}"}
+    @string{vldbj="{VLDB J.}"}
+    @string{wea="Workshop on Experimental Algorithms ({WEA})"}
+
+    @string{acmcs="ACM Computing Surveys"}
+    @string{acmgis="Proceedings of ACM Symposium on Advances in Geographic Information Systems ({GIS})"}
+    @string{alenex="Proceedings of Workshop on Algorithm Engineering and Experiments ({ALENEX})"}
+    @string{bit="BIT Numerical Mathematics"}
+    @string{cacm="Communications of the ACM ({CACM})"}
+    @string{cccg="Proceedings of the Canadian Conference on Computational Geometry ({CCCG})"}
+    @string{cidr="Proceedings of Biennial Conference on Innovative Data Systems Research ({CIDR})"}
+    @string{cikm="Proceedings of Conference on Information and Knowledge Management ({CIKM})"}
+    @string{cpm="Annual Symposium on Combinatorial Pattern Matching ({CPM})"}
+    @string{crypto="Proceedings of Annual International Cryptology Conference ({CROPTO})"}
+    @string{dawak="Proceedings of the Conf. on Data Warehousing and Knowledge Discovery ({DAWAK})"}
+    @string{dcg="Discrete {\&} Computational Geometry"}
+    @string{dexa="Proceedings of International Conference on Database and Expert Systems Applications ({DEXA})"}
+    @string{esa="Proceedings of European Symposium on Algorithms ({ESA})"}
+    @string{edbt="Proceedings of Extending Database Technology ({EDBT})"}
+    @string{focs="Proceedings of Annual {IEEE} Symposium on Foundations of Computer Science ({FOCS})"}
+    @string{foiks="Foundations of Information and Knowledge Systems ({F}o{IKS})"}
+    @string{icalp="International Colloquium on Automata, Languages and Programming ({ICALP})"}
+    @string{icde="Proceedings of International Conference on Data Engineering ({ICDE})"}
+    @string{icdm="Proceedings of International Conference on Management of Data ({ICDM})"}
+    @string{icdt="Proceedings of International Conference on Database Theory ({ICDT})"}
+    @string{ideas="Proceedings of International Database Engineering and Applications Symposium ({IDEAS})"}
+    @string{ipl="Information Processing Letters ({IPL})"}
+    @string{ijcai="Proceedings of the International Joint Conference of Artificial Intelligence ({IJCAI})"}
+    @string{jacm="Journal of the ACM ({JACM})"}
+    @string{jalg="Journal of Algorithms"}
+    @string{jcss="Journal of Computer and System Sciences ({JCSS})"}
+    @string{mdm="Proceedings of the International Conference on Mobile Data Management ({MDM})"}
+    @string{mobide="Proceedings of ACM International Workshop on Data Engineering for Wireless and Mobile Access ({MobiDE})"}
+    @string{pakdd="Proceedings of Pacific-Asia Conference on Knowledge Discovery and Data Mining ({PAKDD})"}
+    @string{pami="IEEE Transactions on Pattern Analysis and Machine Intelligence ({PAMI})"}
+    @string{pods="Proceedings of ACM Symposium on Principles of Database Systems ({PODS})"}
+    @string{pvldb="Proceedings of the VLDB Endowment ({PVLDB})"}
+    @string{kdd="Proceedings of ACM Knowledge Discovery and Data Mining ({SIGKDD})"}
+    @string{sac="Proceedings of {ACM} Symposium on Applied Computing ({SAC})"}
+    @string{sdm="Secure Data Management ({SDM})"}
+    @string{siamj="SIAM Journal of Computing"}
+    @string{sigmetric="Proceedings of International Conference on Measurements and Modeling of Computer Systems ({SIGMETRICS})"}
+    @string{sigmod="Proceedings of ACM Management of Data ({SIGMOD})"}
+    @string{socg="Symposium on Computational Geometry ({S}o{CG})"}
+    @string{soda="Proceedings of the Annual {ACM-SIAM} Symposium on Discrete Algorithms ({SODA})"}
+    @string{ssd="Proceedings of Symposium on Advances in Spatial Databases ({SSD})"}
+    @string{ssdbm="Proceedings of Scientific and Statistical Database Management ({SSDBM})"}
+    @string{sstd="Proceedings of Symposium on Advances in Spatial and Temporal Databases ({SSTD})"}
+    @string{stoc="Proceedings of {ACM} Symposium on Theory of Computing ({STOC})"}
+    @string{talg="{ACM} Transactions on Algorithms ({TALG})"}
+    @string{tcc="Theory of Cryptography Conference ({TCC})"}
+    @string{tcs="Theor. Comput. Sci."}
+    @string{tkde="IEEE Transactions on Knowledge and Data Engineering ({TKDE})"}
+    @string{tmcs="ACM Transactions on Modeling and Computer Simulation ({TMCS})"}
+    @string{tods="ACM Transactions on Database Systems ({TODS})"}
+    @string{tois="ACM Transactions on Information Systems ({TOIS})"}
+    @string{vldb="Proceedings of Very Large Data Bases ({VLDB})"}
+    @string{vldbj="The {VLDB} Journal"}
+    @string{wads="Algorithms and Data Structures Workshop ({WADS})"}
+    @string{www="Proceedings of International World Wide Web Conferences ({WWW})"}
+    @string{wea="Proceedings of Workshop on Experimental Algorithms ({WEA})"}
+
+@inproceedings{anony,
+  author   = {Anonymous},
+  title    = {Paper information removed due to the double-blind policy}
+}
+
+
+@article{a03,
+  author    = {Lars Arge},
+  title     = {The Buffer Tree: A Technique for Designing Batched External
+               Data Structures},
+  journal   = {Algorithmica},
+  volume    = {37},
+  number    = {1},
+  year      = {2003},
+  pages     = {1-24}
+}
+
+@inproceedings{a05,
+  author    = {C. C. Aggarwal},
+  title     = {On k-Anonymity and the Curse of Dimensionality},
+  booktitle = vldb,
+  year      = {2005},
+  pages     = {901-909}
+}
+
+@inproceedings{a07,
+  author    = {Charu Aggarwal},
+  title     = {On Randomization Public Information and the Curse of Dimensionality},
+  booktitle = icde,
+  year      = {2007},
+  pages     = {136-145}
+}
+
+@inproceedings{aa01,
+  author = {Dakshi Agrawal and Charu C. Aggarwal},
+  title = {On the Design and Quantification of Privacy Preserving Data Mining Algorithms},
+  booktitle = pods,
+  year = {2001}
+}
+
+@inproceedings{aabv99,
+  author    = {Pankaj K. Agarwal and
+               Lars Arge and
+               Gerth St{\o}lting Brodal and
+               Jeffrey Scott Vitter},
+  title     = {{I/O}-Efficient Dynamic Point Location in Monotone Planar Subdivisions},
+  booktitle = soda,
+  year      = {1999},
+  pages     = {11-20}
+}
+
+@article{aae03,
+  author    = {Pankaj K. Agarwal and
+               Lars Arge and
+               Jeff Erickson},
+  title     = {Indexing Moving Points},
+  journal   = jcss,
+  volume    = {66},
+  number    = {1},
+  year      = {2003},
+  pages     = {207-243}
+}
+
+@article{aae+00,
+  author    = {Pankaj K. Agarwal and
+               Lars Arge and
+               Jeff Erickson and
+               Paolo Giulio Franciosa and
+               Jeffrey Scott Vitter},
+  title     = {Efficient Searching with Linear Constraints},
+  journal   = jcss,
+  volume    = {61},
+  number    = {2},
+  year      = {2000},
+  pages     = {194-216}
+}
+
+@inproceedings{aal09,
+  author    = {Peyman Afshani and
+               Lars Arge and
+               Kasper Dalgaard Larsen},
+  title     = {Orthogonal Range Reporting in Three and Higher Dimensions},
+  booktitle = focs,
+  year      = {2009},
+  pages     = {149-158}
+}
+
+@inproceedings{aal10,
+  author    = {Peyman Afshani and
+               Lars Arge and
+               Kasper Dalgaard Larsen},
+  title     = {Orthogonal range reporting: query lower bounds, optimal
+               structures in 3-d, and higher-dimensional improvements},
+  booktitle = socg,
+  year      = {2010},
+  pages     = {240-246}
+}
+
+@inproceedings{aay05,
+  author    = {Pankaj K. Agarwal and
+               Lars Arge and
+               Ke Yi},
+  title     = {An optimal dynamic interval stabbing-max data structure?},
+  booktitle = soda,
+  year      = {2005},
+  pages     = {803-812}
+}
+
+@inproceedings{aayy03,
+  author    = {Pankaj K. Agarwal and
+               Lars Arge and
+               Jun Yang and
+               Ke Yi},
+  title     = {{I/O}-Efficient Structures for Orthogonal Range-Max and Stabbing-Max Queries},
+  booktitle = esa,
+  year      = {2003},
+  pages     = {7-18}
+}
+
+@inproceedings{abc09,
+  author    = {Peyman Afshani and
+               Jeremy Barbay and
+               Timothy M. Chan},
+  title     = {Instance-Optimal Geometric Algorithms},
+  booktitle = focs,
+  year      = {2009},
+  pages     = {129-138}
+}
+
+@article{abk+04,
+  author    = {Noga Alon and
+               Richard Beigel and
+               Simon Kasif and
+               Steven Rudich and
+               Benny Sudakov},
+  title     = {Learning a Hidden Matching},
+  journal   = siamj,
+  volume    = {33},
+  number    = {2},
+  year      = {2004},
+  pages     = {487-501}
+}
+
+@inproceedings{abr00,
+  author    = {Stephen Alstrup and
+               Gerth St{\o}lting Brodal and
+               Theis Rauhe},
+  title     = {New Data Structures for Orthogonal Range Searching},
+  booktitle = focs,
+  year      = {2000},
+  pages     = {198-207}
+}
+
+@inproceedings{abr01,
+  author    = {Stephen Alstrup and
+               Gerth St{\o}lting Brodal and
+               Theis Rauhe},
+  title     = {Optimal static range reporting in one dimension},
+  booktitle = stoc,
+  year      = {2001},
+  pages     = {476-482}
+}
+
+@inproceedings{abr08,
+  author    = {Lars Arge and
+               Gerth St{\o}lting Brodal and
+               S. Srinivasa Rao},
+  title     = {External memory planar point location with logarithmic updates},
+  booktitle = socg,
+  year      = {2008},
+  pages     = {139-147}
+}
+
+
+@article{ac08,
+  author    = {Dana Angluin and
+               Jiang Chen},
+  title     = {Learning a hidden graph using {O}(logn) queries per edge},
+  journal   = jcss,
+  volume    = {74},
+  number    = {4},
+  year      = {2008},
+  pages     = {546-556}
+}
+
+@inproceedings{acty09,
+  author    = {Pankaj K. Agarwal and
+               Siu-Wing Cheng and
+               Yufei Tao and
+               Ke Yi},
+  title     = {Indexing uncertain data},
+  booktitle = pods,
+  year      = {2009},
+  pages     = {137-146}
+}
+
+@inproceedings{ac09,
+  author    = {Peyman Afshani and
+               Timothy M. Chan},
+  title     = {Optimal halfspace range reporting in three dimensions},
+  booktitle = soda,
+  year      = {2009},
+  pages     = {180-186}
+}
+
+@INPROCEEDINGS{acd02,
+  AUTHOR = {Sanjay Agrawal and Surajit Chaudhuri and Gautam Das},
+  TITLE = {DBXplorer: A System for Keyword-Based Search over Relational Databases},
+  BOOKTITLE = icde,
+  YEAR = {2002},
+  pages={5-16}
+}
+
+@article{adt03,
+  author    = {Lars Arge and
+               Andrew Danner and
+               Sha-Mayn Teh},
+  title     = {{I/O}-efficient point location using persistent {B}-trees},
+  journal   = {ACM Journal of Experimental Algorithmics},
+  volume    = {8},
+  year      = {2003}
+}
+
+@article{ae98,
+  author    = {Pankaj K. Agarwal and Jeff Erickson},
+  title     = {Geometric range searching and its relatives},
+  journal   = {Advances in Discrete and Computational Geometry},
+  pages     = {1-56}
+}
+
+@inproceedings{afgw10,
+  author    = {Ittai Abraham and
+               Amos Fiat and
+               Andrew V. Goldberg and
+               Renato Fonseca F. Werneck},
+  title     = {Highway Dimension, Shortest Paths, and Provably Efficient
+               Algorithms},
+  booktitle = soda,
+  year      = {2010},
+  pages     = {782-793}
+}
+
+@inproceedings{afk+05,
+  author    = {G. Aggarwal and T. Feder and K. Kenthapadi and R. Motwani and R. Panigrahy and D. Thomas and
+               A. Zhu},
+  title     = {Anonymizing Tables},
+  booktitle = icdt,
+  year      = {2005},
+  pages     = {246-258}
+}
+
+@inproceedings{afk+06,
+  author    = {Gagan Aggarwal and Tomas Feder and Krishnaram Kenthapadi and Samir Khuller and Rina Panigrahy and
+               Dilys Thomas and An Zhu},
+  title     = {Achieving anonymity via clustering},
+  booktitle = pods,
+  year      = {2006},
+  pages     = {153-162}
+}
+
+@article{ag08,
+  author    = {Renzo Angles and
+               Claudio Guti{\'e}rrez},
+  title     = {Survey of graph database models},
+  journal   = acmcs,
+  volume    = {40},
+  number    = {1},
+  year      = {2008}
+}
+
+@inproceedings{agkr02,
+  author    = {Stephen Alstrup and
+               Cyril Gavoille and
+               Haim Kaplan and
+               Theis Rauhe},
+  title     = {Nearest common ancestors: a survey and a new distributed
+               algorithm},
+  booktitle = {SPAA},
+  year      = {2002},
+  pages     = {258-264}
+}
+
+@inproceedings{agm02,
+  author    = {Pankaj K. Agarwal and
+               Sathish Govindarajan and
+               S. Muthukrishnan},
+  title     = {Range Searching in Categorical Data: Colored Range Searching
+               on Grid},
+  booktitle = esa,
+  year      = {2002},
+  pages     = {17-28}
+}
+
+@article{aj94,
+  author    = {Rakesh Agrawal and
+               H. V. Jagadish},
+  title     = {Algorithms for Searching Massive Graphs},
+  journal   = tkde,
+  volume    = {6},
+  number    = {2},
+  year      = {1994},
+  pages     = {225-238}
+}
+
+@inproceedings{ah05,
+  author = {Shipra Agrawal and Jayant R. Haritsa},
+  title = {A Framework for High-Accuracy Privacy-Preserving Mining},
+  booktitle = icde,
+  year = {2005},
+  pages = {193-204}
+}
+
+@inproceedings{ai06,
+  author = {Alexandr Andoni and Piotr Indyk},
+  title = {Near-Optimal Hashing Algorithms for Approximate Nearest Neighbor in High Dimensions},
+  booktitle = focs,
+  year = {2006},
+  pages = {459-468}
+}
+
+@inproceedings{ais93,
+  author    = {Rakesh Agrawal and
+               Tomasz Imielinski and
+               Arun N. Swami},
+  title     = {Mining Association Rules between Sets of Items in Large
+               Databases.},
+  booktitle = sigmod,
+  year      = {1993},
+  pages     = {207-216},
+}
+
+@article{ak02,
+  author    = {Noga Alon and
+               Michael Krivelevich},
+  title     = {Testing k-colorability},
+  journal   = siamj,
+  volume    = {15},
+  number    = {2},
+  year      = {2002},
+  pages     = {211-227}
+}
+
+@inproceedings{akl93,
+  author    = {Lars Arge and
+               Mikael Knudsen and
+               Kirsten Larsen},
+  title     = {A General Lower Bound on the {I/O}-Complexity of Comparison-based
+               Algorithms},
+  booktitle = wads,
+  year      = {1993},
+  pages     = {83-94}
+}
+
+@article{al62,
+  author    = {G.M. Adel'son-Vel'skii and E.M. Landis},
+  title     = {An algorithm for the organization of information},
+  journal   = {Soviet Mathematics Doklady},
+  volume    = {3},
+  year      = {1962},
+  pages     = {1259-1263}
+}
+
+@article{am95,
+  author    = {Pankaj K. Agarwal and
+               Jiri Matousek},
+  title     = {Dynamic Half-Space Range Reporting and Its Applications},
+  journal   = {Algorithmica},
+  volume    = {13},
+  number    = {4},
+  year      = {1995},
+  pages     = {325-345}
+}
+
+@inproceedings{am04,
+  author    = {Arvind Arasu and
+               Gurmeet Singh Manku},
+  title     = {Approximate Counts and Quantiles over Sliding Windows},
+  booktitle = pods,
+  year      = {2004},
+  pages     = {286-296}
+}
+
+@inproceedings{amrt96,
+  author    = {Arne Andersson and
+               Peter Bro Miltersen and
+               S{\o}ren Riis and
+               Mikkel Thorup},
+  title     = {Static Dictionaries on ${AC}^0$ {RAM}s: Query Time ${\Theta}(\sqrt{\log
+               n/ \log \log n})$ is Necessary and Sufficient},
+  booktitle = focs,
+  year      = {1996},
+  pages     = {441-450}
+}
+
+@article{ams06,
+  author    = {Alon, Noga and Moshkovitz, Dana and Safra, Shmuel},
+  title     = {Algorithmic construction of sets for k-restrictions},
+  journal   = talg,
+  volume    = {2},
+  number    = {2},
+  year      = {2006},
+  issn      = {1549-6325},
+  pages     = {153--177}
+}
+
+@inproceedings{ars97,
+  author    = {Khaled Alsabti and
+               Sanjay Ranka and
+               Vineet Singh},
+  title     = {A One-Pass Algorithm for Accurately Estimating Quantiles
+               for Disk-Resident Data},
+  booktitle = vldb,
+  year      = {1997},
+  pages     = {346-355}
+}
+
+@inproceedings{as00,
+  author    = {Rakesh Agrawal and Ramakrishnan Srikant},
+  title     = {Privacy-Preserving Data Mining},
+  booktitle = sigmod,
+  year      = {2000},
+  pages     = {439-450}
+}
+
+@article{as08,
+  author    = {Noga Alon and
+               Asaf Shapira},
+  title     = {A Characterization of the (Natural) Graph Properties Testable
+               with One-Sided Error},
+  journal   = siamj,
+  volume    = {37},
+  number    = {6},
+  year      = {2008},
+  pages     = {1703-1727}
+}
+
+@article{as08b,
+  author    = {Noga Alon and
+               Asaf Shapira},
+  title     = {Every Monotone Graph Property Is Testable},
+  journal   = siamj,
+  volume    = {38},
+  number    = {2},
+  year      = {2008},
+  pages     = {505-522}
+}
+
+@inproceedings{ast05,
+  author = {Rakesh Agrawal and Ramakrishnan Srikant and Dilys Thomas},
+  title = {Privacy Preserving {OLAP}},
+  booktitle = sigmod,
+  year = {2005},
+  pages = {251-262}
+}
+
+@inproceedings{asv99,
+  author    = {Lars Arge and
+               Vasilis Samoladas and
+               Jeffrey Scott Vitter},
+  title     = {On Two-Dimensional Indexability and Optimal Range Search
+               Indexing},
+  booktitle = pods,
+  year      = {1999},
+  pages     = {346-357}
+}
+
+@article{asy09,
+  author    = {Lars Arge and
+               Vasilis Samoladas and
+               Ke Yi},
+  title     = {Optimal External Memory Planar Point Enclosure},
+  journal   = {Algorithmica},
+  volume    = {54},
+  number    = {3},
+  year      = {2009},
+  pages     = {337-352}
+}
+
+@article{av88,
+  author    = {Alok Aggarwal and
+               Jeffrey Scott Vitter},
+  title     = {The Input/Output Complexity of Sorting and Related Problems},
+  journal   = cacm,
+  volume    = {31},
+  number    = {9},
+  year      = {1988},
+  pages     = {1116-1127}
+}
+
+@inproceedings{av96,
+  author    = {Lars Arge and
+               Jeffrey Scott Vitter},
+  title     = {Optimal Dynamic Interval Management in External Memory},
+  booktitle = focs,
+  year      = {1996},
+  pages     = {560-569}
+}
+
+@inproceedings{av00,
+  author    = {Lars Arge and
+               Jan Vahrenhold},
+  title     = {{I/O}-efficient dynamic planar point location (extended abstract)},
+  booktitle = socg,
+  year      = {2000},
+  pages     = {191-200}
+}
+
+@article{av03,
+  author    = {Lars Arge and
+               Jeffrey Scott Vitter},
+  title     = {Optimal External Memory Interval Management},
+  journal   = siamj,
+  volume    = {32},
+  number    = {6},
+  year      = {2003},
+  pages     = {1488-1508}
+}
+
+@article{av04,
+  author    = {Lars Arge and
+               Jan Vahrenhold},
+  title     = {{I/O}-efficient dynamic planar point location},
+  journal   = {Computational Geometry},
+  volume    = {29},
+  number    = {2},
+  year      = {2004},
+  pages     = {147-162},
+  ee        = {http://dx.doi.org/10.1016/j.comgeo.2003.04.001},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@article{avv07,
+  author    = {Lars Arge and
+               Darren Erik Vengroff and
+               Jeffrey Scott Vitter},
+  title     = {External-Memory Algorithms for Processing Line Segments
+               in Geographic Information Systems},
+  journal   = {Algorithmica},
+  volume    = {47},
+  number    = {1},
+  year      = {2007},
+  pages     = {1-25}
+}
+
+@article{avv07,
+  author    = {Lars Arge and
+               Darren Erik Vengroff and
+               Jeffrey Scott Vitter},
+  title     = {External-Memory Algorithms for Processing Line Segments
+               in Geographic Information Systems},
+  journal   = {Algorithmica},
+  volume    = {47},
+  number    = {1},
+  year      = {2007},
+  pages     = {1-25}
+}
+
+@inproceedings{ay04,
+  author    = {Charu C. Aggarwal and Philip S. Yu},
+  title     = {A Condensation Approach to Privacy Preserving Data Mining},
+  booktitle = edbt,
+  year      = {2004},
+  pages     = {183-199}
+}
+
+@inproceedings{b08,
+  author    = {Guy E. Blelloch},
+  title     = {Space-efficient dynamic orthogonal point location, segment
+               intersection, and range reporting},
+  booktitle = soda,
+  year      = {2008},
+  pages     = {894-903}
+}
+
+@inproceedings{b10,
+  author = {Djamal Belazzougui},
+  title = {Succinct Dictionary Matching with No Slowdown},
+  booktitle = {Proceedings of Symposium on Combinatorial Pattern Matching},
+  year = {2010}
+}
+
+@article{b77,
+  author    = {Peter van Emde Boas},
+  title     = {Preserving Order in a Forest in Less Than Logarithmic Time
+               and Linear Space},
+  journal   = ipl,
+  volume    = {6},
+  number    = {3},
+  year      = {1977},
+  pages     = {80-82}
+}
+
+@article{b80,
+  author    = {Jon Louis Bentley},
+  title     = {Multidimensional Divide-and-Conquer},
+  journal   = cacm,
+  volume    = {23},
+  number    = {4},
+  year      = {1980},
+  pages     = {214-229}
+}
+
+@inproceedings{ba05,
+  author = {R.J. Bayardo and R. Agrawal},
+  title = {Data Privacy Through Optimal k-Anonymization},
+  booktitle = icde,
+  year = {2005},
+  pages = {217-228}
+}
+
+@article{ba99,
+  author    = {Albert-L{\`a}szl{\`o} Barab{\`a}si and R{\`e}ka Albert},
+  title     = {Emergence of scaling in random networks},
+  journal   = {Science},
+  volume    = {286},
+  year      = {1999},
+  pages     = {509-512}
+}
+
+@inproceedings{bbd+02,
+  author    = {Brian Babcock and
+               Shivnath Babu and
+               Mayur Datar and
+               Rajeev Motwani and
+               Jennifer Widom},
+  title     = {Models and Issues in Data Stream Systems},
+  booktitle = pods,
+  year      = {2002},
+  pages     = {1-16}
+}
+
+@article{bbd+04,
+  author    = {Therese C. Biedl and
+               Brona Brejov{\'a} and
+               Erik D. Demaine and
+               Ang{\`e}le M. Hamel and
+               Alejandro L{\'o}pez-Ortiz and
+               Tom{\'a}s Vinar},
+  title     = {Finding hidden independent sets in interval graphs},
+  journal   = tcs,
+  volume    = {310},
+  number    = {1-3},
+  year      = {2004},
+  pages     = {287-307}
+}
+
+@inproceedings{bc08,
+  author    = {J{\'e}r{\'e}my Barbay and
+               Eric Y. Chen},
+  title     = {Convex Hull of the Union of Convex Objects in the Plane:
+               an Adaptive Analysis},
+  booktitle = cccg,
+  year      = {2008}
+}
+
+@inproceedings{bcd+02,
+  author    = {Michael A. Bender and
+               Richard Cole and
+               Erik D. Demaine and
+               Martin Farach-Colton and
+               Jack Zito},
+  title     = {Two Simplified Algorithms for Maintaining Order in a List},
+  booktitle = esa,
+  year      = {2002},
+  pages     = {152-164}
+}
+
+@article{bcl93,
+  author    = {Jon Louis Bentley and
+               Kenneth L. Clarkson and
+               David B. Levine},
+  title     = {Fast Linear Expected-Time Algorithms for Computing Maxima
+               and Convex Hulls},
+  journal   = {Algorithmica},
+  volume    = {9},
+  number    = {2},
+  year      = {1993},
+  pages     = {168-183}
+}
+
+@inproceedings{bcs98,
+  author    = {Elisa Bertino and
+               Barbara Catania and
+               Boris Shidlovsky},
+  title     = {Towards Optimal Indexing for Segment Databases},
+  booktitle = edbt,
+  year      = {1998},
+  pages     = {39-53}
+}
+
+@article{bd05a,
+  author    = {Ilya Baran and
+               Erik D. Demaine},
+  title     = {Optimal Adaptive Algorithms for Finding the nearest and
+               Farthest Point on a Parametric Black-box Curve},
+  journal   = {Int. J. Comput. Geometry Appl.},
+  volume    = {15},
+  number    = {4},
+  year      = {2005},
+  pages     = {327-350}
+}
+
+@inproceedings{bdj+05,
+  author = {Douglas Burdick and Prasad Deshpande and T. S. Jayram and Raghu Ramakrishnan and Shivakumar Vaithyanathan},
+  title = {{OLAP} Over Uncertain and Imprecise Data},
+  booktitle = vldb,
+  year = {2005},
+  pages = {970-981}
+}
+
+@inproceedings{bdj+06,
+  author = {Douglas Burdick and Prasad M. Deshpande and T. S. Jayram and Raghu Ramakrishnan and Shivakumar Vaithyanathan},
+  title = {Efficient Allocation Algorithms for {OLAP} Over Imprecise Data},
+  booktitle = vldb,
+  year = {2006},
+  pages = {391-402}
+}
+
+@book{bey98,
+  author    = {Allan Borodin and Ran El-Yaniv},
+  publisher = {Cambridge University Press},
+  title     = {Online Computation and Competitive Analysis},
+  year      = {1998}
+}
+
+@inproceedings{bfm+07,
+  author    = {Holger Bast and
+               Stefan Funke and
+               Domagoj Matijevic and
+               Peter Sanders and
+               Dominik Schultes},
+  title     = {In Transit to Constant Time Shortest-Path Queries in Road
+               Networks},
+  booktitle = alenex,
+  year      = {2007}
+}
+
+@article{bfp+73,
+  author    = {Manuel Blum and
+               Robert W. Floyd and
+               Vaughan R. Pratt and
+               Ronald L. Rivest and
+               Robert Endre Tarjan},
+  title     = {Time Bounds for Selection},
+  journal   = jcss,
+  volume    = {7},
+  number    = {4},
+  year      = {1973},
+  pages     = {448-461}
+}
+
+@article{bg04,
+  author    = {Adam L. Buchsbaum and
+               Michael T. Goodrich},
+  title     = {Three-Dimensional Layers of Maxima},
+  journal   = {Algorithmica},
+  volume    = {39},
+  number    = {4},
+  year      = {2004},
+  pages     = {275-286}
+}
+
+@article{bgo+96,
+  author    = {Bruno Becker and
+               Stephan Gschwind and
+               Thomas Ohler and
+               Bernhard Seeger and
+               Peter Widmayer},
+  title     = {An Asymptotically Optimal Multiversion {B}-Tree},
+  journal   = vldbj,
+  volume    = {5},
+  number    = {4},
+  year      = {1996},
+  pages     = {264-275}
+}
+
+@inproceedings{bhn+02,
+  author    = {Gaurav Bhalotia and
+               Arvind Hulgeri and
+               Charuta Nakhe and
+               Soumen Chakrabarti and
+               S. Sudarshan},
+  title     = {Keyword Searching and Browsing in Databases using {BANKS}},
+  booktitle = icde,
+  year      = {2002},
+  pages     = {431-440}
+}
+
+@inproceedings{bhr00,
+  author    = {Lasse Bergroth and
+               Harri Hakonen and
+               Timo Raita},
+  title     = {A Survey of Longest Common Subsequence Algorithms},
+  booktitle = {SPIRE},
+  year      = {2000},
+  pages     = {39-48}
+}
+
+@inproceedings{bj02,
+  author    = {Gerth St{\o}lting Brodal and
+               Riko Jacob},
+  title     = {Dynamic Planar Convex Hull},
+  booktitle = focs,
+  year      = {2002},
+  pages     = {617-626}
+}
+
+@inproceedings{bks01,
+  author    = {Stephan Borzsonyi and
+               Donald Kossmann and
+               Konrad Stocker},
+  title     = {The Skyline Operator},
+  booktitle = icde,
+  year      = {2001},
+  pages     = {421-430}
+}
+
+@inproceedings{bks02,
+  author    = {Nicolas Bruno and
+               Nick Koudas and
+               Divesh Srivastava},
+  title     = {Holistic twig joins: Optimal {XML} pattern matching},
+  booktitle = sigmod,
+  year      = {2002},
+  pages     = {310-321}
+}
+
+@inproceedings{bkss90,
+  author    = {N. Beckmann and H. Kriegel and R. Schneider and B. Seeger},
+  title     = {The {R}*-Tree: An Efficient and Robust Access Method for Points and Rectangles},
+  booktitle = sigmod,
+  year      = {1990},
+  pages     = {322-331}
+}
+
+@article{bkst78,
+  author    = {Jon Louis Bentley and
+               H. T. Kung and
+               Mario Schkolnick and
+               Clark D. Thompson},
+  title     = {On the Average Number of Maxima in a Set of Vectors and
+               Applications},
+  journal   = jacm,
+  volume    = {25},
+  number    = {4},
+  year      = {1978},
+  pages     = {536-543}
+}
+
+@inproceedings{blcl09,
+  author    = {Zhifeng Bao and
+               Tok Wang Ling and
+               Bo Chen and
+               Jiaheng Lu},
+  title     = {Effective XML Keyword Search with Relevance Oriented Ranking},
+  booktitle = icde,
+  year      = {2009},
+  pages     = {517-528}
+}
+
+@inproceedings{bm95,
+  author    = {A. Boroujerdi and Bernard M. E. Moret},
+  title     = {Persistency in computational geometry},
+  booktitle = cccg,
+  year      = {1995},
+  pages     = {241-246}
+}
+
+@inproceedings{bot02,
+  author    = {Andrej Bogdanov and
+               Kenji Obata and
+               Luca Trevisan},
+  title     = {A Lower Bound for Testing 3-Colorability in Bounded-Degree
+               Graphs},
+  booktitle = focs,
+  year      = {2002},
+  pages     = {93-102}
+}
+
+@article{bs80,
+  author    = {Jon Louis Bentley and
+               James B. Saxe},
+  title     = {Decomposable Searching Problems {I}: Static-to-Dynamic Transformation},
+  journal   = jalg,
+  volume    = {1},
+  number    = {4},
+  year      = {1980},
+  pages     = {301-358}
+}
+
+@inproceedings{bps06,
+  author = {Christian Bohm and Alexey Pryakhin and Matthias Schubert},
+  title = {The Gauss-Tree: Efficient Object Identification in Databases of Probabilistic Feature Vectors},
+  booktitle = icde,
+  year = {2006}
+}
+
+@article{bsi08,
+  author    = {George Beskales and Mohamed A. Soliman and Ihab F. Ilyas},
+  title     = {Efficient search for the top-k probable nearest neighbors in uncertain databases},
+  journal   = pvldb,
+  volume    = {1},
+  number    = {1},
+  year      = {2008},
+  pages     = {326-339}
+}
+
+@inproceedings{bsw97,
+  author    = {Jochen Van den Bercken and
+               Bernhard Seeger and
+               Peter Widmayer},
+  title     = {A Generic Approach to Bulk Loading Multidimensional Index
+               Structures},
+  booktitle = vldb,
+  year      = {1997},
+  pages     = {406-415}
+}
+
+@inproceedings{bt04,
+  author    = {Andrej Bogdanov and
+               Luca Trevisan},
+  title     = {Lower Bounds for Testing Bipartiteness in Dense Graphs},
+  booktitle = {IEEE Conf. on Comp. Complexity},
+  year      = {2004},
+  pages     = {75-81}
+}
+
+@article{bv10,
+  author    = {Henrik Blunck and
+               Jan Vahrenhold},
+  title     = {In-Place Algorithms for Computing (Layers of) Maxima},
+  journal   = {Algorithmica},
+  volume    = {57},
+  number    = {1},
+  year      = {2010},
+  pages     = {1-21}
+}
+
+@article{c03,
+  author    = {Timothy M. Chan},
+  title     = {Semi-Online Maintenance of Geometric Optima and Measures},
+  journal   = siamj,
+  volume    = {32},
+  number    = {3},
+  year      = {2003},
+  pages     = {700-716}
+}
+
+@inproceedings{c06,
+  author    = {Timothy M. Chan},
+  title     = {A dynamic data structure for 3-d convex hulls and 2-d nearest
+               neighbor queries},
+  booktitle = soda,
+  year      = {2006},
+  pages     = {1196-1202}
+}
+
+@article{c10,
+  author    = {Timothy M. Chan},
+  title     = {A dynamic data structure for 3-D convex hulls and 2-D nearest
+               neighbor queries},
+  journal   = jacm,
+  volume    = {57},
+  number    = {3},
+  year      = {2010}
+}
+
+
+@article{c85,
+  author    = {Bernard Chazelle},
+  title     = {On the convex layers of a planar set},
+  journal   = {IEEE Transactions on Information Theory},
+  volume    = {31},
+  number    = {4},
+  year      = {1985},
+  pages     = {509-517}
+}
+
+@article{c86,
+  author    = {Bernard Chazelle},
+  title     = {Filtering Search: A New Approach to Query-Answering},
+  journal   = siamj,
+  volume    = {15},
+  number    = {3},
+  year      = {1986},
+  pages     = {703-724}
+}
+
+@article{c88,
+  author    = {Bernard Chazelle},
+  title     = {A Functional Approach to Data Structures and Its Use in
+               Multidimensional Searching},
+  journal   = siamj,
+  volume    = {17},
+  number    = {3},
+  year      = {1988},
+  pages     = {427-462}
+}
+
+@article{c88b,
+  author    = {Bernard Chazelle},
+  title     = {An Algorithm for Segment-Dragging and Its Implementation},
+  journal   = {Algorithmica},
+  volume    = {3},
+  year      = {1988},
+  pages     = {205-221}
+}
+
+@article{c90,
+  author    = {Bernard Chazelle},
+  title     = {Lower Bounds for Orthogonal Range Searching: I. The Reporting
+               Case},
+  journal   = jacm,
+  volume    = {37},
+  number    = {2},
+  year      = {1990},
+  pages     = {200-212}
+}
+
+@article{c92,
+  author    = {Bernard Chazelle},
+  title     = {An Optimal Algorithm for Intersecting Three-Dimensional
+               Convex Polyhedra},
+  journal   = siamj,
+  volume    = {21},
+  number    = {4},
+  year      = {1992},
+  pages     = {671-696}
+}
+
+@article{c96,
+  author    = {David Clark},
+  title     = {Compact Pat Trees},
+  journal   = {Phd Thesis, University of Waterloo},
+  year      = {1996}
+}
+
+@inproceedings{cbc+00,
+  author    = {Yuan-Chi Chang and
+               Lawrence D. Bergman and
+               Vittorio Castelli and
+               Chung-Sheng Li and
+               Ming-Ling Lo and
+               John R. Smith},
+  title     = {The {O}nion Technique: Indexing for Linear Optimization Queries},
+  booktitle = sigmod,
+  year      = {2000},
+  pages     = {391-402}
+}
+
+@inproceedings{cc05,
+  author    = {Hyung-Ju Cho and
+               Chin-Wan Chung},
+  title     = {An Efficient and Scalable Approach to CNN Queries in a Road
+               Network},
+  booktitle = vldb,
+  year      = {2005},
+  pages     = {865-876}
+}
+
+@inproceedings{cbc+09,
+  author    = {Eric Chu and
+               Akanksha Baid and
+               Xiaoyong Chai and
+               AnHai Doan and
+               Jeffrey F. Naughton},
+  title     = {Combining keyword search and forms for ad hoc querying of
+               databases},
+  booktitle = sigmod,
+  year      = {2009},
+  pages     = {349-360}
+}
+
+
+@article{cct96,
+  author = {Arbee L. P. Chen and Jui-Shang Chiu and Frank Shou-Cheng Tseng},
+  title = {Evaluating Aggregate Operations Over Imprecise Data},
+  journal = tkde,
+  volume = {8},
+  number = {2},
+  year = {1996},
+  pages = {273-284}
+}
+
+@article{cdh+02,
+  author    = {Bernard Chazelle and
+               Olivier Devillers and
+               Ferran Hurtado and
+               Merc{\`e} Mora and
+               Vera Sacristan and
+               Monique Teillaud},
+  title     = {Splitting a Delaunay Triangulation in Linear Time},
+  journal   = {Algorithmica},
+  volume    = {34},
+  number    = {1},
+  year      = {2002},
+  pages     = {39-46}
+}
+
+@inproceedings{cdz04,
+  author    = {Yi Chen and
+               Susan B. Davidson and
+               Yifeng Zheng},
+  title     = {BLAS: An Efficient {XP}ath Processing System},
+  booktitle = sigmod,
+  year      = {2004},
+  pages     = {47-58}
+}
+
+@article{cg86a,
+  author    = {Bernard Chazelle and
+               Leonidas J. Guibas},
+  title     = {Fractional Cascading: {I}. A Data Structuring Technique},
+  journal   = {Algorithmica},
+  volume    = {1},
+  number    = {2},
+  year      = {1986},
+  pages     = {133-162}
+}
+
+@article{cg86b,
+  author    = {Bernard Chazelle and
+               Leonidas J. Guibas},
+  title     = {Fractional Cascading: {II}. Applications},
+  journal   = {Algorithmica},
+  volume    = {1},
+  number    = {2},
+  year      = {1986},
+  pages     = {163-191}
+}
+
+@inproceedings{cggl03,
+  author    = {Jan Chomicki and
+               Parke Godfrey and
+               Jarek Gryz and
+               Dongming Liang},
+  title     = {Skyline with Presorting},
+  booktitle = icde,
+  year      = {2003},
+  pages     = {717-816}
+}
+
+@inproceedings{cgk05,
+  author    = {Li Chen and
+               Amarnath Gupta and
+               M. Erdem Kurul},
+  title     = {Stack-based Algorithms for Pattern Matching on DAGs},
+  booktitle = vldb,
+  year      = {2005},
+  pages     = {493-504}
+}
+
+@article{cgl85,
+  author    = {Bernard Chazelle and
+               Leonidas J. Guibas and
+               D. T. Lee},
+  title     = {The Power of Geometric Duality},
+  journal   = bit,
+  volume    = {25},
+  number    = {1},
+  year      = {1985},
+  pages     = {76-90}
+}
+
+@article{cj90,
+  author    = {Siu-Wing Cheng and
+               Ravi Janardan},
+  title     = {Efficient Dynamic Algorithms for Some Geometric Intersection
+               Problems},
+  journal   = ipl,
+  volume    = {36},
+  number    = {5},
+  year      = {1990},
+  pages     = {251-258}
+}
+
+@inproceedings{cjlp03,
+  author    = {Zhimin Chen and
+               H. V. Jagadish and
+               Laks V. S. Lakshmanan and
+               Stelios Paparizos},
+  title     = {From Tree Patterns to Generalized Tree Patterns: On Efficient
+               Evaluation of {XQ}uery},
+  booktitle = vldb,
+  year      = {2003},
+  pages     = {237-248}
+}
+
+@inproceedings{cjt+06,
+  author    = {Chee Yong Chan and
+               H. V. Jagadish and
+               Kian-Lee Tan and
+               Anthony K. H. Tung and
+               Zhenjie Zhang},
+  title     = {Finding k-dominant skylines in high dimensional space},
+  booktitle = sigmod,
+  year      = {2006},
+  pages     = {503-514}
+}
+
+@inproceedings{ckms05,
+  author    = {Graham Cormode and
+               Flip Korn and
+               S. Muthukrishnan and
+               Divesh Srivastava},
+  title     = {Effective Computation of Biased Quantiles over Data Streams},
+  booktitle = icde,
+  year      = {2005},
+  pages     = {20-31}
+}
+
+@inproceedings{ckp03,
+  author    = {Reynold Cheng and Dmitri V. Kalashnikov and Sunil Prabhakar},
+  title     = {Evaluating Probabilistic Queries over Imprecise Data},
+  booktitle = sigmod,
+  year      = {2003},
+  pages     = {551-562}
+}
+
+@inproceedings{ckrt04,
+ author = {Bernard Chazelle and Joe Kilian and Ronitt Rubinfeld and Ayellet Tal},
+ title = {The Bloomier filter: an efficient data structure for static support lookup tables},
+ booktitle = soda,
+ year = {2004},
+ pages = {30--39}
+}
+
+@inproceedings{cg07,
+  author = {Graham Cormode and Minos Garofalakis},
+  title = {Sketching probabilistic data streams},
+  booktitle = sigmod,
+  year = {2007},
+  pages = {281--292}
+}
+
+@inproceedings{cg09,
+  author = {Graham Cormode and Minos Garofalakis},
+  title = {Histograms and Wavelets on Probabilistic Data},
+  booktitle = icde,
+  year = {2009}
+}
+
+@inproceedings{cll05,
+  author    = {Ting Chen and
+               Jiaheng Lu and
+               Tok Wang Ling},
+  title     = {On Boosting Holism in {XML} Twig Pattern Matching using Structural
+               Indexing Techniques},
+  booktitle = sigmod,
+  year      = {2005},
+  pages     = {455-466}
+}
+
+@book{clrs01,
+    author = {Cormen, Thomas  H. and Leiserson, Charles  E. and Rivest, Ronald  L.  and Stein, Clifford},
+    isbn = {0262531968},
+    publisher = {The MIT Press},
+    title = {Introduction to Algorithms, Second Edition},
+    year = {2001}
+}
+
+@inproceedings{clt+06,
+  author    = {Songting Chen and
+               Hua-Gang Li and
+               Jun'ichi Tatemura and
+               Wang-Pin Hsiung and
+               Divyakant Agrawal and
+               K. Sel\c{c}uk Candan},
+  title     = {Twig$^2$Stack: Bottom-up Processing of Generalized-Tree-Pattern
+               Queries over {XML} Documents},
+  booktitle = vldb,
+  year      = {2006},
+  pages     = {283-294}
+}
+
+@article{cm05,
+  author    = {Graham Cormode and
+               S. Muthukrishnan},
+  title     = {An improved data stream summary: the count-min sketch and
+               its applications},
+  journal   = {J. Algorithms},
+  volume    = {55},
+  number    = {1},
+  year      = {2005},
+  pages     = {58-75}
+}
+
+@inproceedings{cmks03,
+  author    = {Sara Cohen and
+               Jonathan Mamou and
+               Yaron Kanza and
+               Yehoshua Sagiv},
+  title     = {XSEarch: A Semantic Search Engine for {XML}},
+  booktitle = vldb,
+  year      = {2003},
+  pages     = {45-56}
+}
+
+@inproceedings{cp10,
+  author    = {Liang Jeff Chen and
+               Yannis Papakonstantinou},
+  title     = {Supporting top-K keyword search in {XML} databases},
+  booktitle = icde,
+  year      = {2010},
+  pages     = {689-700}
+}
+
+@inproceedings{crl07,
+  author    = {Bee-Chung Chen and Raghu Ramakrishnan and Kristen LeFevre},
+  title     = {Privacy Skyline: Privacy with Multidimensional Adversarial Knowledge},
+  booktitle = vldb,
+  year      = {2007},
+  pages     = {770-781}
+}
+
+@inproceedings{csm06,
+  author    = {Yen-Yu Chen and Torsten Suel and Alexander Markowetz},
+  title     = {Efficient query processing in geographic web search engines},
+  booktitle = sigmod,
+  year      = {2006},
+  pages     = {277-288}
+}
+
+@inproceedings{cszy09,
+  author    = {Zaiben Chen and
+               Heng Tao Shen and
+               Xiaofang Zhou and
+               Jeffrey Xu Yu},
+  title     = {Monitoring path nearest neighbor in road networks},
+  booktitle = sigmod,
+  year      = {2009},
+  pages     = {591-602}
+}
+
+@inproceedings{cxp+04,
+  author    = {Reynold Cheng and Yuni Xia and Sunil Prabhakar and Rahul Shah and Jeffrey Scott Vitter},
+  title     = {Efficient Indexing Methods for Probabilistic Threshold Queries over Uncertain Data},
+  booktitle = vldb,
+  year      = {2004},
+  pages     = {876-887}
+}
+
+
+@Article{d59,
+  author =	 {Edsger W. Dijkstra},
+  title =	 {A note on two problems in connexion with graphs},
+  journal =	 {Numerische Mathematik},
+  year =	 1959,
+  volume =	 1,
+  pages =	 {269--271}
+}
+
+@article{d64,
+  author    = {Richard Durstenfeld},
+  title     = {Algorithm 235: Random permutation},
+  journal   = cacm,
+  volume    = {7},
+  number    = {7},
+  year      = {1964},
+  pages     = {420}
+}
+
+@inproceedings{d06,
+  author    = {Cynthia Dwork},
+  title     = {Differential Privacy},
+  booktitle = icalp,
+  year      = {2006},
+  pages     = {1-12}
+}
+
+@inproceedings{dhi+09,
+  author    = {Demaine, Erik D. and Harmon, Dion and Iacono, John and Kane, Daniel and P\u{a}tra\c{s}cu, Mihai},
+  title     = {The geometry of binary search trees},
+  booktitle = soda,
+  year      = {2009},
+  pages     = {496--505}
+ }
+
+@inproceedings{diim04,
+  author = {Mayur Datar and Nicole Immorlica and Piotr Indyk and Vahab S. Mirrokni},
+  title = {Locality-sensitive hashing scheme based on $p$-stable distributions},
+  booktitle = socg,
+  year = {2004},
+  pages = {253-262}
+}
+
+@article{dkm+94,
+  author    = {Martin Dietzfelbinger and
+               Anna R. Karlin and
+               Kurt Mehlhorn and
+               Friedhelm Meyer auf der Heide and
+               Hans Rohnert and
+               Robert Endre Tarjan},
+  title     = {Dynamic Perfect Hashing: Upper and Lower Bounds},
+  journal   = siamj,
+  volume    = {23},
+  number    = {4},
+  year      = {1994},
+  pages     = {738-761}
+}
+
+@inproceedings{dks09,
+  author    = {Ugur Demiryurek and
+               Farnoush Banaei Kashani and
+               Cyrus Shahabi},
+  title     = {Efficient Continuous Nearest Neighbor Query in Spatial Networks
+               Using Euclidean Restriction},
+  booktitle = sstd,
+  year      = {2009},
+  pages     = {25-43}
+}
+
+@inproceedings{dks10,
+  author    = {Ugur Demiryurek and
+               Farnoush Banaei Kashani and
+               Cyrus Shahabi},
+  title     = {Efficient K-Nearest Neighbor Search in Time-Dependent Spatial
+               Networks},
+  booktitle = dexa,
+  year      = {2010},
+  pages     = {432-449}
+}
+
+@inproceedings{dlm00,
+  author    = {Erik D. Demaine and
+               Alejandro L{\'o}pez-Ortiz and
+               J. Ian Munro},
+  title     = {Adaptive set intersections, unions, and differences},
+  booktitle = soda,
+  year      = {2000},
+  pages     = {743-752}
+}
+
+@inproceedings{dmn06,
+  author    = {Cynthia Dwork and Frank McSherry and Kobbi Nissim and Adam Smith},
+  title     = {Calibrating Noise to Sensitivity in Private Data Analysis},
+  booktitle = tcc,
+  year      = {2006},
+  pages     = {265-284}
+}
+
+@inproceedings{dn03,
+  author = {Irit Dinur and Kobbi Nissim},
+  title = {Revealing information while preserving privacy},
+  booktitle = pods,
+  year = {2003},
+  pages = {202-210}
+}
+
+@inproceedings{dr78,
+  author = {Tore Dalenius and Steven P. Reiss},
+  title = {Data-swapping: A Technique for Disclosure Control},
+  booktitle = {Proc. of the Survey Research Methods Section, American Statistical Association},
+  year = {1978},
+  pages = {191-194}
+}
+
+@inproceedings{ds87,
+  author    = {Paul F. Dietz and
+               Daniel Dominic Sleator},
+  title     = {Two Algorithms for Maintaining Order in a List},
+  booktitle = stoc,
+  year      = {1987},
+  pages     = {365-372}
+}
+
+@article{ds91,
+  author    = {David P. Dobkin and
+               Subhash Suri},
+  title     = {Maintenance of Geometric Extrema},
+  journal   = jacm,
+  volume    = {38},
+  number    = {2},
+  year      = {1991},
+  pages     = {275-298}
+}
+
+@inproceedings{ds04,
+  author    = {Nilesh N. Dalvi and Dan Suciu},
+  title     = {Efficient Query Evaluation on Probabilistic Databases},
+  booktitle = vldb,
+  year      = {2004},
+  pages     = {864-875}
+}
+
+@inproceedings{ds05,
+  author    = {Nilesh N. Dalvi and
+               Dan Suciu},
+  title     = {Answering Queries from Statistics and Probabilistic Views},
+  booktitle = vldb,
+  year      = {2005},
+  pages     = {805-816}
+}
+
+@article{dsst89,
+  author    = {James R. Driscoll and Neil Sarnak and Daniel Dominic Sleator and Robert Endre Tarjan},
+  title     = {Making Data Structures Persistent},
+  journal   = jcss,
+  volume    = {38},
+  number    = {1},
+  year      = {1989},
+  pages     = {86-124}
+}
+
+@inproceedings{dyw+07,
+  author    = {Bolin Ding and
+               Jeffrey Xu Yu and
+               Shan Wang and
+               Lu Qin and
+               Xiao Zhang and
+               Xuemin Lin},
+  title     = {Finding Top-k Min-Cost Connected Trees in Databases},
+  booktitle = icde,
+  year      = {2007},
+  pages     = {836-845}
+}
+
+@inproceedings{dz03,
+  author = {Wenliang Du and Zhijun Zhan},
+  title = {Using randomized response techniques for privacy-preserving data mining},
+  booktitle = kdd,
+  year = {2003},
+  pages = {505-510}
+}
+
+@inproceedings{dz04,
+  author    = {H. K. Dai and
+               Xi-Wen Zhang},
+  title     = {Improved Linear Expected-Time Algorithms for Computing Maxima},
+  booktitle = {Latin American Theoretical  Informatics},
+  year      = {2004},
+  pages     = {181-192}
+}
+
+@article{dzs+09,
+  author    = {Ke Deng and
+               Xiaofang Zhou and
+               Heng Tao Shen and
+               Shazia W. Sadiq and
+               Xue Li},
+  title     = {Instance optimal query processing in spatial networks},
+  journal   = vldbj,
+  volume    = {18},
+  number    = {3},
+  year      = {2009},
+  pages     = {675-693}
+}
+
+@article{e83,
+  author    = {Herbert Edelsbrunner},
+  title     = {A new approach to rectangle intersections, part {I}},
+  journal   = {International Journal of Computer Mathematics},
+  volume    = {13},
+  year      = {1983},
+  pages     = {209-219}
+}
+
+@inproceedings{egs03,
+  author = {Alexandre V. Evfimievski and Johannes Gehrke and Ramakrishnan Srikant},
+  title = {Limiting privacy breaches in privacy preserving data mining},
+  booktitle = pods,
+  year = {2003},
+  pages = {211-222}
+}
+
+@article{eo82,
+  author    = {Herbert Edelsbrunner and
+               Mark H. Overmars},
+  title     = {On the Equivalence of Some Rectangle Problems},
+  journal   = ipl,
+  volume    = {14},
+  number    = {3},
+  year      = {1982},
+  pages     = {124-127}
+}
+
+@inproceedings{esag02,
+  author = {Alexandre V. Evfimievski and Ramakrishnan Srikant and Rakesh Agrawal and Johannes Gehrke},
+  title = {Privacy preserving mining of association rules},
+  booktitle = kdd,
+  year = {2002},
+  pages = {217--228}
+}
+
+@inproceedings{ess05,
+  author    = {Jost Enderle and
+               Nicole Schneider and
+               Thomas Seidl},
+  title     = {Efficiently Processing Queries on Interval-and-Value Tuples
+               in Relational Databases},
+  booktitle = vldb,
+  year      = {2005},
+  pages     = {385-396}}
+
+@article{f87,
+  author    = {Greg N. Frederickson},
+  title     = {Fast Algorithms for Shortest Paths in Planar Graphs, with
+               Applications},
+  journal   = siamj,
+  volume    = {16},
+  number    = {6},
+  year      = {1987},
+  pages     = {1004-1022}
+}
+
+@article{f98,
+  author    = {Feige, Uriel},
+  title     = {A threshold of ln n for approximating set cover},
+  journal   = jacm,
+  volume    = {45},
+  number    = {4},
+  year      = {1998},
+  pages     = {634--652}
+}
+
+@article{f99,
+  author    = {Ronald Fagin},
+  title     = {Combining Fuzzy Information from Multiple Systems},
+  journal   = jcss,
+  volume    = {58},
+  number    = {1},
+  year      = {1999},
+  pages     = {83-99}
+}
+
+@article{fc84,
+  author    = {Christos Faloutsos and Stavros Christodoulakis},
+  title     = {Signature Files: An Access Method for Documents and Its Analytical Performance Evaluation},
+  journal   = tois,
+  volume    = {2},
+  number    = {4},
+  year      = {1984},
+  pages     = {267-288}
+}
+
+@article{fg99,
+  author = {Paolo Ferragina and Roberto Grossi},
+  title = {The string {B}-tree: a new data structure for string search in external memory and its applications},
+  journal = jacm,
+  volume = {46},
+  number = {2},
+  year = {1999},
+  pages = {236--280}
+}
+
+@inproceedings{fh06,
+  author    = {Johannes Fischer and
+               Volker Heun},
+  title     = {Theoretical and Practical Improvements on the {RMQ}-Problem,
+               with Applications to {LCA} and {LCE}},
+  booktitle = cpm,
+  year      = {2006},
+  pages     = {36-48}
+}
+
+@inproceedings{fhr08,
+  author    = {Ian De Felipe and Vagelis Hristidis and Naphtali Rishe},
+  title     = {Keyword Search on Spatial Databases},
+  booktitle = icde,
+  year      = {2008},
+  pages     = {656-665}
+}
+
+@inproceedings{fln01,
+  author    = {Ronald Fagin and
+               Amnon Lotem and
+               Moni Naor},
+  title     = {Optimal Aggregation Algorithms for Middleware},
+  booktitle = pods,
+  year      = {2001}
+}
+
+@inproceedings{fwy05,
+  author    = {B. C. M. Fung and K. Wang and P. S. Yu},
+  title     = {Top-Down Specialization for Information and Privacy Preservation},
+  booktitle = icde,
+  year      = {2005},
+  pages     = {205-216}
+}
+
+@article{g72,
+  author    = {Ronald L. Graham},
+  title     = {An Efficient Algorithm for Determining the Convex Hull of
+               a Finite Planar Set},
+  journal   = ipl,
+  volume    = {1},
+  number    = {4},
+  year      = {1972},
+  pages     = {132-133}
+}
+
+@inproceedings{g84,
+  author = {A. Guttman},
+  title = {R-trees: a dynamic index structure for spatial searching},
+  booktitle = sigmod,
+  year = {1984},
+  pages = {47-57}
+}
+
+@inproceedings{g02,
+  author    = {Torsten Grust},
+  title     = {Accelerating XPath location steps},
+  booktitle = {SIGMOD Conference},
+  year      = {2002},
+  pages     = {109-120}
+}
+
+@inproceedings{g04,
+  author    = {Ronald J. Gutman},
+  title     = {Reach-Based Routing: A New Approach to Shortest Path Algorithms
+               Optimized for Road Networks},
+  booktitle = alenex,
+  year      = {2004},
+  pages     = {100-111}
+}
+
+@inproceedings{gaa03,
+  author    = {Sathish Govindarajan and
+               Pankaj K. Agarwal and
+               Lars Arge},
+  title     = {{CRB}-Tree: An Efficient Indexing Scheme for Range-Aggregate
+               Queries},
+  booktitle = icdt,
+  year      = {2003},
+  pages     = {143-157}
+}
+
+@article{gad06,
+  author    = {Ralf Hartmut Guting and
+               Victor Teixeira de Almeida and
+               Zhiming Ding},
+  title     = {Modeling and querying moving objects in networks},
+  journal   = vldbj,
+  volume    = {15},
+  number    = {2},
+  year      = {2006},
+  pages     = {165-190}
+}
+
+@article{gbh10,
+  author    = {Nils Grimsmo and
+               Truls Amundsen Bj{\o}rklund and
+               Magnus Lie Hetland},
+  title     = {Fast Optimal Twig Joins},
+  journal   = pvldb,
+  volume    = {3},
+  number    = {1},
+  year      = {2010},
+  pages     = {894-905}
+}
+
+@inproceedings{gbsw10,
+  author    = {Andrey Gubichev and
+               Srikanta J. Bedathur and
+               Stephan Seufert and
+               Gerhard Weikum},
+  title     = {Fast and accurate estimation of shortest paths in large
+               graphs},
+  booktitle = cikm,
+  year      = {2010},
+  pages     = {499-508}
+}
+
+@inproceedings{gbt84,
+  author    = {Harold N. Gabow and
+               Jon Louis Bentley and
+               Robert Endre Tarjan},
+  title     = {Scaling and Related Techniques for Geometry Problems},
+  booktitle = stoc,
+  year      = {1984},
+  pages     = {135-143}
+}
+
+@inproceedings{gh05,
+  author    = {Andrew V. Goldberg and
+               Chris Harrelson},
+  title     = {Computing the shortest path: ${A}^*$ search meets graph
+               theory},
+  booktitle = soda,
+  year      = {2005},
+  pages     = {156-165}
+}
+
+@inproceedings{gim99,
+  author = {Aristides Gionis and Piotr Indyk and Rajeev Motwani},
+  title = {Similarity Search in High Dimensions via Hashing},
+  booktitle = vldb,
+  year = {1999},
+  pages = {518-529}
+}
+
+@inproceedings{gk01,
+  author    = {Michael Greenwald and
+               Sanjeev Khanna},
+  title     = {Space-Efficient Online Computation of Quantile Summaries},
+  booktitle = sigmod,
+  year      = {2001},
+  pages     = {58-66}
+}
+
+@inproceedings{gkkm07,
+  author    = {Gabriel Ghinita and Panagiotis Karras and Panos Kalnis and Nikos Mamoulis},
+  title     = {Fast Data Anonymization with Low Information Loss},
+  booktitle = vldb,
+  year      = {2007},
+  pages     = {758-769}
+}
+
+@inproceedings{gkms02,
+  author    = {Anna C. Gilbert and
+               Yannis Kotidis and
+               S. Muthukrishnan and
+               Martin Strauss},
+  title     = {How to Summarize the Universe: Dynamic Maintenance of Quantiles},
+  booktitle = vldb,
+  year      = {2002},
+  pages     = {454-465}
+}
+
+@article{gkr00,
+  author    = {Naveen Garg and
+               Goran Konjevod and
+               R. Ravi},
+  title     = {A Polylogarithmic Approximation Algorithm for the Group
+               Steiner Tree Problem},
+  journal   = {J. Algorithms},
+  volume    = {37},
+  number    = {1},
+  year      = {2000},
+  pages     = {66-84}
+}
+
+@inproceedings{gks08,
+  author    = {Konstantin Golenberg and
+               Benny Kimelfeld and
+               Yehoshua Sagiv},
+  title     = {Keyword proximity search in complex data graphs},
+  booktitle = sigmod,
+  year      = {2008},
+  pages     = {927-940}
+}
+
+@inproceedings{gkw06,
+  author    = {Andrew V. Goldberg and
+               H. Kaplan and
+               R. F. Werneck},
+  title     = {Reach for ${A}^*$: Shortest Path Algorithms with Preprocessing.},
+  booktitle = alenex,
+  year      = {2006},
+  pages     = {38-51}
+}
+
+@article{ggr98,
+  author    = {Oded Goldreich and
+               Shafi Goldwasser and
+               Dana Ron},
+  title     = {Property Testing and its Connection to Learning and Approximation},
+  journal   = jacm,
+  volume    = {45},
+  number    = {4},
+  year      = {1998},
+  pages     = {653-750}
+}
+
+@inproceedings{gsbs03,
+  author    = {Lin Guo and
+               Feng Shao and
+               Chavdar Botev and
+               Jayavel Shanmugasundaram},
+  title     = {{XRANK}: Ranked Keyword Search over {XML} Documents},
+  booktitle = sigmod,
+  year      = {2003},
+  pages     = {16-27}
+}
+
+@article{gsg07,
+  author    = {Parke Godfrey and
+               Ryan Shipley and
+               Jarek Gryz},
+  title     = {Algorithms and analyses for maximal vector computation},
+  journal   = vldbj,
+  volume    = {16},
+  number    = {1},
+  year      = {2007},
+  pages     = {5-28}
+}
+
+@inproceedings{gssd08,
+  author    = {Robert Geisberger and
+               Peter Sanders and
+               Dominik Schultes and
+               Daniel Delling},
+  title     = {Contraction Hierarchies: Faster and Simpler Hierarchical
+               Routing in Road Networks},
+  booktitle = wea,
+  year      = {2008},
+  pages     = {319-333}
+}
+
+@inproceedings{gtk08,
+  author    = {Gabriel Ghinita and Yufei Tao and Panos Kalnis},
+  title     = {On the Anonymization of Sparse High-Dimensional Data},
+  booktitle = icde,
+  year      = {2008},
+  pages     = {715-724}
+}
+
+@inproceedings{gtvv93,
+  author    = {Michael T. Goodrich and
+               Jyh-Jong Tsay and
+               Darren Erik Vengroff and
+               Jeffrey Scott Vitter},
+  title     = {External-Memory Computational Geometry},
+  booktitle = focs,
+  year      = {1993},
+  pages     = {714-723}
+}
+
+@inproceedings{gz03,
+  author    = {Anupam Gupta and
+               Francis Zane},
+  title     = {Counting inversions in lists},
+  booktitle = soda,
+  year      = {2003},
+  pages     = {253-254}
+}
+
+@article{hkm+02,
+  author    = {Joseph M. Hellerstein and
+               Elias Koutsoupias and
+               Daniel P. Miranker and
+               Christos H. Papadimitriou and
+               Vasilis Samoladas},
+  title     = {On a model of indexability and its bounds for range queries},
+  journal   = jacm,
+  volume    = {49},
+  number    = {1},
+  year      = {2002},
+  pages     = {35-55}
+}
+
+
+@inproceedings{hd08,
+  author    = {Zhengli Huang and Wenliang Du},
+  title     = {{OptRR}: Optimizing Randomized Response Schemes for Privacy-Preserving Data Mining},
+  booktitle = icde,
+  year      = {2008},
+  pages     = {705-714}
+}
+
+@inproceedings{hdc05,
+  author = {Zhengli Huang and Wenliang Du and Biao Chen},
+  title = {Deriving Private Information from Randomized Data},
+  booktitle = sigmod,
+  year = {2005},
+  pages = {37-48}
+}
+
+@article{hg07,
+  author = {P. J. Hajduk and J. Greer},
+  title = {A Decade of Fragment-based Drug Design: Strategic Advances and Lessons Learned},
+  journal = {Nat. Rev. Drug Discov.},
+  volume = {6},
+  number = {3},
+  year = {2007},
+  pages = {211-219}
+}
+
+@inproceedings{hhlm07,
+  author    = {Ramaswamy Hariharan and Bijit Hore and Chen Li and Sharad Mehrotra},
+  title     = {Processing Spatial-Keyword ({SK}) Queries in Geographic Information
+               Retrieval ({GIR}) Systems},
+  booktitle = ssdbm,
+  year      = {2007}
+}
+
+@inproceedings{hjs05,
+  author    = {Xuegang Huang and
+               Christian S. Jensen and
+               Simonas Saltenis},
+  title     = {The Islands Approach to Nearest Neighbor Querying in Spatial
+               Networks},
+  booktitle = sstd,
+  year      = {2005},
+  pages     = {73-90}
+}
+
+@inproceedings{hk03,
+  author    = {Eran Halperin and
+               Robert Krauthgamer},
+  title     = {Polylogarithmic inapproximability},
+  booktitle = stoc,
+  year      = {2003},
+  pages     = {585-594}
+}
+
+@article{hkps06,
+  author    = {Vagelis Hristidis and
+               Nick Koudas and
+               Yannis Papakonstantinou and
+               Divesh Srivastava},
+  title     = {Keyword Proximity Search in {XML} Trees},
+  journal   = tkde,
+  volume    = {18},
+  number    = {4},
+  year      = {2006},
+  pages     = {525-539}
+}
+
+@inproceedings{hll06,
+  author    = {Haibo Hu and
+               Dik Lun Lee and
+               Victor C. S. Lee},
+  title     = {Distance Indexing on Road Networks},
+  booktitle = vldb,
+  year      = {2006},
+  pages     = {894-905}
+}
+
+@inproceedings{hlx06,
+  author    = {Haibo Hu and
+               Dik Lun Lee and
+               Jianliang Xu},
+  title     = {Fast Nearest Neighbor Search on Road Networks},
+  booktitle = edbt,
+  year      = {2006},
+  pages     = {186-203}
+}
+
+@article{hmz03,
+  author    = {David A. Hutchinson and
+               Anil Maheshwari and
+               Norbert Zeh},
+  title     = {An external memory data structure for shortest path queries},
+  journal   = {Discrete Applied Mathematics},
+  volume    = {126},
+  number    = {1},
+  year      = {2003},
+  pages     = {55-82}
+}
+
+@inproceedings{hp01,
+  author = {Sariel Har-Peled},
+  title = {A Replacement for Voronoi Diagrams of Near Linear Size},
+  booktitle = focs,
+  year = {2001},
+  pages = {94-103}
+}
+
+@inproceedings{hp02,
+  author = {Vagelis Hristidis and Yannis Papakonstantinou},
+  title = {DISCOVER: Keyword Search in Relational Databases},
+  booktitle = vldb,
+  year = {2002},
+  pages = {670-681}
+}
+
+@article{hr90,
+  author    = {Torben Hagerup and
+               Christine Rub},
+  title     = {A Guided Tour of Chernoff Bounds},
+  journal   = ipl,
+  volume    = {33},
+  number    = {6},
+  year      = {1990},
+  pages     = {305-308}
+}
+
+@article{vp04,
+  author    = {Vagelis Hristidis and
+               Yannis Papakonstantinou},
+  title     = {Algorithms and applications for answering ranked queries
+               using ranked views},
+  journal   = vldbj,
+  volume    = {13},
+  number    = {1},
+  year      = {2004},
+  pages     = {49-70}
+}
+
+
+@article{hs99,
+  author = {G. R. Hjaltason and H. Samet},
+  title = {Distance Browsing in Spatial Databases},
+  journal = tods,
+  volume = {24},
+  number = {2},
+  year = {1999},
+  pages = {265-318}
+}
+
+@inproceedings{hs05,
+  author    = {Michael E. Houle and
+               Jun Sakuma},
+  title     = {Fast Approximate Similarity Search in Extremely High-Dimensional
+               Data Sets},
+  booktitle = icde,
+  year      = {2005},
+  pages     = {619-630}
+}
+
+@article{ht84,
+  author    = {Dov Harel and
+               Robert Endre Tarjan},
+  title     = {Fast Algorithms for Finding Nearest Common Ancestors},
+  journal   = siamj,
+  volume    = {13},
+  number    = {2},
+  year      = {1984},
+  pages     = {338-355}
+}
+
+@article{hnr68,
+  author    = {P. E. Hart and
+               N. J. Nilsson and
+               B. Raphael},
+  title     = {A Formal Basis for the Heuristic Determination of Minimum Cost Paths},
+  journal   = {IEEE Trans. Systems Science and Cybernetics},
+  volume    = {4},
+  number    = {2},
+  year      = {1968},
+  pages     = {100-107}
+}
+
+@article{hw87,
+  author    = {David Haussler and
+               Emo Welzl},
+  title     = {Epsilon-Nets and Simplex Range Queries},
+  journal   = dcg,
+  volume    = {2},
+  year      = {1987},
+  pages     = {127-151}
+}
+
+@inproceedings{hwyy07,
+  author    = {Hao He and
+               Haixun Wang and
+               Jun Yang and
+               Philip S. Yu},
+  title     = {{BLINKS:} ranked keyword searches on graphs},
+  booktitle = sigmod,
+  year      = {2007},
+  pages     = {305-316}
+}
+
+
+@inproceedings{i02,
+  author = {V. Iyengar},
+  title = {Transforming data to satisfy privacy constraints},
+  booktitle = kdd,
+  year = {2002},
+  pages = {279-288}
+}
+
+@inproceedings{iae03,
+  author    = {Ihab F. Ilyas and
+               Walid G. Aref and
+               Ahmed K. Elmagarmid},
+  title     = {Supporting Top-k Join Queries in Relational Databases},
+  booktitle = vldb,
+  year      = {2003},
+  pages     = {754-765}
+}
+
+@article{ibs08,
+  author    = {Ihab F. Ilyas and
+               George Beskales and
+               Mohamed A. Soliman},
+  title     = {A survey of top-$k$ query processing techniques in
+               relational database systems},
+  journal   = acmcs,
+  volume    = {40},
+  number    = {4},
+  year      = {2008}
+}
+
+@inproceedings{in07,
+  author    = {Tochukwu Iwuchukwu and Jeffrey F. Naughton},
+  title     = {$k$-Anonymization as Spatial Indexing: Toward Scalable and Incremental Anonymization},
+  booktitle = vldb,
+  year      = {2007},
+  pages     = {746-757}
+}
+
+@article{j91,
+  author    = {Ravi Janardan},
+  title     = {On the Dynamic Maintenance of Maximal Points in the Plane},
+  journal   = ipl,
+  volume    = {40},
+  number    = {2},
+  year      = {1991},
+  pages     = {59-64}
+}
+
+@article{jhr98,
+  author    = {Ning Jing and
+               Yun-Wu Huang and
+               Elke A. Rundensteiner},
+  title     = {Hierarchical Encoded Path Views for Path Query Processing:
+               An Optimal Model and Its Performance Evaluation},
+  journal   = tkde,
+  volume    = {10},
+  number    = {3},
+  year      = {1998},
+  pages     = {409-432}
+}
+
+@inproceedings{jkpt03,
+  author    = {Christian S. Jensen and
+               Jan Kol{\'a}rvr and
+               Torben Bach Pedersen and
+               Igor Timko},
+  title     = {Nearest neighbor queries in road networks},
+  booktitle = {GIS},
+  year      = {2003},
+  pages     = {1-8}
+}
+
+@inproceedings{jkv07,
+  author = {T. S. Jayram and Satyen Kale and Erik Vee},
+  title = {Efficient aggregation algorithms for probabilistic data},
+  booktitle = soda,
+  year = {2007},
+  pages = {346--355}
+}
+
+@inproceedings{jmmv07,
+  author = {T. S. Jayram and Andrew McGregor and S. Muthukrishnan and Erik Vee},
+  title = {Estimating statistical aggregates on probabilistic data streams},
+  booktitle = pods,
+  year = {2007},
+  pages = {243--252}
+}
+
+@article{jp02,
+  author    = {Sungwon Jung and
+               Sakti Pramanik},
+  title     = {An Efficient Path Computation Model for Hierarchically Structured
+               Topographical Road Maps},
+  journal   = tkde,
+  volume    = {14},
+  number    = {5},
+  year      = {2002},
+  pages     = {1029-1046}
+}
+
+@inproceedings{jwly03,
+  author    = {Haifeng Jiang and
+               Wei Wang and
+               Hongjun Lu and
+               Jeffrey Xu Yu},
+  title     = {Holistic Twig Joins on Indexed {XML} Documents},
+  booktitle = vldb,
+  year      = {2003},
+  pages     = {273-284}
+}
+
+@inproceedings{jwyz07,
+  author    = {Haoliang Jiang and
+               Haixun Wang and
+               Philip S. Yu and
+               Shuigeng Zhou},
+  title     = {GString: A Novel Approach for Efficient Search in Graph
+               Databases},
+  booktitle = icde,
+  year      = {2007},
+  pages     = {566-575}
+}
+
+@article{k55,
+  author    = {H. Kuhn},
+  title     = {The Hungarian method for the assignment problem},
+  journal   = {Naval Res. Logist. Q.},
+  volume    = {2},
+  year      = {1955},
+  pages     = {83-97}
+}
+
+@article{k83,
+  author    = {David G. Kirkpatrick},
+  title     = {Optimal Search in Planar Subdivisions},
+  journal   = siamj,
+  volume    = {12},
+  number    = {1},
+  year      = {1983},
+  pages     = {28-35}
+}
+
+@inproceedings{k99,
+  author    = {Jon M. Kleinberg},
+  title     = {The small-world phenomenon: an algorithm perspective},
+  booktitle = stoc,
+  year      = {2000},
+  pages     = {163-170}
+}
+
+@article{k00,
+  author    = {Sanjiv Kapoor},
+  title     = {Dynamic Maintenance of Maxima of 2-d Point Sets},
+  journal   = siamj,
+  volume    = {29},
+  number    = {6},
+  year      = {2000},
+  pages     = {1858-1877}
+}
+
+@inproceedings{k02,
+  author    = {Eamonn J. Keogh},
+  title     = {Exact Indexing of Dynamic Time Warping},
+  booktitle = vldb,
+  year      = {2002},
+  pages     = {406-417}
+}
+
+@inproceedings{kf94,
+  author = {Kamel, Ibrahim and Faloutsos, Christos},
+  title = {Hilbert {R}-tree: An Improved R-tree using Fractals},
+  booktitle = vldb,
+  year = {1994},
+  pages = {500--509}
+}
+
+@inproceedings{kg06,
+  author    = {Daniel Kifer and Johannes Gehrke},
+  title     = {Injecting utility into anonymized datasets},
+  booktitle = sigmod,
+  year      = {2006},
+  pages     = {217-228}
+}
+
+@inproceedings{kk01,
+  author    = {Michihiro Kuramochi and
+               George Karypis},
+  title     = {Frequent Subgraph Discovery},
+  booktitle = icdm,
+  year      = {2001},
+  pages     = {313-320}
+}
+
+@inproceedings{kknr04,
+  author    = {Raghav Kaushik and
+               Rajasekar Krishnamurthy and
+               Jeffrey F. Naughton and
+               Raghu Ramakrishnan},
+  title     = {On the Integration of Structure Indexes and Inverted Lists},
+  booktitle = sigmod,
+  year      = {2004},
+  pages     = {779-790}
+}
+
+
+@inproceedings{kkr90,
+  author    = {Paris C. Kanellakis and
+               Gabriel M. Kuper and
+               Peter Z. Revesz},
+  title     = {Constraint Query Languages},
+  booktitle = pods,
+  year      = {1990},
+  pages     = {299-313}
+}
+
+@inproceedings{kgl09,
+  author    = {Lingbo Kong and
+               Remi Gilleron and
+               Aurelien Lemay},
+  title     = {Retrieving meaningful relaxed tightest fragments for {XML}
+               keyword search},
+  booktitle = edbt,
+  year      = {2009},
+  pages     = {815-826}
+}
+
+@article{klp75,
+  author    = {H. T. Kung and
+               Fabrizio Luccio and
+               Franco P. Preparata},
+  title     = {On Finding the Maxima of a Set of Vectors},
+  journal   = jacm,
+  volume    = {22},
+  number    = {4},
+  year      = {1975},
+  pages     = {469-476}
+}
+
+@inproceedings{km00,
+  author    = {Flip Korn and
+               S. Muthukrishnan},
+  title     = {Influence Sets Based on Reverse Nearest Neighbor Queries},
+  booktitle = sigmod,
+  year      = {2000},
+  pages     = {201-212}
+}
+
+@inproceedings{kmt03,
+  author    = {Haim Kaplan and
+               Eyal Molad and
+               Robert Endre Tarjan},
+  title     = {Dynamic rectangular intersection with priorities},
+  booktitle = stoc,
+  year      = {2003},
+  pages     = {639-648}
+}
+
+@article{kmz10,
+  author    = {Hideaki Kimura and
+               Samuel Madden and
+               Stanley B. Zdonik},
+  title     = {{UPI}: A Primary Index for Uncertain Databases},
+  journal   = pvldb,
+  volume    = {3},
+  number    = {1},
+  year      = {2010},
+  pages     = {630-637}
+}
+
+@inproceedings{kpc+05,
+  author    = {Varun Kacholia and
+               Shashank Pandit and
+               Soumen Chakrabarti and
+               S. Sudarshan and
+               Rushi Desai and
+               Hrishikesh Karambelkar},
+  title     = {Bidirectional Expansion For Keyword Search on Graph Databases},
+  booktitle = vldb,
+  year      = {2005},
+  pages     = {505-516}
+}
+
+@inproceedings{kpm08,
+  author    = {Maria Kontaki and
+               Apostolos N. Papadopoulos and
+               Yannis Manolopoulos},
+  title     = {Continuous k-dominant skyline computation on multidimensional
+               data streams},
+  booktitle = sac,
+  year      = {2008},
+  pages     = {956-960}
+}
+
+@inproceedings{krr02,
+  author    = {Donald Kossmann and
+               Frank Ramsak and
+               Steffen Rost},
+  title     = {Shooting Stars in the Sky: An Online Algorithm for Skyline
+               Queries},
+  booktitle = vldb,
+  year      = {2002},
+  pages     = {275-286}
+}
+
+@inproceedings{krs+09,
+  author    = {Gjergji Kasneci and
+               Maya Ramanath and
+               Mauro Sozio and
+               Fabian M. Suchanek and
+               Gerhard Weikum},
+  title     = {{STAR}: Steiner-Tree Approximation in Relationship Graphs},
+  booktitle = icde,
+  year      = {2009},
+  pages     = {868-879}
+}
+
+@inproceedings{ks04,
+  author    = {Mohammad R. Kolahdouzan and
+               Cyrus Shahabi},
+  title     = {Voronoi-Based K Nearest Neighbor Search for Spatial Network
+               Databases},
+  booktitle = vldb,
+  year      = {2004},
+  pages     = {840-851}
+}
+
+@article{ks05,
+  author    = {Mohammad R. Kolahdouzan and
+               Cyrus Shahabi},
+  title     = {Alternative Solutions for Continuous K Nearest Neighbor
+               Queries in Spatial Network Databases},
+  journal   = {GeoInformatica},
+  volume    = {9},
+  number    = {4},
+  year      = {2005},
+  pages     = {321-341}
+}
+
+@inproceedings{ks06,
+  author    = {Benny Kimelfeld and
+               Yehoshua Sagiv},
+  title     = {Finding and approximating top-k answers in keyword proximity
+               search},
+  booktitle = pods,
+  year      = {2006},
+  pages     = {173-182}
+}
+
+@inproceedings{ks85,
+  author    = {David G. Kirkpatrick and
+               Raimund Seidel},
+  title     = {Output-size sensitive algorithms for finding maximal vectors},
+  booktitle = socg,
+  year      = {1985},
+  pages     = {89-96}
+}
+
+@article{kv86,
+  author    = {Martin David Katz and
+               Dennis J. Volper},
+  title     = {Data Structures for Retrieval on Square Grids},
+  journal   = siamj,
+  volume    = {15},
+  number    = {4},
+  year      = {1986},
+  pages     = {919-931}
+}
+
+@inproceedings{kzwn06,
+  author    = {Wei-Shinn Ku and
+               Roger Zimmermann and
+               Haojun Wang and
+               Trung Nguyen},
+  title     = {ANNATTO: Adaptive Nearest Neighbor Queries in Travel Time
+               Networks},
+  booktitle = mdm,
+  year      = {2006}
+}
+
+@article{l04,
+  author = {U. Lauther},
+  title = {An extremely fast, exact algorithm for finding shortest paths in static networks with geographical background},
+  journal = {Geoinformation und Mobilit{\"a}t - von der Forschung zur praktischen Anwendung},
+  volume = {22},
+  year = 2004,
+  PAGES = {219-230}
+}
+
+@inproceedings{lc07,
+  author    = {Ziyang Liu and
+               Yi Chen},
+  title     = {Identifying meaningful return information for {XML} keyword
+               search},
+  booktitle = sigmod,
+  year      = {2007},
+  pages     = {329-340}
+}
+
+@article{lc08,
+  author    = {Ziyang Liu and
+               Yi Chen},
+  title     = {Reasoning and identifying relevant matches for {XML} keyword
+               search},
+  journal   = pvldb,
+  volume    = {1},
+  number    = {1},
+  year      = {2008},
+  pages     = {921-932}
+}
+
+@article{lc10,
+  author    = {Ziyang Liu and
+               Yi Chen},
+  title     = {Return specification inference and result clustering for
+               keyword search on XML},
+  journal   = tods,
+  volume    = {35},
+  number    = {2},
+  year      = {2010}
+}
+
+@inproceedings{lch+05,
+  author    = {Feifei Li and
+               Dihan Cheng and
+               Marios Hadjieleftheriou and
+               George Kollios and
+               Shang-Hua Teng},
+  title     = {On Trip Planning Queries in Spatial Databases},
+  booktitle = sstd,
+  year      = {2005},
+  pages     = {273-290}}
+}
+
+@article{lcl85,
+  author = {Chong K. Liew and Uinam J. Choi and Chung J. Liew},
+  title = {A data distortion by probability distribution},
+  journal = tods,
+  volume = {10},
+  number = {3},
+  year = {1985},
+  pages = {395--411}
+}
+
+@inproceedings{ldr05,
+  author    = {K. LeFevre and D. J. DeWitt and R. Ramakrishnan},
+  title     = {Incognito: Efficient Full-Domain $k$-Anonymity},
+  booktitle = sigmod,
+  year      = {2005},
+  pages     = {49-60}
+}
+
+@inproceedings{ldr06a,
+  author    = {K. LeFevre and D. J. DeWitt and R. Ramakrishnan},
+  title     = {Mondrian Multidimensional $k$-Anonymity},
+  booktitle = icde,
+  year      = {2006},
+  pages     = {277-286}
+}
+
+@inproceedings{ldr06b,
+  author    = {Kristen LeFevre and David J. DeWitt and Raghu Ramakrishnan},
+  title     = {Workload-aware anonymization},
+  booktitle = kdd,
+  year      = {2006},
+  pages     = {277-286}
+}
+
+@inproceedings{lel97,
+  author    = {S. T. Leutenegger and J. M. Edgington and M. A. Lopez},
+  title     = {{STR}: A Simple and Efficient Algorithm for R-Tree Packing},
+  booktitle = icde,
+  year      = {1997},
+  pages     = {497-506}
+}
+
+@inproceedings{llcc05,
+  author    = {Jiaheng Lu and
+               Tok Wang Ling and
+               Chee Yong Chan and
+               Ting Chen},
+  title     = {From Region Encoding To Extended Dewey: On Efficient Processing
+               of {XML} Twig Pattern Matching},
+  booktitle = vldb,
+  year      = {2005},
+  pages     = {193-204}
+}
+
+@inproceedings{lof+08,
+  author    = {Guoliang Li and
+               Beng Chin Ooi and
+               Jianhua Feng and
+               Jianyong Wang and
+               Lizhu Zhou},
+  title     = {{EASE}: an effective 3-in-1 keyword search method for unstructured,
+               semi-structured and structured data},
+  booktitle = sigmod,
+  year      = {2008},
+  pages     = {903-914}
+}
+
+@inproceedings{lm01,
+  author    = {Iosif Lazaridis and
+               Sharad Mehrotra},
+  title     = {Progressive Approximate Aggregate Queries with a Multi-Resolution
+               Tree Structure},
+  booktitle = sigmod,
+  year      = {2001},
+  pages     = {401-412}
+}
+
+@inproceedings{llv07,
+  author    = {Ninghui Li and Tiancheng Li and Suresh Venkatasubramanian},
+  title     = {$t$-Closeness: Privacy Beyond $k$-Anonymity and $\ell$-Diversity},
+  booktitle = icde,
+  year      = {2007},
+  pages     = {106-115}
+}
+
+@inproceedings{lp00,
+  author = {Yehuda Lindell and Benny Pinkas},
+  title = {Privacy Preserving Data Mining},
+  booktitle = crypto,
+  year = {2000},
+  pages = {36-54}
+}
+
+@inproceedings{lpc+04,
+  author    = {Anukool Lakhina and
+               Konstantina Papagiannaki and
+               Mark Crovella and
+               Christophe Diot and
+               Eric D. Kolaczyk and
+               Nina Taft},
+  title     = {Structural analysis of network traffic flows},
+  booktitle = sigmetric,
+  year      = {2004},
+  pages     = {61-72}
+}
+
+@inproceedings{ls89,
+  author    = {David B. Lomet and
+               Betty Salzberg},
+  title     = {Access Methods for Multiversion Data},
+  booktitle = sigmod,
+  year      = {1989},
+  pages     = {315-324}
+}
+
+@inproceedings{ls07,
+  author = {Vebjorn Ljosa and Ambuj K. Singh},
+  title = {{APLA}: Indexing Arbitrary Probability Distributions},
+  booktitle = icde,
+  year = {2007},
+  pages = {946-955}
+}
+
+@inproceedings{lyj04,
+  author    = {Yunyao Li and
+               Cong Yu and
+               H. V. Jagadish},
+  title     = {Schema-Free XQuery},
+  booktitle = vldb,
+  year      = {2004},
+  pages     = {72-83}
+}
+
+@article{lyj08,
+  author    = {Yunyao Li and
+               Cong Yu and
+               H. V. Jagadish},
+  title     = {Enabling Schema-Free {XQ}uery with meaningful query focus},
+  journal   = vldbj,
+  volume    = {17},
+  number    = {3},
+  year      = {2008},
+  pages     = {355-377}
+}
+
+@inproceedings{lywl05,
+  author    = {Xuemin Lin and
+               Yidong Yuan and
+               Wei Wang and
+               Hongjun Lu},
+  title     = {Stabbing the Sky: Efficient Skyline Computation over Sliding
+               Windows},
+  booktitle = icde,
+  year      = {2005},
+  pages     = {502-513}
+}
+
+@inproceedings{lyzz07,
+  author    = {Xuemin Lin and
+               Yidong Yuan and
+               Qing Zhang and
+               Ying Zhang},
+  title     = {Selecting Stars: The k Most Representative Skyline Operator},
+  booktitle = icde,
+  year      = {2007},
+  pages     = {86-95}
+}
+
+@article{m85,
+  author    = {Edward M. McCreight},
+  title     = {Priority Search Trees},
+  journal   = siamj,
+  volume    = {14},
+  number    = {2},
+  year      = {1985},
+  pages     = {257-276}
+}
+
+@article{m91,
+  author    = {Jiri Matousek},
+  title     = {Computing Dominances in ${E}^n$},
+  journal   = ipl,
+  volume    = {38},
+  number    = {5},
+  year      = {1991},
+  pages     = {277-278}
+}
+
+@inproceedings{m03,
+  author    = {Christian Worm Mortensen},
+  title     = {Fully-dynamic two dimensional orthogonal range and line
+               segment intersection reporting in logarithmic time},
+  booktitle = soda,
+  year      = {2003},
+  pages     = {618-627}
+}
+
+@inproceedings{mgkv06,
+  author    = {Ashwin Machanavajjhala and Johannes Gehrke and Daniel Kifer and Muthuramakrishnan Venkitasubramaniam},
+  title     = {$\ell$-Diversity: Privacy Beyond $k$-Anonymity},
+  booktitle = icde,
+  year      = {2006},
+  pages     = {24}
+}
+
+@inproceedings{mhp05,
+  author    = {Kyriakos Mouratidis and
+               Marios Hadjieleftheriou and
+               Dimitris Papadias},
+  title     = {Conceptual Partitioning: An Efficient Method for Continuous
+               Nearest Neighbor Monitoring},
+  booktitle = sigmod,
+  year      = {2005},
+  pages     = {634-645}
+}
+
+@inproceedings{mka08,
+  author    = {Ashwin Machanavajjhala and Daniel Kifer and John M. Abowd and Johannes Gehrke and
+               Lars Vilhuber},
+  title     = {Privacy: Theory meets Practice on the Map},
+  booktitle = icde,
+  year      = {2008},
+  pages     = {277-286}
+}
+
+@inproceedings{mkm+07,
+  author    = {David Martin and Daniel Kifer and Ashwin Machanavajjhala and Johannes Gehrke and
+               Joseph Halpern},
+  title     = {Worst-case Background Knowledge in Privacy.},
+  booktitle = icde,
+  year      = {2007},
+  pages     = {126-135}
+}
+
+@article{mn90,
+  author    = {Kurt Mehlhorn and
+               Stefan N{\"a}her},
+  title     = {Dynamic Fractional Cascading},
+  journal   = {Algorithmica},
+  volume    = {5},
+  number    = {2},
+  year      = {1990},
+  pages     = {215-241}
+}
+
+
+@article{mn98,
+  author = {Makoto Matsumoto and Takuji Nishimura},
+  title = {Mersenne twister: a 623-dimensionally equidistributed uniform pseudo-random number generator},
+  journal = tmcs,
+  number = {1},
+  pages = {3-30},
+  volume = {8},
+  year = {1998}
+}
+
+@article{mp80,
+  author    = {J. Ian Munro and
+               Mike Paterson},
+  title     = {Selection and Sorting with Limited Storage},
+  journal   = tcs,
+  volume    = {12},
+  year      = {1980},
+  pages     = {315-323}
+}
+
+@article{mp07,
+  author    = {Kyriakos Mouratidis and
+               Dimitris Papadias},
+  title     = {Continuous Nearest Neighbor Queries over Sliding Windows},
+  journal   = tkde,
+  volume    = {19},
+  number    = {6},
+  year      = {2007},
+  pages     = {789-803}
+}
+
+@inproceedings{mpj07,
+  author    = {Michael D. Morse and
+               Jignesh M. Patel and
+               H. V. Jagadish},
+  title     = {Efficient Skyline Computation over Low-Cardinality Domains},
+  booktitle = vldb,
+  year      = {2007},
+  pages     = {267-278}
+}
+
+@inproceedings{mpp05,
+  author    = {Christian Worm Mortensen and
+               Rasmus Pagh and
+               Mihai Patrascu},
+  title     = {On dynamic range reporting in one dimension},
+  booktitle = stoc,
+  year      = {2005},
+  pages     = {104-111}
+}
+
+@article{mr81,
+  author = {C. S. Myers and L. R. Rabiner},
+  title = {A comparative study of several dynamic time-warping algorithms for connected word recognition},
+  journal = {The Bell Syst. Tech. Journal},
+  number = {7},
+  pages = {1389-1409},
+  volume = {60},
+  year = {1981}
+}
+
+@inproceedings{mrl98,
+  author    = {Gurmeet Singh Manku and
+               Sridhar Rajagopalan and
+               Bruce G. Lindsay},
+  title     = {Approximate Medians and other Quantiles in One Pass and
+               with Limited Memory},
+  booktitle = sigmod,
+  year      = {1998},
+  pages     = {426-435}
+}
+
+@inproceedings{mrl99,
+  author    = {Gurmeet Singh Manku and
+               Sridhar Rajagopalan and
+               Bruce G. Lindsay},
+  title     = {Random Sampling Techniques for Space Efficient Online Computation
+               of Order Statistics of Large Datasets},
+  booktitle = sigmod,
+  year      = {1999},
+  pages     = {251-262}
+}
+
+@inproceedings{ms06,
+  author    = {Nina Mishra and Mark Sandler},
+  title     = {Privacy via pseudorandom sketches},
+  booktitle = pods,
+  year      = {2006},
+  pages     = {143-152}
+}
+
+@article{ms99,
+  author = {Krishnamurty Muralidhar and Rathindra Sarathy},
+  title = {Security of random data perturbation methods},
+  journal = tods,
+  volume = {24},
+  number = {4},
+  year = {1999},
+  pages = {487--493}
+}
+
+@article{mss01,
+  author = {S. McClean and B. Scotney and M. Shapcott},
+  title = {Aggregation of Imprecise and Uncertain Information in Databases},
+  journal = tkde,
+  volume = {13},
+  number = {6},
+  year = {2001}
+}
+
+@inproceedings{mw04,
+  author    = {A. Meyerson and R. Williams},
+  title     = {On the Complexity of Optimal $k$-Anonymity},
+  booktitle = pods,
+  year      = {2004},
+  pages     = {223-228}
+}
+
+@inproceedings{mxa04,
+  author    = {Mohamed F. Mokbel and
+               Xiaopeng Xiong and
+               Walid G. Aref},
+  title     = {SINA: Scalable Incremental Processing of Continuous Queries
+               in Spatio-temporal Databases},
+  booktitle = sigmod,
+  year      = {2004},
+  pages     = {623-634}
+}
+
+@article{mycc07,
+  author    = {Nikos Mamoulis and Man Lung Yiu and Kit Hung Cheng and David W. Cheung},
+  title     = {Efficient top-$k$ aggregation of ranked inputs},
+  journal   = tods,
+  volume    = {32},
+  number    = {3},
+  year      = {2007}
+}
+
+@inproceedings{mypm06,
+  author    = {Kyriakos Mouratidis and
+               Man Lung Yiu and
+               Dimitris Papadias and
+               Nikos Mamoulis},
+  title     = {Continuous Nearest Neighbor Monitoring in Road Networks},
+  booktitle = vldb,
+  year      = {2006},
+  pages     = {43-54}
+}
+
+@article{n66,
+  author    = {T. A. J. Nicholson},
+  title     = {Finding the shortest route between two points in a network},
+  journal   = {The Computer Journal},
+  volume    = {9},
+  year      = {1966},
+  pages     = {275-280}
+}
+
+@inproceedings{nac07,
+  author    = {Mehmet Ercan Nergiz and Maurizio Atzori and Chris Clifton},
+  title     = {Hiding the presence of individuals from shared databases},
+  booktitle = sigmod,
+  year      = {2007},
+  pages     = {665-676}
+}
+
+@inproceedings{ncs+01,
+  author    = {Apostol Natsev and
+               Yuan-Chi Chang and
+               John R. Smith and
+               Chung-Sheng Li and
+               Jeffrey Scott Vitter},
+  title     = {Supporting Incremental Join Queries on Ranked Inputs},
+  booktitle = vldb,
+  year      = {2001},
+  pages     = {281-290}
+}
+
+@book{o87,
+  author    = {Mark H. Overmars},
+  publisher = {Springer-Verlag},
+  title     = {The Design of Dynamic Data Structures},
+  year      = {1987}
+}
+
+@article{o88,
+  author    = {Mark H. Overmars},
+  title     = {Efficient Data Structures for Range Searching on a Grid},
+  journal   = {J. Algorithms},
+  volume    = {9},
+  number    = {2},
+  year      = {1988},
+  pages     = {254-275}
+}
+
+@book{obsc00,
+  author    = {Atsuyuki Okabe and
+               Barry Boots and
+               Kokichi Sugihara and
+               Sung Nok Chiu},
+  title     = {Spatial Tessellations, Concepts and Applications of Voronoi Diagrams},
+  publisher = {John Wiley \& Sons Ltd.},
+  year      = {2000}
+}
+
+@inproceedings{p08,
+  author    = {Mihai Patrascu},
+  title     = {Succincter},
+  booktitle = focs,
+  year      = {2008},
+  pages     = {305-313}
+}
+
+@inproceedings{p08b,
+  author    = {Peyman Afshani},
+  title     = {On Dominance Reporting in {3D}},
+  booktitle = esa,
+  year      = {2008},
+  pages     = {41-51}
+}
+
+@inproceedings{pbcg09,
+  author    = {Michalis Potamias and
+               Francesco Bonchi and
+               Carlos Castillo and
+               Aristides Gionis},
+  title     = {Fast shortest path distance estimation in large networks},
+  booktitle = cikm,
+  year      = {2009},
+  pages     = {867-876}
+}
+
+@inproceedings{pkzt01,
+  author    = {Dimitris Papadias and Panos Kalnis and Jun Zhang and Yufei Tao},
+  title     = {Efficient {OLAP} Operations in Spatial Data Warehouses},
+  booktitle = sstd,
+  year      = {2001},
+  pages     = {443-459}
+}
+
+@article{ptfs05,
+  author    = {Dimitris Papadias and
+               Yufei Tao and
+               Greg Fu and
+               Bernhard Seeger},
+  title     = {Progressive skyline computation in database systems},
+  journal   = tods,
+  volume    = {30},
+  number    = {1},
+  year      = {2005},
+  pages     = {41-82}
+}
+
+@inproceedings{pzmt03,
+  author    = {Dimitris Papadias and
+               Jun Zhang and
+               Nikos Mamoulis and
+               Yufei Tao},
+  title     = {Query Processing in Spatial Network Databases},
+  booktitle = vldb,
+  year      = {2003},
+  pages     = {802-813}
+}
+
+@article{r84,
+  author = {Steven P. Reiss},
+  title = {Practical data-swapping:  the first steps},
+  journal = tods,
+  volume = {9},
+  number = {1},
+  year = {1984},
+  pages = {20--37}
+}
+
+@book{r02,
+  author =       {Peter Revesz},
+  title =        {Introduction to Constraint Databases},
+  publisher =    {Springer-Verlag},
+  year =         {2002}
+}
+
+@inproceedings{r97,
+  author    = {Sridhar Ramaswamy},
+  title     = {Efficient Indexing for Constraint and Temporal Databases},
+  booktitle = icdt,
+  year      = {1997},
+  pages     = {419-431}
+}
+
+@inproceedings{rkv95,
+  author    = {N. Roussopoulos and S. Kelley and F. Vincent},
+  title     = {Nearest Neighbor Queries},
+  booktitle = sigmod,
+  year      = {1995},
+  pages     = {71-79}
+}
+
+@inproceedings{rh02,
+  author = {Shariq J. Rizvi and Jayant R. Haritsa},
+  title = {Maintaining data privacy in association rule mining},
+  booktitle = vldb,
+  year = {2002},
+  pages = {682--693}
+}
+
+@inproceedings{rhs07,
+  author    = {Vibhor Rastogi and Sungho Hong and Dan Suciu},
+  title     = {The Boundary Between Privacy and Utility in Data Publishing},
+  booktitle = vldb,
+  year      = {2007},
+  pages     = {531-542}
+}
+
+@article{rm06,
+  author    = {Praveen Rao and
+               Bongki Moon},
+  title     = {Sequencing {XML} data and query twigs for fast pattern matching},
+  journal   = tods,
+  volume    = {31},
+  number    = {1},
+  year      = {2006},
+  pages     = {299-345}
+}
+
+@article{rrr07,
+  author    = {Rajeev Raman and
+               Venkatesh Raman and
+               Satti Srinivasa Rao},
+  title     = {Succinct indexable dictionaries with applications to encoding
+               $k$-ary trees, prefix sums and multisets},
+  journal   = talg,
+  volume    = {3},
+  number    = {4},
+  year      = {2007}
+}
+
+@article{rs84,
+  author    = {Neil Robertson and
+               Paul D. Seymour},
+  title     = {Graph minors. III. Planar tree-width},
+  journal   = {Journal of Combinatorial Theory, Series B},
+  volume    = {36},
+  number    = {1},
+  year      = {1984},
+  pages     = {49-64},
+  ee        = {http://dx.doi.org/10.1016/0095-8956(84)90013-3},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@article{rsg05,
+  author = {Robert Ross and V. S. Subrahmanian and John Grant},
+  title = {Aggregate operators in probabilistic databases},
+  journal = jacm,
+  volume = {52},
+  number = {1},
+  pages = {54-101},
+  year = {2005}
+}
+
+@article{rt10,
+  author    = {Michael N. Rice and
+               Vassilis J. Tsotras},
+  title     = {Graph Indexing of Road Networks for Shortest Path Queries
+               with Label Restrictions},
+  journal   = pvldb,
+  volume    = {4},
+  number    = {2},
+  year      = {2010},
+  pages     = {69-80}
+}
+
+@inproceedings{rw89,
+  author    = {Gabriele Reich and
+               Peter Widmayer},
+  title     = {Beyond Steiner's Problem: A VLSI Oriented Generalization},
+  booktitle = {WG},
+  year      = {1989},
+  pages     = {196-210}
+}
+
+@inproceedings{pbcg09,
+  author    = {Michalis Potamias and
+               Francesco Bonchi and
+               Carlos Castillo and
+               Aristides Gionis},
+  title     = {Fast shortest path distance estimation in large networks},
+  booktitle = cikm,
+  year      = {2009},
+  pages     = {867-876}
+}
+
+@inproceedings{pjly07,
+  author    = {Jian Pei and Bin Jiang and Xuemin Lin and Yidong Yuan},
+  title     = {Probabilistic Skylines on Uncertain Data},
+  booktitle = vldb,
+  year      = {2007},
+  pages     = {15-26}
+}
+
+@inproceedings{ps07,
+  author    = {Hyoungmin Park and Kyuseok Shim},
+  title     = {Approximate algorithms for $k$-anonymity},
+  booktitle = sigmod,
+  year      = {2007},
+  pages     = {67-78}
+}
+
+@article{s97,
+  author = {Petr Slavik},
+  title = {The errand scheduling problem},
+  journal = {Technical Report},
+  year = {1997}
+}
+
+@article{s60,
+  author = {S. Stiassny},
+  title = {mathematical analysis of various superimposed coding methods},
+  journal = {Am. Doc.},
+  volume = {11},
+  number = {2},
+  year = {1960},
+  pages = {155-169}
+}
+
+@article{s01,
+  author    = {P. Samarati},
+  title     = {Protecting Respondents' Identities in Microdata Release},
+  journal   = tkde,
+  volume    = {13},
+  number    = {6},
+  year      = {2001},
+  pages     = {1010-1027}
+}
+
+@article{s02,
+  author    = {Latanya Sweeney},
+  title     = {Achieving $k$-Anonymity Privacy Protection using Generalization and Suppression},
+  journal   = {International Journal on Uncertainty, Fuzziness and Knowledge-based Systems},
+  volume    = {10},
+  number    = {5},
+  year      = {2002},
+  pages     = {571-588}
+}
+
+@article{s02b,
+  author = {Latanya Sweeney},
+  title = {$k$-anonymity: a model for protecting privacy},
+  journal = {International Journal on Uncertainty, Fuzziness, and Knowlege-Based Systems},
+  volume = {10},
+  number = {5},
+  year = {2002},
+  pages = {557--570}
+}
+
+@BOOK{s06,
+  AUTHOR =       {Hanan Samet},
+  TITLE =        {Foundations of multidimensional and metric data structures},
+  PUBLISHER =    {Morgan-Kaufmann},
+  YEAR =         {2006}
+}
+
+@article{s08,
+  author    = {Maytham Safar},
+  title     = {Group k-Nearest Neighbors queries in spatial network
+               databases},
+  journal   = {Journal of Geographical Systems},
+  volume    = {10},
+  number    = {4},
+  year      = {2008},
+  pages     = {407-416}
+}
+
+@inproceedings{scg07,
+  author    = {Chong Sun and
+               Chee Yong Chan and
+               Amit K. Goenka},
+  title     = {Multiway {SLCA}-based keyword search in {XML} data},
+  booktitle = www,
+  year      = {2007},
+  pages     = {1043-1052}
+}
+
+@inproceedings{sg97,
+  author    = {Narayanan Shivakumar and
+               Hector Garcia-Molina},
+  title     = {Wave-Indices: Indexing Evolving Databases},
+  booktitle = sigmod,
+  year      = {1997},
+  pages     = {381-392}
+}
+
+@inproceedings{sic07,
+  author    = {Mohamed A. Soliman and
+               Ihab F. Ilyas and
+               Kevin Chen-Chuan Chang},
+  title     = {Top-k Query Processing in Uncertain Databases},
+  booktitle = icde,
+  year      = {2007},
+  pages     = {896-905}
+}
+
+@article{sic08,
+  author    = {Mohamed A. Soliman and
+               Ihab F. Ilyas and
+               Kevin Chen-Chuan Chang},
+  title     = {Probabilistic top-$k$ and ranking-aggregate queries},
+  journal   = tods,
+  volume    = {33},
+  number    = {3},
+  year      = {2008}
+}
+
+@inproceedings{sj04,
+  author    = {Qingmin Shi and
+               Joseph JaJa},
+  title     = {Techniques for Indexing and Querying Temporal Observations
+               for a Collection of Objects},
+  booktitle = {ISAAC},
+  year      = {2004},
+  pages     = {822-834}
+}
+
+@inproceedings{sjll00,
+  author    = {Simonas Saltenis and
+               Christian S. Jensen and
+               Scott T. Leutenegger and
+               Mario A. Lopez},
+  title     = {Indexing the Positions of Continuously Moving Objects},
+  booktitle = sigmod,
+  year      = {2000},
+  pages     = {331-342}
+}
+
+@article{sks03,
+  author    = {Cyrus Shahabi and
+               Mohammad R. Kolahdouzan and
+               Mehdi Sharifzadeh},
+  title     = {A Road Network Embedding Technique for K-Nearest Neighbor
+               Search in Moving Object Databases},
+  journal   = {GeoInformatica},
+  volume    = {7},
+  number    = {3},
+  year      = {2003},
+  pages     = {255-273}
+}
+
+@inproceedings{skw01,
+  author    = {Albrecht Schmidt and
+               Martin L. Kersten and
+               Menzo Windhouwer},
+  title     = {Querying {XML} Documents Made Easy: Nearest Concept Queries},
+  booktitle = icde,
+  year      = {2001},
+  pages     = {321-329}
+}
+
+@article{slnx09,
+  author    = {Atish Das Sarma and
+               Ashwin Lall and
+               Danupon Nanongkai and
+               Jun Xu},
+  title     = {Randomized Multi-pass Streaming Skyline Algorithms},
+  journal   = pvldb,
+  volume    = {2},
+  number    = {1},
+  year      = {2009},
+  pages     = {85-96}
+}
+
+@inproceedings{sm09,
+  author    = {Md. Anisuzzaman Siddique and
+               Yasuhiko Morimoto},
+  title     = {K-Dominant Skyline Computation by Using Sort-Filtering Method},
+  booktitle = pakdd,
+  year      = {2009},
+  pages     = {839-848}
+}
+
+@inproceedings{sms+08,
+  author    = {Sarvjeet Singh and Chris Mayfield and Rahul Shah and Sunil Prabhakar and Susanne E. Hambrusch},
+  title     = {Query Selectivity Estimation for Uncertain Data},
+  booktitle = ssdbm,
+  year      = {2008},
+  pages     = {61-78}
+}
+
+@inproceedings{sp08,
+  author    = {Karl Schnaitter and
+               Neoklis Polyzotis},
+  title     = {Evaluating rank joins with optimal cost},
+  booktitle = pods,
+  year      = {2008},
+  pages     = {43-52}
+}
+
+@inproceedings{sr95,
+  author    = {Sairam Subramanian and
+               Sridhar Ramaswamy},
+  title     = {The P-range Tree: A New Data Structure for Range Searching
+               in Secondary Memory},
+  booktitle = soda,
+  year      = {1995},
+  pages     = {378-387}
+}
+
+@inproceedings{sr08,
+  author    = {Parag Singla and
+               Matthew Richardson},
+  title     = {Yes, there is a correlation: - from social networks to personal
+               behavior on the web},
+  booktitle = www,
+  year      = {2008},
+  pages     = {655-664}
+}
+
+@inproceedings{ss98,
+  author    = {P. Samarati and L. Sweeney},
+  title     = {Generalizing Data to Provide Anonymity when Disclosing Information},
+  booktitle = pods,
+  year      = {1998},
+  pages     = {188}
+}
+
+@inproceedings{ss05,
+  author    = {Peter Sanders and
+               Dominik Schultes},
+  title     = {Highway Hierarchies Hasten Exact Shortest Path Queries},
+  booktitle = esa,
+  year      = {2005},
+  pages     = {568-579}
+}
+
+@inproceedings{ss06,
+  author    = {Peter Sanders and
+               Dominik Schultes},
+  title     = {Engineering Highway Hierarchies},
+  booktitle = esa,
+  year      = {2006},
+  pages     = {804-816}
+}
+
+@article{ss08,
+  author    = {Mehdi Sharifzadeh and
+               Cyrus Shahabi},
+  title     = {Processing Optimal Sequenced Route Queries Using Voronoi
+               Diagrams},
+  journal   = {GeoInformatica},
+  volume    = {12},
+  number    = {4},
+  year      = {2008},
+  pages     = {411-433}
+}
+
+@inproceedings{ss09,
+  author    = {Jagan Sankaranarayanan and
+               Hanan Samet},
+  title     = {Distance Oracles for Spatial Networks},
+  booktitle = icde,
+  year      = {2009},
+  pages     = {652-663}
+}
+
+@inproceedings{ssa08,
+  author    = {Hanan Samet and
+               Jagan Sankaranarayanan and
+               Houman Alborzi},
+  title     = {Scalable network distance browsing in spatial databases},
+  booktitle = sigmod,
+  year      = {2008},
+  pages     = {43-54}
+}
+
+@article{ssa09,
+  author    = {Jagan Sankaranarayanan and
+               Hanan Samet and
+               Houman Alborzi},
+  title     = {Path Oracles for Spatial Networks},
+  journal   = pvldb,
+  volume    = {2},
+  number    = {1},
+  year      = {2009},
+  pages     = {1210-1221}
+}
+
+@article{ssk09,
+  author    = {Mehdi Sharifzadeh and
+               Cyrus Shahabi and
+               Leyla Kazemi},
+  title     = {Processing spatial skyline queries in both vector spaces
+               and spatial network databases},
+  journal   = tods,
+  volume    = {34},
+  number    = {3},
+  year      = {2009}
+}
+
+@article{sst+09,
+  author    = {Spyros Sioutas and
+               Dimitrios Sofotassios and
+               Kostas Tsichlas and
+               Dimitrios Sotiropoulos and
+               Panayiotis Vlamos},
+  title     = {Canonical Polygon Queries on the Plane: A New Approach},
+  journal   = {Journal of Computers},
+  volume    = {4},
+  number    = {9},
+  year      = {2009},
+  pages     = {913-919}
+}
+
+@article{st86,
+  author    = {Neil Sarnak and
+               Robert Endre Tarjan},
+  title     = {Planar Point Location Using Persistent Search Trees},
+  journal   = cacm,
+  volume    = {29},
+  number    = {7},
+  year      = {1986},
+  pages     = {669-679}
+}
+
+@article{st99,
+  author    = {Betty Salzberg and
+               Vassilis J. Tsotras},
+  title     = {Comparison of Access Methods for Time-Evolving Data},
+  journal   = acmcs,
+  volume    = {31},
+  number    = {2},
+  year      = {1999},
+  pages     = {158-221}
+}
+
+@article{sv88,
+  author    = {Baruch Schieber and
+               Uzi Vishkin},
+  title     = {On Finding Lowest Common Ancestors: Simplification and Parallelization},
+  journal   = siamj,
+  volume    = {17},
+  number    = {6},
+  year      = {1988},
+  pages     = {1253-1262}
+}
+
+@article{sv93,
+  author    = {Omer Berkman and
+               Uzi Vishkin},
+  title     = {Recursive Star-Tree Parallel Data Structure},
+  journal   = siamj,
+  volume    = {22},
+  number    = {2},
+  year      = {1993},
+  pages     = {221-242}
+}
+
+@inproceedings{swg02,
+  author    = {Dennis Shasha and
+               Jason Tsong-Li Wang and
+               Rosalba Giugno},
+  title     = {Algorithmics and Applications of Tree and Graph Searching},
+  booktitle = pods,
+  year      = {2002},
+  pages     = {39-52}
+}
+
+@article{t79,
+  author    = {Robert Endre Tarjan},
+  title     = {A Class of Algorithms which Require Nonlinear Time to Maintain
+               Disjoint Sets},
+  journal   = jcss,
+  volume    = {18},
+  number    = {2},
+  year      = {1979},
+  pages     = {110-127}
+}
+
+@inproceedings{tbpm05,
+  author    = {Manolis Terrovitis and
+               Spiridon Bakiras and
+               Dimitris Papadias and
+               Kyriakos Mouratidis},
+  title     = {Constrained Shortest Path Computation},
+  booktitle = sstd,
+  year      = {2005},
+  pages     = {181-199}
+}
+
+@inproceedings{tp01,
+  author    = {Yufei Tao and
+               Dimitris Papadias},
+  title     = {{MV3R}-Tree: A Spatio-Temporal Access Method for Timestamp
+               and Interval Queries},
+  booktitle = vldb,
+  year      = {2001},
+  pages     = {431-440}
+}
+
+@article{tp04,
+  author    = {Yufei Tao and
+               Dimitris Papadias},
+  title     = {Range Aggregate Processing in Spatial Databases},
+  journal   = tkde,
+  volume    = {16},
+  number    = {12},
+  year      = {2004},
+  pages     = {1555-1570}
+}
+
+@inproceedings{tps03,
+  author    = {Yufei Tao and
+               Dimitris Papadias and
+               Jimeng Sun},
+  title     = {The {TPR}*-Tree: An Optimized Spatio-Temporal Access Method
+               for Predictive Queries},
+  booktitle = vldb,
+  year      = {2003},
+  pages     = {790-801}
+}
+
+@inproceedings{tvb+02,
+  author    = {Igor Tatarinov and
+               Stratis Viglas and
+               Kevin S. Beyer and
+               Jayavel Shanmugasundaram and
+               Eugene J. Shekita and
+               Chun Zhang},
+  title     = {Storing and querying ordered XML using a relational database
+               system},
+  booktitle = sigmod,
+  year      = {2002},
+  pages     = {204-215}
+}
+
+@article{tx08,
+  author    = {Yufei Tao and Xiaokui Xiao},
+  title     = {Efficient temporal counting with bounded error},
+  journal   = vldbj,
+  volume    = {17},
+  number    = {5},
+  year      = {2008},
+  pages     = {1271-1292}
+}
+
+@article{txc07,
+  author    = {Yufei Tao and
+               Xiaokui Xiao and
+               Reynold Cheng},
+  title     = {Range search on multidimensional uncertain data},
+  journal   = tods,
+  volume    = {32},
+  number    = {3},
+  year      = {2007},
+  pages     = {15}
+}
+
+@inproceedings{txlz08,
+  author    = {Yufei Tao and Xiaokui Xiao and Jiexing Li and Donghui Zhang},
+  title     = {On Anti-Corruption Privacy Preserving Publication},
+  booktitle = icde,
+  year      = {2008},
+  pages     = {725-734}
+}
+
+@article{tz05,
+  author    = {Mikkel Thorup and
+               Uri Zwick},
+  title     = {Approximate distance oracles},
+  journal   = jacm,
+  volume    = {52},
+  number    = {1},
+  year      = {2005},
+  pages     = {1-24}
+}
+
+@article{v06,
+  author    = {Jeffrey Scott Vitter},
+  title     = {Algorithms and data structures for external memory},
+  journal   = {{F}oundation and {T}rends in {T}heoretical {C}omputer {S}cience},
+  volume    = {2},
+  number    = {4},
+  pages     = {305-474},
+  year      = {2006}
+}
+
+@inproceedings{vc02,
+  author    = {Jaideep Vaidya and Chris Clifton},
+  title     = {Privacy-preserving $k$-means clustering over vertically partitioned data},
+  booktitle = kdd,
+  year      = {2002},
+  pages     = {206-215}
+}
+
+@article{veb+04,
+  author    = {Vassilios S. Verykios and Ahmed K. Elmagarmid and Elisa Bertino and Yucel Saygin and
+               Elena Dasseni},
+  title     = {Association Rule Hiding},
+  journal   = tkde,
+  volume    = {16},
+  number    = {4},
+  year      = {2004},
+  pages     = {434-447}
+}
+
+@article{vv97,
+  author    = {Peter J. Varman and
+               Rakesh M. Verma},
+  title     = {An Efficient Multiversion Access STructure},
+  journal   = tkde,
+  volume    = {9},
+  number    = {3},
+  year      = {1997},
+  pages     = {391-409}
+}
+
+@article{w83,
+  author    = {Dan E. Willard},
+  title     = {Log-Logarithmic Worst-Case Range Queries are Possible in
+               Space $\Theta(N)$},
+  journal   = ipl,
+  volume    = {17},
+  number    = {2},
+  year      = {1983},
+  pages     = {81-84}
+}
+
+@inproceedings{w10,
+  author    = {Fang Wei},
+  title     = {TEDI: Efficient shortest path query answering on graphs},
+  booktitle = sigmod,
+  year      = {2010},
+  pages     = {99-110}
+}
+
+@inproceedings{wf06,
+  author    = {Ke Wang and Benjamin C. M. Fung},
+  title     = {Anonymizing sequential releases},
+  booktitle = kdd,
+  year      = {2006},
+  pages     = {414-423}
+}
+
+@inproceedings{wfwp07,
+  author    = {Raymond Chi-Wing Wong and Ada Wai-Chee Fu and Ke Wang and Jian Pei},
+  title     = {Minimality Attack in Privacy Preserving Data Publishing},
+  booktitle = vldb,
+  year      = {2007},
+  pages     = {543-554}
+}
+
+@inproceedings{wjs+99,
+  author    = {Ouri Wolfson and
+               Liqin Jiang and
+               A. Prasad Sistla and
+               Sam Chamberlain and
+               Naphtali Rishe and
+               Minglin Deng},
+  title     = {Databases for Tracking Mobile Units in Real Time},
+  booktitle = icdt,
+  year      = {1999},
+  pages     = {169-186}
+}
+
+@inproceedings{wyc04,
+  author    = {K. Wang and P. S. Yu and S. Chakraborty},
+  title     = {Bottom-Up Generalization: A Data Mining Solution to Privacy Protection},
+  booktitle = icdm,
+  year      = {2004},
+  pages     = {249-256}
+}
+
+@article{wwz05,
+  author    = {Dorothea Wagner and
+               Thomas Willhalm and
+               Christos D. Zaroliagis},
+  title     = {Geometric containers for efficient shortest-path computation},
+  journal   = {ACM Journal of Experimental Algorithmics},
+  volume    = {10},
+  year      = {2005}
+}
+
+@inproceedings{xp05,
+  author    = {Yu Xu and
+               Yannis Papakonstantinou},
+  title     = {Efficient Keyword Search for Smallest {LCA}s in {XML} Databases},
+  booktitle = sigmod,
+  year      = {2005},
+  pages     = {537-538}
+}
+
+@inproceedings{xp08,
+  author    = {Yu Xu and
+               Yannis Papakonstantinou},
+  title     = {Efficient {LCA} based keyword search in {XML} data},
+  booktitle = edbt,
+  year      = {2008},
+  pages     = {535-546}
+}
+
+@inproceedings{xt06a,
+  author    = {Xiaokui Xiao and Yufei Tao},
+  title     = {Personalized privacy preservation},
+  booktitle = sigmod,
+  year      = {2006},
+  pages     = {229-240}
+}
+
+@inproceedings{xt06b,
+  author    = {Xiaokui Xiao and Yufei Tao},
+  title     = {Anatomy: Simple and Effective Privacy Preservation},
+  booktitle = vldb,
+  year      = {2006},
+  pages     = {139-150}
+}
+
+@inproceedings{xt07,
+  author    = {Xiaokui Xiao and Yufei Tao},
+  title     = {$m$-invariance: Towards privacy preserving re-publication of dynamic datasets},
+  booktitle = sigmod,
+  year      = {2007},
+  pages     = {689-700}
+}
+
+@inproceedings{xwp+09,
+  author    = {Yanghua Xiao and
+               Wentao Wu and
+               Jian Pei and
+               Wei Wang and
+               Zhenying He},
+  title     = {Efficiently indexing shortest paths by exploiting symmetry
+               in graphs},
+  booktitle = edbt,
+  year      = {2009},
+  pages     = {493-504}
+}
+
+@inproceedings{y09,
+  author    = {Ke Yi},
+  title     = {Dynamic indexability and lower bounds for dynamic one-dimensional
+               range query indexes},
+  booktitle = pods,
+  year      = {2009},
+  pages     = {187-196}
+}
+
+@inproceedings{ya10,
+  author    = {Hao Yuan and Mikhail J. Atallah},
+  title     = {Data Structures for Range Minimum Queries in Multidimensional Arrays},
+  booktitle = soda,
+  year      = {2010},
+  pages     = {689-700}
+}
+
+@article{ym09,
+  author    = {Man Lung Yiu and
+               Nikos Mamoulis},
+  title     = {Multi-dimensional top-{\it } dominating queries},
+  journal   = vldbj,
+  volume    = {18},
+  number    = {3},
+  year      = {2009},
+  pages     = {695-718}
+}
+
+@article{ymp05,
+  author    = {Man Lung Yiu and
+               Nikos Mamoulis and
+               Dimitris Papadias},
+  title     = {Aggregate Nearest Neighbor Queries in Road Networks},
+  journal   = tkde,
+  volume    = {17},
+  number    = {6},
+  year      = {2005},
+  pages     = {820-833}
+}
+
+@inproceedings{ypk05,
+  author    = {Xiaohui Yu and
+               Ken Q. Pu and
+               Nick Koudas},
+  title     = {Monitoring K-Nearest Neighbor Queries Over Moving Objects},
+  booktitle = icde,
+  year      = {2005},
+  pages     = {631-642}
+}
+
+@article{ys05,
+  author    = {Jin Soung Yoo and
+               Shashi Shekhar},
+  title     = {In-Route Nearest Neighbor Queries},
+  journal   = {GeoInformatica},
+  volume    = {9},
+  number    = {2},
+  year      = {2005},
+  pages     = {117-137}
+}
+
+@article{yw03,
+  author    = {Jun Yang and
+               Jennifer Widom},
+  title     = {Incremental computation and maintenance of temporal aggregates},
+  journal   = vldbj,
+  volume    = {12},
+  number    = {3},
+  year      = {2003},
+  pages     = {262-283}
+}
+
+
+@inproceedings{z02,
+  author    = {Mohammed Javeed Zaki},
+  title     = {Efficiently mining frequent trees in a forest},
+  booktitle = kdd,
+  year      = {2002},
+  pages     = {71-80}
+}
+
+@inproceedings{zcm+09,
+  author    = {Dongxiang Zhang and Yeow Meng Chee and Anirban Mondal and Anthony K. H. Tung and Masaru Kitsuregawa},
+  title     = {Keyword Search in Spatial Databases: Towards Searching by Document},
+  booktitle = icde,
+  year      = {2009},
+  pages     = {688-699}
+}
+
+
+@inproceedings{zksy07,
+  author    = {Qing Zhang and Nick Koudas and Divesh Srivastava and Ting Yu},
+  title     = {Aggregate Query Answering on Anonymized Tables},
+  booktitle = icde,
+  year      = {2007},
+  pages     = {116-125}
+}
+
+@inproceedings{zko04,
+  author    = {Ning Zhang and
+               Varun Kacholia and
+               M. Tamer Ozsu},
+  title     = {A Succinct Physical Storage Scheme for Efficient Evaluation
+               of Path Queries in XML},
+  booktitle = icde,
+  year      = {2004},
+  pages     = {54-65}
+}
+
+@inproceedings{zl04,
+  author = {Yu Zhu and Lei Liu},
+  title = {Optimal randomization for privacy preserving data mining},
+  booktitle = kdd,
+  year = {2004},
+  pages = {761-766}
+}
+
+@inproceedings{zll10,
+  author    = {Rui Zhou and
+               Chengfei Liu and
+               Jianxin Li},
+  title     = {Fast {ELCA} computation for keyword queries on {XML} data},
+  booktitle = edbt,
+  year      = {2010},
+  pages     = {549-560}
+}
+
+@article{zlz+10,
+  author    = {Ying Zhang and
+               Xuemin Lin and
+               Wenjie Zhang and
+               Jianmin Wang and
+               Qianlu Lin},
+  title     = {Effectively Indexing the Uncertain Space},
+  journal   = tkde,
+  volume    = {22},
+  number    = {9},
+  year      = {2010},
+  pages     = {1247-1261}
+}
+
+@article{zmt+08,
+  author    = {Donghui Zhang and
+               Alexander Markowetz and
+               Vassilis J. Tsotras and
+               Dimitrios Gunopulos and
+               Bernhard Seeger},
+  title     = {On computing temporal aggregates with range predicates},
+  journal   = tods,
+  volume    = {33},
+  number    = {2},
+  year      = {2008}
+}
+
+@inproceedings{znd+01,
+  author    = {Chun Zhang and
+               Jeffrey F. Naughton and
+               David J. DeWitt and
+               Qiong Luo and
+               Guy M. Lohman},
+  title     = {On Supporting Containment Queries in Relational Database
+               Management Systems},
+  booktitle = sigmod,
+  year      = {2001},
+  pages     = {425-436}
+}
+
+@article{zpzl05,
+  author    = {Manli Zhu and
+               Dimitris Papadias and
+               Jun Zhang and
+               Dik Lun Lee},
+  title     = {Top-k Spatial Joins},
+  journal   = tkde,
+  volume    = {17},
+  number    = {4},
+  year      = {2005},
+  pages     = {567-579}
+}
+
+@article{zt05,
+  author    = {Donghui Zhang and
+               Vassilis J. Tsotras},
+  title     = {Optimizing spatial Min/Max aggregations},
+  journal   = vldbj,
+  volume    = {14},
+  number    = {2},
+  year      = {2005},
+  pages     = {170-181}
+}
+
+@inproceedings{zxw+05,
+  author    = {Yinghua Zhou and Xing Xie and Chuang Wang and Yuchang Gong and Wei-Ying Ma},
+  title     = {Hybrid index structures for location-based web search},
+  booktitle = cikm,
+  year      = {2005},
+  pages     = {155-162}
+}
+
+@inproceedings{zyw05,
+  author     = {S. Zhong and Z. Yang and R. N. Wright},
+  title      = {Privacy-enhancing $k$-Anonymization of Customer Data},
+  booktitle  = pods,
+  year       = {2005},
+  pages      = {139-147}
+}
+
+@inproceedings{zyy07,
+  author    = {Peixiang Zhao and
+               Jeffrey Xu Yu and
+               Philip S. Yu},
+  title     = {Graph Indexing: Tree + Delta $>$= Graph},
+  booktitle = vldb,
+  year      = {2007},
+  pages     = {938-949}
+}

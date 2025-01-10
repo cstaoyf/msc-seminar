@@ -1,0 +1,339 @@
+%\documentclass{...}
+
+\input{../def/yf-formatting}
+
+\usepackage{amsfonts, amsmath, amsthm}
+\usepackage{graphicx}
+%\usepackage{times}
+
+\input{../def/yf-math-def}
+
+\begin{document}
+
+\section*{Lecture 1: External Memory Model and Sorting}
+
+\noindent Yufei Tao \\
+Department of Computer Science and Engineering \\
+Chinese University of Hong Kong \\
+{\em taoyf@cse.cuhk.edu.hk}
+
+\section{The computation model} \label{sec:model}
+
+You are probably familiar with the complexities of many algorithms in internal
+memory, e.g., $N$ numbers can be sorted in $O(N \log N)$ time. Exactly what we
+mean there is that there is an algorithm able to solve the (sorting) problem
+by
+performing $O(N \log N)$ ``basic operations''. Now it is a good time to recall
+that each of those operations performs some CPU work (e.g., arithmetic
+calculation, comparison, etc.) or accesses a memory location.
+
+Many applications in practice need to deal with datasets that are too
+large to fit in memory. While it is true that the memory capacity of a computer
+has been increasing rapidly, dataset sizes have exploded at an even greater
+pace,
+such that it is increasingly unrealistic to hope that someday we could run
+all the applications entirely in memory. In reality, data still need to
+be stored in an external device, typically, a hard disk. An algorithm in such
+environments would need to perform many disk I/Os to move
+data between the memory and the disk. Since an I/O is rather
+expensive
+(at the order of 1-10 milliseconds), the overall execution cost may be
+far dominated by the I/O overhead.
+
+This phenomenon has triggered extensive research in the past three decades on
+algorithms in the {\em external memory} (EM) model proposed in 1988, which has
+been highly successful in capturing the characteristics of I/O-bound
+algorithms. A computer of this model is equipped with a memory having a
+capacity of $M$ words, and a disk of an unbounded size. The disk has been
+formatted into disjoint {\em blocks}, each of which has the length of $B$
+words. An I/O either brings a block of data from the disk to the memory, or
+conversely writes $B$ words in memory to a disk block. The space complexity of a
+data structure or an algorithm is measured as the number of disk blocks
+occupied, while the time complexity is measured as the number of I/Os
+performed. CPU calculation can be done only on the data that currently reside
+in the memory, but any such calculation is charged with no cost. Accessing any
+memory location is also for free.
+
+$B$ cannot be regarded as a constant. It is required that the memory
+can accommodate at least a constant number of blocks, namely, $M = \Omega(B)$.
+However, it is often
+acceptable to assume $M \ge B^2$, which is known as the {\em tall cache
+assumption}. By fitting in some typical values of $B$ in practice, you can
+convince yourself that a memory with $B^2$ words is available in almost any
+reasonable computer nowadays.
+
+For a dataset of $N$ elements\footnote{Unless otherwise stated, each element can
+be described by a constant number of words.}, the minimum number of blocks
+required to store all the elements is $\Omega(N/B)$. Therefore, {\em linear
+cost} should be understood as $O(N/B)$. Also, in many scenarios, what is
+challenging is to make the base of logarithm to be either $B$ or $M/B$.
+Accordingly, {\em poly-logarithmic cost} should be interpreted as $O(\log^c_B
+N)$ or $O(\log^c_{M/B} N)$ for some constant $c$. Note that usually we will
+not be happy with complexities involving logarithms with a constant base, as
+are often easy to achieve.
+
+\section{Sorting in external memory} \label{sec:ub}
+
+Let us start with the sorting problem. We are given a set $S$ of $N$
+elements obeying a total order. At the beginning, these elements
+are stored in a file of $O(N/B)$ consecutive blocks. Eventually we should output
+another file of $O(N/B)$ blocks where the elements have been properly sorted.
+Adapting a memory-resident algorithm to sort an external file can easily result
+in a cost of $O(N \log N)$ I/Os. The rest of the section gives two I/O-oriented
+solutions that perform $O(\frac{N}{B} \log_{M/B} \frac{N}{B})$ I/Os.
+
+\subsection{External sort} \label{sec:ub-extsrt}
+
+Let us warm up by refreshing our memory about the {\em external sort} algorithm
+at the undergraduate level. $S$ can be divided into $N/M$
+runs, each of which includes $M/B$ consecutive blocks. We load each run into
+memory, sort the elements there (in memory), and write the sorted order back to
+the
+disk, making sure that elements of a run are stored in consecutive blocks. This
+creates another sorted run with $M$ elements in $O(M/B)$ I/Os. After doing so to
+all $N/M$ runs, we have obtained $N/M$ sorted runs.
+
+Let $m = M/B$ and $n = N/B$. In general, assume that we are given $R$ sorted
+runs, each of which has $O(n/R)$ blocks. In linear I/Os, we can
+produce $\lc R/(m - 1) \rc = O(R/m)$ sorted runs each having at most $O(nm/R)$
+blocks, still ensuring that each element be in one and exactly one sorted run.
+To
+do so, divide the $R$ sorted runs into $\lc R/(m - 1) \rc$ groups,
+each of which has $m - 1$ sorted runs except possibly the last group. For each
+group, merge the (input) sorted runs there into one (output) sorted run by
+scanning the input runs and writing the output run synchronously.
+Specifically, allocate a memory block to each input run as its input buffer,
+and to the output run as its output buffer. Whenever an input buffer
+is empty, use it to read the next block of the corresponding run; whenever the
+output buffer is full, flush its contents to
+the disk. As long as one input run has not been exhausted, among the
+elements in all the input buffers, we move the smallest to the output buffer.
+At the end, after all the elements in the input runs have been read, we flush
+whatever is left in the output buffer.
+
+The algorithm stops when the number of runs gets down to one. After one
+iteration as
+described above, the number of runs decreases by a factor of $\Omega(m)$, except
+possibly the last iteration. The total number of iterations is therefore
+$O(\log_m (N/M)) = O(\log_m (n/m)) = O(\log_m n)$. As each iteration incurs
+$O(n)$ I/Os, the total cost is $O(n \log_m n)$.
+
+\subsection{Distribution sort} \label{sec:ub-distsrt}
+
+While the external sort follows a bottom-up strategy, next we will see an
+algorithm that goes top-down. The main idea is this: imagine we partition the
+input $S$ into $f$ subsets $S_1, ..., S_f$ of roughly the same size, such that
+any element in $S_i$ should
+rank before all elements in $S_j$, for any $i < j$. Then, we can work on each
+subset recursively, until the subset is small enough to fit in memory, at which
+point we simply sort the subset in memory. It is obvious that the overall
+sorted list can be obtained in $O(N/B)$ I/Os by combining all the smallest
+(sorted) subsets.
+
+The core of the algorithm is to obtain $S_1, ..., S_f$ from $S$ efficiently.
+Intuitively, if $f$ is not too large, this is simpler than sorting $S$,
+because
+we do not care about the ordering of the elements in each $S_i$.
+Next, we will see that with $f = \sqrt{m}$, we can pull this off in linear I/Os.
+The subsequent discussion will assume $m \ge 4$ (i.e., the memory has at least 4
+blocks).
+
+\extraspacing {\bf The \boldmath$k$-selection problem.} We will first look at a
+relevant problem called {\em $k$-selection}, where we are given a set $S$ of
+elements and want to report the $k$-th smallest one (obviously, $1 \le k \le
+|S|$). We will first discuss the problem in internal memory (specifically, the
+RAM model) before extending our solution to the EM model. It is trivial to solve
+the problem in $O(N \log N)$ time, but there is a well-known algorithm to do so
+in $O(N)$ time.
+
+We will first find the median of $S$. Divide $S$ arbitrarily into groups of size
+5: $G_1, ..., G_{N/5}$. For each group, collect the median of each group into a
+set $G$, which therefore, has $N/5$ elements. Call each element in $G$ the {\em
+representative} of its original group. So far the cost is $O(N)$. Next,
+we want to find the median $g$ of $G$. Note that this is another $k$-selection
+(with $k = |G|/2$) problem, but on a set with a smaller size, and
+therefore can be solved recursively in the same way. Now assume that we have
+already obtained $g$. In linear time, we divide $S$ into $S_1$ and $S_2$
+containing all the elements at most and larger than $g$, respectively. If $|S_1|
+\ge k$, we recurse by finding the $k$-th smallest element in $S_1$, and
+otherwise, by finding the $(k - |S_1|)$-th smallest in $S_2$.
+
+The crucial reason why this algorithm works is (for simplicity assume $N$ is a
+multiple of 10; if not, pad $O(1)$ dummy elements to make it so):
+
+\begin{lemma} \label{lmm:ub-ksel}
+	$|S_1| \le 7N/10$ and $|S_2| \le 7N/10$.
+\end{lemma}
+
+\begin{proof}
+	We will bound only $|S_2|$ because the case with $|S_1|$ is
+similar. In each group, 2 elements are smaller than the representative. As
+before $g$ there are $N/10 - 1$ group
+representatives, we know at least $3 (N/10 - 1) + 3 = 3N/10$ elements are at
+most $g$, where the term $+3$ counts the elements in the group of $g$. Hence,
+$|S_2| \le 7N/10$.
+\end{proof}
+
+We are ready to analyze the running time of the
+$k$-selection algorithm. Denote by $F(N)$ the time of solving an input of size
+$N$. It is easy to observe that, for $N$ greater than a sufficiently large
+constant $c$,
+\begin{eqnarray}
+	F(N) \le F(N/5) + F(7N/10) + O(N) \label{eqn:ub-ksel}
+\end{eqnarray}
+where $F(N/5)$ is the cost of finding $g$, and $F(7N/10)$ the cost of solving
+the problem recursively on either $S_1$ or $S_2$. For $N \le c$, we can
+solve the problem by simply sorting all elements in constant time. Solving the
+recurrence gives $F(N) = O(N)$.
+
+The above algorithm can be easily modified to terminate in $O(N/B)$ I/Os in
+external memory.
+
+\extraspacing {\bf Distribution sort.} Now we return to the original sorting
+problem, and clarify how to implement the top-down strategy efficiently. Given
+$S$, we divide it (arbitrarily) into $N/M$ groups $G_1, ..., G_{N/M}$, each of
+which has $M$ items except possibly one group. Then, we load each $G_i$ into
+memory, sort it, go through the sorted list in ascending order, and collect one
+out of every $f/4$ elements into a set $G$ (i.e., the $f/4$-th, the $2f/4$-th,
+and so on). Those elements are the {\em representatives} of $G_i$. In total, $G$
+has $(4M / f)(N/M) = 4N/f$ elements. Up to now, we have performed only linear
+I/Os.
+
+Next, for each $i$ from $1$ to $f$, we pick the $i(4N/f^2)$-th smallest element
+in $G$, which is referred to as a {\em pivot} and denoted as $p_i$. To do so, we
+apply the $k$-selection algorithm $f$ times, but since $G$ has $O(N/f)$
+elements, the total cost is $O((N/(fB)) \cdot f) = O(N/B)$.
+
+We proceed by partitioning $S$ into $S_1, ..., S_{f+1}$ such that (i) all
+elements in $S_i$ are smaller than any element in $S_j$ for $i < j$, and (ii)
+for each $i \in [1, f]$, every element in $S_i$ is at most $p_i$, which
+in turn is smaller than every element in $S_{i+1}$. Setting $f = \sqrt{m}$,
+we can do so in $O(N/B)$ I/Os by assigning a memory block as the output buffer
+for each $S_i$, and another memory block as the input buffer for reading $S$.
+
+\begin{lemma} \label{lmm:ub-distsrt}
+	$|S_i| \le 5N/(4\sqrt{m})$.
+\end{lemma}
+
+\begin{proof}
+	Define two dummy pivots $p_0$ and $p_{f+1}$ as the smallest and largest
+elements in the underlying total order, respectively. So the elements in $S_i$
+are between $p_{i-1}$ and $p_i$. To bound the size of $S_i$, we will analyze
+the number $x_j$ of elements in $S_i$ that are contributed by group
+$G_j$ ($1 \le j \le N/M$). We achieve this purpose by examining the number $y_j$
+of representatives from $G_j$ that are between $p_{i-1}$ and $p_i$.
+
+By the way that group representatives are selected, we have:
+\begin{eqnarray}
+	y_j \le x_j \cdot (f/4) + f/4 \label{eqn:ub-distrst-eq1}
+\end{eqnarray}
+On the other hand, by the way that pivots are picked, we have:
+\begin{eqnarray}
+	\sum_i y_j = 4N / f^2. \label{eqn:ub-distust-eq2}
+\end{eqnarray}
+Combining \eqref{eqn:ub-distrst-eq1} and \eqref{eqn:ub-distust-eq2} gives
+\begin{eqnarray}
+	\sum_i x_i \le \frac{4N}{f^2} \frac{f}{4} + \frac{f}{4} \frac{N}{M}
+= \frac{N}{\sqrt{m}} + \frac{\sqrt{m}}{4} \frac{n}{m} \le
+\frac{5N}{4\sqrt{m}} \nonumber
+\end{eqnarray}
+\end{proof}
+
+Therefore, if we denote $F(N)$ as the cost of distribution sort on a set with
+cardinality $N$, it holds that, when $N > M$
+\begin{eqnarray}
+	F(N) \le \sum_{i=1}^{\sqrt{m}} F(|S_i|) + O(N/B)
+\nonumber
+\end{eqnarray}
+where each $|S_i| \le 5N / (4\sqrt{m})$ and $\sum_{i=1}^{\sqrt{m}} |S_i| = N$.
+Also, $F(N) = N/B$ when $N \le M$. Solving the recurrence gives $F(N) = O(n
+\log_m n)$ (notice that there are at most $\log_{4\sqrt{m}/5} m = O(\log_m n)$
+levels in the recursion).
+
+\section{Lower bound of sorting in external memory} \label{sec:lb}
+
+We all know that, in the comparison model, sorting $N$ elements
+takes $\Omega(N \log N)$ time. This section will establish the corresponding
+lower bound in the EM model. Specifically, we will show that every
+comparison-based algorithm must perform $\Omega((N/B) \log_{M/B} (N/B))$ I/Os to
+sort a set $S$ of $N$ elements. In other words, both external sort and
+distribution sort are already optimal. As before, in the sequel, set $n = N/B$
+and $m = M/B$.
+
+Let us recall the proof of the $\Omega(N\log N)$ bound in internal memory. We
+start with a pool $P$ of all the $N!$ possible permutations. Each time a
+comparison is done, $P$ can be divided into $P_1$ and $P_2$, including all the
+permutations consistent with either result of the comparison, respectively. It
+is easy to see that either $P_1$ or $P_2$ has at least $|P|/2$
+permutations. So a simple adversary argument shows that at least $\log_2
+(N!) = \Omega(N \log N)$ comparisons are needed.
+
+Next, we extend this argument to the EM model. First, it is clear that
+$\Omega(n)$ is a trivial lower bound (any algorithm defying this claim
+cannot even have seen all the elements yet). We can thus afford to perform a
+preprocessing step of cost $O(n)$ prior to running any algorithm. Such a
+step reads every block of $S$, sorts the elements there in memory, and
+writes them (in sorted order) back to the block. Doing so cannot increase the
+cost of the original algorithm by more than a constant factor.
+
+Again, let $P$ be a pool of all the $N!$ permutations. The goal of any
+algorithm is still to continuously remove, based on the results of the
+comparisons performed, the impossible permutations from $P$ until $|P| = 1$. In
+the preprocessing step, after sorting a block, we reduce the size of $P$ by a
+factor of $B!$. Therefore, at the end of the step, there are still $N! / (B!)^n$
+permutations in $P$ to choose from. Below, we focus on the rest of the
+algorithm's execution.
+
+We enforce a rule to make things harsh for ourselves. Every time a block of $B$
+elements is read into memory, we consider that the algorithm always sorts them
+together with the other (at most) $M - B$ elements already in memory, and
+discards the permutations in $P$ inconsistent with the ordering of the $M$
+elements. This is the fastest way to shrink $P$ as long as the algorithm is
+comparison based, since comparisons can only be performed among elements in the
+memory simultaneously. This rule implies that, when a block of $B$ elements is
+written to the disk, the permutation among them has already been used to shrink
+$P$. Inductively, this, together with our preprocessing step, ensures that each
+time a block is read, the permutation among the $B$ elements themselves provides
+no useful information for us to shrink $P$.
+
+We are ready to consider how much $P$ can be shrunk by reading a block of $B$
+elements. The only comparisons that can give us new information for shrinking
+$P$ are those between one of the $B$ elements read, and one of the $M-B$
+elements already in memory. The number of distinct outcomes of all these
+comparisons is at most $M \choose B$ (hint: this is essentially the number of
+possible ways to pick $B$ balls from $M - B$ boxes of different colors).
+Therefore, this I/O allows the algorithm to reduce $|P|$ by a factor of at most
+${M \choose B} < M^B / B!$.
+
+Now we can claim that the number of I/Os is at least
+\begin{eqnarray}
+	\frac{\log (N! / (B!)^n)}{\log (M^B / B!)} &=& \frac{\log N! - n \log B!}{B
+\log M - \log B!} \nonumber \\
+	&=& \Omega \left( \frac{N \log N - N \log B}{B \log M - B \log B}
+\right) \nonumber \\
+	&=& \Omega \left( \frac{N \log (N/B)}{B \log (M/B)} \right) \nonumber
+\end{eqnarray}
+
+
+\section{Bibliography}
+
+The EM model was proposed by Aggarwal and Vitter \cite{av88}, after
+several earlier attempts to model I/O-oriented algorithms. The external sort
+algorithm was also presented in \cite{av88}. The $k$-selection algorithm we
+described was developed by Blum et al.\ \cite{bfp+73}, whereas the distribution
+sort algorithm is based on ideas in \cite{av88} and the description of
+Arge \cite{a96}. The lower bound proof we discussed is due to Erickson
+\cite{e05}. Several stronger versions of the proof exist. Aggarwal and Vitter
+\cite{av88} showed that $\Omega((N/B) \log_{M/B} (N/B))$ is still the lower
+bound for all algorithms (including those not based on comparisons) that always
+move each item as a whole (i.e., the {\em indivisibility assumption}). Erickson
+\cite{e05} discussed the lower bounds for algorithms that can be captured by
+algebraic decision trees. Arge, Knudsen and Larsen \cite{akl93} proved that any
+problem with a lower bound of $\Omega(n \log n)$ under the comparison model in
+internal memory has a lower bound of $\Omega((N/B) \log_{M/B} (N/B))$
+under the comparison model in external memory.
+
+\bibliographystyle{abbrv}
+\bibliography{../ref}
+
+\end{document}

@@ -1,0 +1,51 @@
+% modification history
+% created on 18 sep 2011
+
+%\usepackage{amsfonts, amsmath, amssymb}
+
+%===== spacing =====
+
+\def\extraspacing{\vspace{2mm} \noindent}
+\def\vgap{\vspace{2mm}}
+\def\hgap{\textrm{\hspace{1mm}}}	
+
+%===== tabbing =====
+
+\def\tab{\hspace{2mm}}
+\def\tabpos{\hspace{4mm} \= \hspace{4mm} \= \hspace{4mm} \= \hspace{4mm} \=
+\hspace{4mm} \= \hspace{4mm} \= \hspace{4mm} \= \hspace{4mm} \= \hspace{4mm}
+\kill}
+
+%===== blocks =====
+
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{lemma}{Lemma}
+% \newtheorem{corollary}{Corollary}
+% \newtheorem{proposition}{Proposition}
+% \newtheorem{definition}{Definition}
+% \newtheorem{problem}{Problem}
+
+%===== math macros =====
+
+\def\eps{\epsilon}
+\def\fr{\frac}
+\def\lc{\lceil}
+\def\lf{\lfloor}
+\def\rc{\rceil}
+\def\rf{\rfloor}
+\def\Pr{\mathrm{Pr}}
+\def\real{\mathbb{R}}
+\def\int{\mathbb{N}}
+\def\*{\star}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\polylog}{polylog}
+\DeclareMathOperator*{\intr}{\cap}
+
+%===== misc =====
+
+\def\done{\hspace*{\fill} $\framebox[2mm]{}$}	% end of proof
+
+%===== coloring =====
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}

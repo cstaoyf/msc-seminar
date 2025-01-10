@@ -1,0 +1,186 @@
+%\documentclass{...}
+
+\input{../def/yf-formatting}
+
+\usepackage{amsfonts, amsmath, amsthm}
+\usepackage{graphicx}
+%\usepackage{times}
+
+\input{../def/yf-math-def}
+
+\def\U{\mathcal{U}}
+\def\H{\mathcal{H}}
+
+\begin{document}
+
+\section*{Lecture Notes: Markov Inequality, Chebyshev Inequality, and Chernoff Bound}
+
+\noindent Yufei Tao \\
+Chinese University of Hong Kong \\
+{\em taoyf@cse.cuhk.edu.hk}\\
+
+\noindent 10 Feb, 2012
+
+\section*{}
+
+In this lecture, we will study three inequalities that are of paramount importance in analyzing randomized algorithms.
+
+\section{Markov inequality} \label{sec:markov}
+
+\begin{theorem} [Markov inequality] \label{thm:markov-markov}
+    Let $X \ge 0$ be a random variable. For any $t > 0$, it holds that:
+	\begin{equation}
+	    \Pr[X \ge t] \le \fr{\expect[X]}{t}.
+		\nonumber
+	\end{equation}
+\end{theorem}
+
+\begin{proof} 
+    Let $f(X)$ be the probability density function of $X$. It holds that:
+	\begin{eqnarray} 
+	    \Pr[X \ge t] &=& \int_t^\infty f(X) dX \nonumber \\
+		&=& \fr{1}{t} \int_t^\infty t \cdot f(X) dX \nonumber \\
+		\textrm{(as $t > 0$)} &\le& \fr{1}{t} \int_t^\infty X \cdot f(X) dX \nonumber \\
+		\textrm{(as $X \ge 0$)} &\le& \fr{1}{t} \cdot \expect[X] \nonumber
+	\end{eqnarray}
+	as needed. 
+\end{proof}
+
+\begin{corollary}
+    Let $X \ge 0$ be a random variable. For any $t > 0$, it holds that:
+	\begin{equation}
+	    \Pr[X \ge t \cdot \expect[X]] \le \fr{1}{t}.
+		\nonumber
+	\end{equation}
+\end{corollary}
+
+The above corollary is perhaps more intuitive (than Theorem~\ref{thm:markov-markov}): it says that the probability for $X$ to be $t$ times larger than its expected value is at most $1/t$.
+
+\extraspacing {\bf Example: sampling.} Consider a box of $n$ balls, each of which is either black or white. We want to know the percentage $p$ of the black balls. Each time we can look at a random ball. If we have seen $k$ balls among which $b$ balls are black, we estimate $p$ to be $b/k$. The question is how large $k$ needs to be before our estimate is close to $p$ with a probability close to 1. To facilitate analysis, let us assume that after drawing a ball, we put it back into the box, so that it may be drawn again with the same chance of any other ball. This is called {\em sampling with replacement}.
+
+At the end of the lecture, we will find a fairly good answer to the earlier question, but at this point, we will be content with the following (weaker) claim:
+
+\begin{lemma} \label{lmm:markov-samp} 
+    For any $k \ge 1$, the probability that $b/k \ge 2p$ is at most $1/2$.  
+\end{lemma}
+
+\begin{proof} 
+    Define random variable $x_i$ ($1 \le i \le k$) such that $x_i = 1$ if the $i$-th ball sampled is black, or 0 otherwise. Thus, $\Pr[x_i = 1] = p$, which implies that $\expect[x_i]=p$. Clearly, $b = \sum_{i=1}^k x_i$. Hence:
+	\begin{eqnarray}
+	    \expect[b] = \expect \left[\sum_{i=1}^k x_i \right] = \sum_{i=1}^k \expect[x_i] = kp. \nonumber
+	\end{eqnarray}
+	By Markov inequality:
+	\begin{eqnarray} 
+	    \Pr\big[b \ge 2 \cdot \expect[b]\big] &\le& 1/2 \nonumber \\
+		\Rightarrow \Pr[b \ge 2 kp] &\le& 1/2 \nonumber \\
+		\Rightarrow \Pr[b/k \ge 2 p] &\le& 1/2. \nonumber
+	\end{eqnarray}
+\end{proof}
+
+The lemma indicates that, we can over-estimate $p$ by a factor of 2 with at most 50\% probability, regardless of how many balls are sampled.
+
+\section{Chebyshev inequality} \label{sec:cheb}
+
+\begin{theorem} [Chebyshev inequality] \label{thm:cheb-cheb}
+    Let $X$ be a random variable with expectation $\mu$ and variance $\sigma^2$ (namely, $\sigma > 0$ is the standard deviation). For any $t > 0$, it holds that:
+	\begin{eqnarray} 
+	    \Pr[|X - \mu| \ge t \sigma] \le \fr{1}{t^2}.
+		\nonumber
+	\end{eqnarray}
+\end{theorem}
+
+\begin{proof}
+    \begin{eqnarray} 
+        \Pr[|X - \mu| \ge t \sigma] &=& \Pr[(X - \mu)^2 \ge t^2 \sigma^2] \nonumber 
+    \end{eqnarray}
+	As $\sigma^2 = \expect[X^2] - \expect[X]^2 = \expect[X^2] - \mu^2$, we have:
+	\begin{eqnarray}
+        \Pr[(X - \mu)^2 \ge t^2 \sigma^2] &=& \Pr[(X - \mu)^2 \ge t^2 (\expect[X^2] - \mu^2)] \nonumber
+    \end{eqnarray}
+	Define $Y = (X - \mu)^2 = X^2 - 2X \mu + \mu^2$. Thus:
+	\begin{eqnarray}
+	    \expect[Y] &=& \expect[X^2] - 2\expect[X] \mu + \mu^2 \nonumber \\
+		&=& \expect[X^2] - 2\mu^2 + \mu^2 \nonumber \\
+		&=& \expect[X^2] - \mu^2. \nonumber 
+	\end{eqnarray}
+	Hence:
+	\begin{eqnarray}
+	    \Pr[(X - \mu)^2 \ge t^2 (\expect[X^2] - \mu^2)]
+		&=&
+		\Pr\big[Y \ge t^2 \expect[Y] \big] \nonumber 
+	\end{eqnarray}
+	which is at most $1/t^2$ by Markov inequality. 
+\end{proof}
+
+The theorem says that $X$ can deviate from its expectation by at least $t$ times the standard deviation with probability at most $1/t^2$.
+
+\begin{corollary}
+    Let $X$ be a random variable with expectation $\mu$ and variance $\sigma^2$ (namely, $\sigma > 0$ is the standard deviation). For any $t > 0$, it holds that:
+	\begin{eqnarray}
+	    \Pr[|X - \mu| \ge t] \le \fr{\sigma^2}{t^2}.
+		\nonumber
+	\end{eqnarray}
+\end{corollary}
+
+\extraspacing {\bf Sampling (cont.).} We now utilize Chebyshev inequality to obtain a stronger claim about the sampling scenario described in the earlier section:
+
+\begin{lemma} \label{lmm:cheb-samp}
+    Let $\delta$ be any value satisfying $0 < \delta < 1$. With $k = \fr{1}{\eps^2 \delta}$, the probability that $|b/k - p| \le \eps$ is at least $1 - \delta$.
+\end{lemma}
+
+\begin{proof}
+	Define random variables $x_1, ..., x_k$ as in the proof of Lemma~\ref{lmm:markov-samp}. For each $i \in [1, k]$, $\expect[x_i] = p$ and $\var[x_i] = p(1-p)$. As $b = \sum_{i=1}^k x_i$ and $x_1, ..., x_k$ are mutually independent, we know:
+    \begin{eqnarray}
+        \expect[b] &=& kp \nonumber \\
+		\var[b] &=& \sum_{i=1}^k \var[x_i] = kp(1-p) \nonumber
+    \end{eqnarray}
+	Hence:
+	\begin{eqnarray}
+	    \Pr[|b/k - p| \ge \eps] &=& \Pr[|b - kp| \ge \eps k] \nonumber \\
+		\textrm{(by Chebyshev inequality)} &\le& \fr{\var[b]}{\eps^2 k^2} = \fr{kp(1-p)}{\eps^2 k^2} = \fr{p(1-p)}{\eps^2 k} \nonumber \\
+		&<& 1/(\eps^2 k) \nonumber \\
+		&=& \delta \nonumber 
+	\end{eqnarray}
+\end{proof}
+
+Note that the value of $k$ in the above lemma is {\em independent} on $n$. In other words, a fixed number of samples is sufficient to achieve the probabilistic guarantee described by the same pair of $\eps$ and $\delta$, regardless of the size of population (good news for surveying in a populous country).
+
+\section{Chernoff bound} \label{sec:chernoff} 
+
+\begin{theorem} [Chernoff bound] \label{thm:chernoff-chernoff}
+    Let $X_1, ..., X_k$ be $k$ independent random variables such that, for each $i \in [1, k]$, $X_i$ equals 1 with probability $p$, and $0$ with probability $1-p$. Let $X = \sum_{i=1}^k X_i$ and $\mu = kp$. For any $\eps$ satisfying $0 < \eps < 1$, it holds that:
+	\begin{eqnarray}
+	    \Pr \big[|X - \mu| \ge \eps \mu \big] &\le& 2e^{\fr{- \eps^2 \mu}{3}}. \nonumber
+	\end{eqnarray}
+\end{theorem}
+
+We will skip the proof, which can be found in \cite{hr90} and is a bit technically involved. Remember that this theorem demands $X_1, ..., X_k$ to be independent. When this condition is fulfilled, the Chernoff bound usually gives a tighter bound. Next, we demonstrate this in the sampling scenario of the previous sections.
+
+\extraspacing {\bf Sampling (cont.).} We will prove the following which significantly improves Lemma~\ref{lmm:cheb-samp} when $\delta$ is small.
+
+\begin{theorem} \label{thm:cheb-samp}
+    Let $\delta$ be any value satisfying $0 < \delta < 1$. With $k = \fr{3}{\eps^2} \log \fr{1}{\delta}$, the probability that $|b/k - p| \le \eps$ is at least $1 - \delta$.
+\end{theorem}
+
+\begin{proof}
+    Define random variables $x_1, ..., x_k$ as in the proof of Lemma~\ref{lmm:markov-samp}; recall that they are independent. For each $i \in [1, k]$, $\expect[x_i] = p$. As $b = \sum_{i=1}^k x_i$, we know $\expect[b] = kp$. Hence:
+	\begin{eqnarray}
+	    \Pr[|b/k - p| \ge \eps] &=& \Pr[|b - kp| \ge \eps k] \nonumber \\
+		&=& \Pr\left[|b - kp| \ge \fr{\eps}{p} kp \right] \nonumber \\
+		&=& \Pr\left[|b - \expect[b]| \ge \fr{\eps}{p} \cdot \expect[b] \right] \nonumber \\
+		\textrm{(by Chernoff bound)}
+		&=&
+		\le 2e^{- \fr{\eps^2}{3p^2} kp} \nonumber \\
+		&=& 2e^{- \fr{\eps^2 k}{3p}} \nonumber
+	\end{eqnarray}
+	To make the above at most $\delta$, we need:
+	\begin{eqnarray}
+	    k &\ge& \fr{3p}{\eps^2} \ln \fr{2}{\delta} \nonumber
+	\end{eqnarray}
+	As $p < 1$, taking $k = \fr{3}{\eps^2} \ln \fr{2}{\delta}$ guarantees the above.
+\end{proof}
+
+\bibliographystyle{abbrv}
+\bibliography{../ref}
+
+\end{document}

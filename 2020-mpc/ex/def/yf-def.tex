@@ -1,0 +1,105 @@
+
+%=== use the these packages if they are not already in use ===
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage[nocompress]{cite}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage[normalem]{ulem}
+\usepackage{wrapfig}
+%=============================================================
+
+%===== fonts =====
+\def\ttt{\texttt}
+\def\tsc{\textsc}
+
+%===== spacing =====
+
+\def\extraspacing{\vspace{3mm} \noindent}
+\def\figcapup{\vspace{-1mm}}
+\def\figcapdown{\vspace{-0mm}}
+\def\hgap{\textrm{\hspace{1mm}}}
+\def\thmvgap{\vspace{0mm}}
+\def\vgap{\vspace{1mm}}
+
+
+%===== tabbing =====
+
+\def\tab{\hspace{3mm}}
+\def\tabpos{\hspace{4mm} \= \hspace{4mm} \= \hspace{4mm} \= \hspace{4mm} \=
+\hspace{4mm} \= \hspace{4mm} \= \hspace{4mm} \= \hspace{4mm} \= \hspace{4mm}
+\kill}
+\newcommand{\mytab}[1]{\begin{tabbing}\tabpos #1\end{tabbing}}
+
+%===== blocks =====
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{problem}{Problem}
+
+\newcommand{\boxminipg}[2]{\begin{center}\fbox{\begin{minipage}{#1}#2\end{minipage}}\end{center}}
+\newcommand{\minipg}[2]{\begin{center}\begin{minipage}{#1}#2\end{minipage}\end{center}}
+\newcommand{\myitems}[1]{\begin{itemize}#1\end{itemize}}
+\newcommand{\myenums}[1]{\begin{enumerate}#1\end{enumerate}}
+\newcommand{\myfig}[1]{\begin{figure}\centering #1\end{figure}}
+\newcommand{\myfigstar}[1]{\begin{figure*}\centering #1\end{figure*}}
+
+%===== math macros =====
+
+\newcommand{\bm}[1]{\textrm{\boldmath${#1}$}}
+% \newcommand{\smat}[2]{\left[\begin{tabular}{#1}#2\end{tabular}\right]}
+% \newcommand{\bmat}[2]{\left|\begin{tabular}{#1}#2\end{tabular}\right|}
+\newcommand{\bmat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
+\newcommand{\myeqn}[1]{\begin{eqnarray}#1\end{eqnarray}}
+
+\newcommand{\myset}[1]{\{#1\}}
+
+%\def\bm{\boldmath}
+%\def\defeq{\stackrel{\textrm{\tiny{def}}}{=}}
+\def\mit{\mathit}
+\def\defeq{:=}
+\def\eps{\epsilon}
+\def\fr{\frac}
+\def\-{\mbox{-}}
+\def\real{\mathbb{R}}
+
+\def\tO{\tilde{O}}
+
+\def\lc{\lceil}
+\def\lf{\lfloor}
+\def\rc{\rceil}
+\def\rf{\rfloor}
+
+\def\nn{\nonumber}
+
+\def\Pr{\mathbf{Pr}}
+\def\expt{\mathbf{E}}
+\def\var{\mathbf{var}}
+
+\def\dcl{\{\!\!\{}
+\def\dcr{\}\!\!\}}
+\def\bigdcl{\Big\{\!\!\Big\{}
+\def\bigdcr{\Big\}\!\!\Big\}}
+\def\bigmid{\textrm{ $\Big|$ }}
+
+\def\*{\star}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\polylg}{polylg}
+\DeclareMathOperator*{\polylog}{polylog}
+\DeclareMathOperator*{\intr}{\cap}
+
+
+%===== misc =====
+
+\def\done{\qed \vspace{2mm}}	% end of proof
+\def\tbc{\hspace*{\fill} $\textrm{{\em (to be continued)}}\blacktriangle$ \vspace{2mm}}
+%\def\done{\hspace*{\fill} $\Box$}	% end of proof
+
+%===== coloring =====
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}

@@ -1,0 +1,13 @@
+\extraspacing {\bf Solution.} Iteration 1:
+\myitems{
+    \item Processing $\bm{a}$: Since $\bm{w} \cdot \bm{a} = 0$, the point is mis-classified. Hence, $\bm{w}$ changes to $(0, 0) - (1, 2) = (-1, -2)$. The point is deleted.
+
+    \item Processing $\bm{b}$: Since $\bm{w} \cdot \bm{b} < 0$, the point is correctly classified. Hence, $\bm{w}$ incurs no changes.
+
+    \item Processing $\bm{c}$: Since $\bm{w} \cdot \bm{c} < 0$, the point is mis-classified. Hence, $\bm{w}$ changes to $(-1, -2) + (2, 4) = (1, 2)$. The point is deleted.
+}
+Now the set contains only $\bm{b}$. Iteration 2 proceeds as follows:
+\myitems{
+    \item Processing $\bm{b}$: Since $\bm{w} \cdot \bm{b} > 0$, the point is mis-classified. Hence, $\bm{w}$ changes to $(1, 2) - (-2, 3) = (3, -1)$.
+}
+This is the final $\bm{w}$ returned.

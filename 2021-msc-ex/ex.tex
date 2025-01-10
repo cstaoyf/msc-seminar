@@ -1,0 +1,81 @@
+\documentclass[11pt]{article}
+\input{./def/yf-def}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{comment}
+\usepackage{ifthen}
+
+%\newboolean{solver}\setboolean{solver}{true}
+\newboolean{solver}\setboolean{solver}{false}
+\ifthenelse{\boolean{solver}}{\includecomment{sol}}{\excludecomment{sol}}
+  
+\def\extraspacing{\vspace{4mm} \noindent}   
+\def\vgap{\vspace{2mm}}   
+
+
+%===== macros =====
+\begin{document}
+
+Define $\real^2$ as the set of 2D points. We will represent a point $(x, y)$ as a 2D vector. Parameterized by a 2D vector $\bm{w}$, a linear classifier $h$ maps a point $\bm{p}$ to 1 if $\bm{w} \cdot \bm{p} \ge 0$, or $-1$ otherwise. 
+
+\extraspacing {\bf Problem 1.} In the seminar, we introduced the Perceptron algorithm for {\em online} learning. Suppose that the algorithm initially holds a linear classifier (i.e., $h_\mit{now}$) parameterized by $\bm{w} = (0, 0)$. Use the algorithm to process (in the online model) the following sequence of points: 
+
+\minipg{0.5\linewidth}{
+    point $\bm{a} = (1, 2)$, label $-1$ \\ 
+    point $\bm{b} = (-2, 3)$, label $-1$ \\
+    point $\bm{c} = (2, 4)$, label $1$ 
+}
+
+\noindent Given the value of $\bm{w}$ after processing each point. 
+
+\begin{sol}
+\extraspacing {\bf Solution.}  
+\myitems{
+    \item Processing $\bm{a}$: Since $\bm{w} \cdot \bm{a} = 0$, the point is mis-classified. Hence, $\bm{w}$ changes to $(0, 0) - (1, 2) = (-1, -2)$.
+    
+    \item Processing $\bm{b}$: Since $\bm{w} \cdot \bm{b} < 0$, the point is correctly classified. Hence, $\bm{w}$ incurs no changes.
+    
+    \item Processing $\bm{c}$: Since $\bm{w} \cdot \bm{c} < 0$, the point is mis-classified. Hence, $\bm{w}$ changes to $(-1, -2) + (2, 4) = (1, 2)$.
+}
+\end{sol}
+
+
+\extraspacing {\bf Problem 2.} What is the worst-permutation mistake bound of the Perceptron algorithm on the point set $\set{\bm{a}, \bm{b}, \bm{c}}$? Here, $\bm{a}, \bm{b}, \bm{c}$ are the same as given in Problem 1. You should assume that the algorithm {\em always} starts with $\bm{w} = (0, 0)$. 
+
+\begin{sol}
+\extraspacing {\bf Solution.} Consider how Perceptron processes the permutation $\bm{a, c, b}$: 
+\myitems{
+    \item Processing $\bm{a}$: Since $\bm{w} \cdot \bm{a} = 0$, the point is mis-classified. Hence, $\bm{w}$ changes to $(0, 0) - (1, 2) = (-1, -2)$.
+    
+    \item Processing $\bm{c}$: Since $\bm{w} \cdot \bm{c} < 0$, the point is mis-classified. Hence, $\bm{w}$ changes to $(-1, -2) + (2, 4) = (1, 2)$.
+    
+    \item Processing $\bm{b}$: Since $\bm{w} \cdot \bm{b} > 0$, the point is mis-classified. 
+}
+We can now conclude that the worst-permutation mistake bound is 3. 
+\end{sol}
+
+\extraspacing {\bf Problem 3.} We learned a method to convert Perceptron to a batch learning algorithm. Let us run the converted Perceptron algorithm on the set $\set{\bm{a}, \bm{b}, \bm{c}}$. Recall that the method runs in iterations. Assume that, in each iteration, the points remaining in the set are processed in alphabetic order. What is the final $\bm{w}$ output by the algorithm?
+
+\begin{sol}
+\extraspacing {\bf Solution.} Iteration 1:     
+\myitems{
+    \item Processing $\bm{a}$: Since $\bm{w} \cdot \bm{a} = 0$, the point is mis-classified. Hence, $\bm{w}$ changes to $(0, 0) - (1, 2) = (-1, -2)$. The point is deleted.
+    
+    \item Processing $\bm{b}$: Since $\bm{w} \cdot \bm{b} < 0$, the point is correctly classified. Hence, $\bm{w}$ incurs no changes.
+    
+    \item Processing $\bm{c}$: Since $\bm{w} \cdot \bm{c} < 0$, the point is mis-classified. Hence, $\bm{w}$ changes to $(-1, -2) + (2, 4) = (1, 2)$. The point is deleted.
+}
+Now the set contains only $\bm{b}$. Iteration 2 proceeds as follows: 
+\myitems{
+    \item Processing $\bm{b}$: Since $\bm{w} \cdot \bm{b} > 0$, the point is mis-classified. Hence, $\bm{w}$ changes to $(1, 2) - (-2, 3) = (3, -1)$.
+}
+This is the final $\bm{w}$ returned. 
+\end{sol}
+
+
+
+% 
+% \bibliographystyle{abbrv}
+% \bibliography{./ref}
+
+\end{document}

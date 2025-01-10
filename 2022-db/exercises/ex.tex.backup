@@ -1,0 +1,93 @@
+%\documentclass{...}
+
+\input{./def/yf-formatting}
+
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{latexsym}
+%\usepackage{times}
+
+
+\input{./def/yf-def}
+
+\def\extraspacing{\vspace{4mm} \noindent}
+\newboolean{solver}\setboolean{solver}{true}
+\ifthenelse{\boolean{solver}}{\includecomment{sol}}{\excludecomment{sol}}
+
+\begin{document}
+
+\section*{Exercises} 
+
+By Yufei Tao 
+
+\begin{center}
+\fbox{
+The terms and notions in the following exercises are based on the slides covered in the class.}
+\end{center}
+
+\extraspacing {\bf Problem 1.} Consider the following dataset, where a red point has label 1 and a white point has label 0:
+\begin{center}
+	\includegraphics[height=50mm]{./artwork/noisy-ds}
+\end{center}
+
+\begin{itemize}
+    \item What is the width of the dataset? 
+    \item What is the value of $k$? Recall that $k$ is the smallest error of a monotone classifier.
+\end{itemize}
+
+
+\begin{sol}
+\extraspacing {\bf Answer:} The width is 1, and $k$ = 2.
+\end{sol}
+
+
+\extraspacing {\bf Problem 2.} Suppose that we randomly pick a point $p$ from the dataset, probe its label, and then guess the labels of {\em some} other points in the following way: 
+\begin{itemize} 
+    \item If the label of $p$ is 0, make a guess of ``label 0'' on every point that $p$ dominates (recall that a point dominates another point if the former has a larger x-coordinate and a larger y-coordinate). 
+    
+    \item Otherwise, make a guess of ``label 1'' on every point that dominates $p$.
+\end{itemize}
+Answer the following questions: 
+\begin{itemize} 
+    \item What is the probability that we make a guess on the point $q$ as shown in the figure? 
+    
+    \item What is the probability that we make a wrong guess on $q$? That is, we make a guess on $q$, and the guess turns out to be ``label 0''. 
+\end{itemize}
+
+\begin{sol}
+\extraspacing {\bf Answer:} 
+\begin{center}
+        \includegraphics[height=50mm]{./artwork/noisy-ds2}
+\end{center}
+\begin{itemize} 
+    \item We make a guess on $q$ only if $p = a, b,$ or $c$. The probability for this to happen is $3/12 = 1/4$. 
+    
+    \item We make a wrong guess on $q$ only if $p = c$. The probability for this to happen is $1/12$.
+\end{itemize}
+\end{sol}
+
+\extraspacing {\bf Problem 3.} In this problem, we will consider a simple version of the ``attrition-and-elimination game''. $S$ is the set of integers from $1$ to $n$ where $n \ge 2$. Suppose that we repeat the following operations: 
+\begin{itemize} 
+    \item Randomly pick an integer $x$ in $S$, and remove from $S$ all integers $y \ge x$. 
+\end{itemize}
+Prove that $S$ becomes empty after in expectation $O(\log n)$ operations. 
+
+\begin{sol}
+\extraspacing {\bf Answer:} Let $f(n)$ be the expected number of operations needed to obtain an empty $S$. We will prove that $f(n) \le 1 + \log_2 n$. This is true for $n = 1$ because clearly $f(1) = 1$. 
+
+\vgap 
+
+Inductively, assuming that this is true for all $n \le m$, we will prove the claim for $n = m$. Observe that if $x = i$, it will remove $n - i + 1$ integers from $S$. After that, $S$ contains only $i - 1$ integers for the next operation. This implies the following recursion: 
+\begin{eqnarray}
+    f(n) &=& \fr{1}{n} \sum_{i=0}^{n-1} f(m-1) \nn \\ 
+    &\le& \fr{1}{n} \sum_{i=0}^{n-1} (1 + \log_2 (m-1)) \nn \\
+\end{eqnarray}
+
+\end{sol}
+
+%\bibliographystyle{abbrv}
+%\bibliography{../ref}
+
+\end{document}

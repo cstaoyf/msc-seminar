@@ -1,0 +1,6 @@
+   \extraspacing {\bf Solution.} Let $x$ and $y$ be the number of red and blue elements Machine 1 sees, respectively. Thus, $x + y \le n + L$. The number of pairs that can be produced by Machine 1 is $xy$. We have:
+   \myeqn{
+        \sqrt{xy} &\le& (x+y)/2 \hspace{10mm} \Rightarrow \nn \\
+        xy &\le& ((x+y)/2)^2 \hspace{10mm} \Rightarrow \nn \\
+        &=& \left(\fr{n+L}{2}\right)^2. \hspace{10mm} \nn
+   }

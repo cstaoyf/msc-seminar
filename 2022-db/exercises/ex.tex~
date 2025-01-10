@@ -1,0 +1,248 @@
+%\documentclass{...}
+
+\input{./def/yf-formatting}
+
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{latexsym}
+%\usepackage{times}
+
+
+\input{./def/yf-def}
+
+\def\extraspacing{\vspace{4mm} \noindent}
+\newboolean{solver}\setboolean{solver}{false}
+\ifthenelse{\boolean{solver}}{\includecomment{sol}}{\excludecomment{sol}}
+
+\begin{document}
+
+\section*{CMSC5724: Exercise List 1 }
+
+\extraspacing {\bf Problem 1.} Assume that we have the following training set:
+\begin{center}
+	\begin{tabular}{ccc||c}
+		{\bf refund} & {\bf marital} & {\bf income} & {\bf cheat} \\
+		\hline yes & single & 125 & no \\
+		\hline no & married & 100 & no \\
+		\hline no & single & 70 & no \\
+		\hline yes & married & 120 & no \\
+		\hline no & divorced & 95 & yes \\
+		\hline no & married & 60 & no \\
+		\hline yes & divorced & 220 & no \\
+		\hline no & single & 85 & yes \\
+		\hline no & married & 75 & no \\
+		\hline no & single & 90 & yes
+	\end{tabular}
+\end{center}
+
+In the above table, {\em cheat} is the class attribute, whereas the other columns are the describing attributes. In the following questions, all Gini values are with respect to the class attribute.
+
+\extraspacing (i) What is the Gini value of the original table?
+
+\begin{sol}
+\extraspacing {\bf Answer:} The Gini value equals $1 - p_y^2 - p_n^2$ where $p_y$ ($p_n$) is the percentage of the yes (no) records. Here, $p_y = 0.3$ and $p_n = 0.7$. Hence, the Gini value is $1 - 0.09 - 0.49 = 0.42$.
+\end{sol}
+
+\extraspacing (ii) Now let us create the first internal node in our decision tree. Recall that our algorithm does so by looking for the best split, for which purpose the algorithm examines each dimension in turn. Let us consider first attribute {\em refund}. Since this is a binary attribute, there is only one possible split. What is the Gini of this split?
+
+\begin{sol}
+\extraspacing {\bf Answer:} Consider the following table:
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf refund} \\
+		& yes & no \\
+		\hline yes & 0 & 3 \\
+		no & 3 & 4 \\
+		\hline total & 3 & 7
+	\end{tabular}
+\end{center}
+
+The table should be read as follows. Suppose that we split by {\em refund}, which creates a left (right) child for {\em refund} = yes and no, respectively. Then, the left child contains 3 records, among which 0 (3) satisfy {\em cheat} = yes (no). Hence, $\textrm{GINI(left)} = 1 - (0/3)^2 - (3/3)^2 = 0$. The right child contains 7 records, among which 3 (4) satisfy {\em cheat} = yes (no). Hence, $\textrm{GINI(right)} = 1 - (3/7)^2 - (4/7)^2 = 0.490$. Recall that, in general, the {\em Gini of the split} equals:
+\begin{eqnarray}
+	\fr{n_{\mathit{left}}}{n} \cdot \textrm{GINI(left)} + \fr{n_{\mathit{right}}}{n} \cdot \textrm{GINI(right)} \nn
+\end{eqnarray}
+where $n_{\mathit{left}}$ ($n_{\mathit{right}}$) is the number of records in the left (right) child, and $n = n_{\mathit{left}} + n_{\mathit{right}}$. Therefore, the Gini of the above split equals $(3/10) \cdot 0 + (7/10) \cdot 0.490 = 0.343$.
+\end{sol}
+
+\extraspacing (iii) Let us now focus on attribute {\em marital}. How many splits are possible on this attribute? Which one is the best one, and what is its Gini?
+
+\begin{sol}
+\extraspacing {\bf Answer:} There are 3 splits, each of which is illustrated by a table below:
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf marital} \\
+		& \{single\} & \{married, divorced\} \\
+		\hline yes & 2 & 1 \\
+		no & 2 & 5 \\
+		\hline total & 4 & 6 \\
+		\hline & \multicolumn{2}{c}{Gini of split = 0.367}
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf marital} \\
+		& \{married\} & \{single, divorced\} \\
+		\hline yes & 0 & 3 \\
+		no & 4 & 3 \\
+		\hline total & 4 & 6 \\
+		\hline & \multicolumn{2}{c}{Gini of split = 0.3}
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf marital} \\
+		& \{divorced\} & \{single, married\} \\
+		\hline yes & 1 & 2 \\
+		no & 1 & 6 \\
+		\hline total & 2 & 8 \\
+		\hline & \multicolumn{2}{c}{Gini of split = 0.4}
+	\end{tabular}
+\end{center}
+
+The best split is the second one.
+\end{sol}
+
+\extraspacing (iv) Repeat the above for attribute {\em income}.
+
+\begin{sol}
+\extraspacing {\bf Answer.} There are 9 splits, as shown below:
+
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf income} \\
+		& $\le 60$ & $> 60$ \\
+		\hline yes & 0 & 3 \\
+		no & 1 & 6 \\
+		\hline & \multicolumn{2}{c}{Gini of split = 0.4}
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf income} \\
+		& $\le 70$ & $> 70$ \\
+		\hline yes & 0 & 3 \\
+		no & 2 & 5 \\
+		\hline & \multicolumn{2}{c}{Gini of split = 0.375}
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf income} \\
+		& $\le 75$ & $> 75$ \\
+		\hline yes & 0 & 3 \\
+		no & 3 & 4 \\
+		\hline & \multicolumn{2}{c}{Gini of split = 0.342}
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf income} \\
+		& $\le 85$ & $> 85$ \\
+		\hline yes & 1 & 2 \\
+		no & 3 & 4 \\
+		\hline & \multicolumn{2}{c}{Gini of split = 0.417}
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf income} \\
+		& $\le 90$ & $> 90$ \\
+		\hline yes & 2 & 1 \\
+		no & 3 & 4 \\
+		\hline & \multicolumn{2}{c}{Gini of split = 0.4}
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf income} \\
+		& $\le 95$ & $> 95$ \\
+		\hline yes & 3 & 0 \\
+		no & 3 & 4 \\
+		\hline & \multicolumn{2}{c}{Gini of split = 0.3}
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf income} \\
+		& $\le 100$ & $> 100$ \\
+		\hline yes & 3 & 0 \\
+		no & 4 & 3 \\
+		\hline & \multicolumn{2}{c}{Gini of split = 0.342}
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf income} \\
+		& $\le 120$ & $> 120$ \\
+		\hline yes & 3 & 0 \\
+		no & 5 & 2 \\
+		\hline & \multicolumn{2}{c}{Gini of split = 0.375}
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{c||c|c}
+		{\bf cheat} & \multicolumn{2}{c}{\bf income} \\
+		& $\le 125$ & $> 125$ \\
+		\hline yes & 3 & 0 \\
+		no & 6 & 1 \\
+		\hline & \multicolumn{2}{c}{Gini of split = 0.4}
+	\end{tabular}
+\end{center}
+
+The best one is to split at 95.
+\end{sol}
+
+\extraspacing (v) Considering all dimensions, which one is the best split? What is its Gain? Recall that the {\em Gain} of a split equals the difference between (a) Gini value before the split and (b) the Gini of the split.
+
+\begin{sol}
+\extraspacing {\bf Answer.} Actually 2 splits are equally the best, i.e., the best splits in (iii) and (iv), respectively. The Gini of each split is 0.3. Hence, its Gain is $0.42 - 0.3 = 0.12$. By the way, in this case, the decision tree construction algorithm will pick one of the two splits randomly to create the root.
+\end{sol} 
+
+\extraspacing {\bf Problem 2.} Consider a classification problem where there is only one describing attribute $A$ and one class attribute $B$. Both $A$ and $B$ have binary domains. Specifically, $A$ has two values $a_0$ and $a_1$ while $B$ has two values {\em yes} and {\em no}. We want to build a decision tree such that given a person, by looking at her/his $A$ value, we predict her/his class label.
+
+\vgap 
+
+Suppose that we already know the following statistics: 
+\begin{itemize} 
+    \item 90\% of the population have $A$ value $a_0$. 
+    \item Among those people with $A = a_0$, 70\% belong to the {\em yes} class. 
+    \item Among those people with $A = a_1$, 70\% belong to the {\em no} class. 
+\end{itemize}
+We can assume that each person to be classified is randomly picked from the population. Answer the following questions. 
+
+\extraspacing (i) What is the error probability of the following decision tree (which contains only one leaf)? 
+
+\begin{center} 
+    \includegraphics[height=6mm]{./artwork/dec2.eps} 
+\end{center}
+
+\begin{sol} 
+\extraspacing {\bf Answer.} This tree makes a mistake in classification when a person belongs to the {\em no} class. The probability for a random person to belong to this class equals $0.9 \cdot 0.3 + 0.1 \cdot 0.7 = 0.34$. 
+\end{sol}
+
+\extraspacing (ii) What is the error probability of the following decision tree? 
+
+\begin{center} 
+    \includegraphics[height=18mm]{./artwork/dec2b.eps} 
+\end{center}
+
+\begin{sol} 
+\extraspacing {\bf Answer.} This tree makes a mistake in classification when (i) a person has $A = a_0$ but belongs to the {\em yes} class, or (ii) a person has $A = a_1$ but belongs to the {\em no} class. The probability that (i) happens is $0.9 \cdot 0.7 = 0.63$, while the probability that (ii) happens is $0.1 \cdot 0.7 = 0.07$. Therefore, the mis-classification probability is $0.63 + 0.07 = 0.7$.  
+\end{sol}
+
+%\bibliographystyle{abbrv}
+%\bibliography{../ref}
+
+\end{document}

@@ -1,0 +1,50 @@
+#-----------------------------
+# yufei's 
+# latex compiler script
+
+# dates of updates: 
+# 2011-11-09
+# 2012-07-10, 11
+# 2013-07-16
+# 2015-11-6
+#-----------------------------
+
+fn1=$1
+fn=${fn1%.tex}
+
+#echo $fn
+
+#op=$2 
+#echo $op
+
+if [ "$2" != "clean" ] 
+then
+	pdf=1
+	rm ${fn}.bbl
+	latexmk -pdf ${fn}.tex
+	#dvips ${fn}.dvi -t letter 
+	if [ $pdf -eq 1 ]
+	then
+	    if [ "$2" != "quick" ] 
+	    then 
+		echo "final touch..."
+	     	pdftops ${fn}.pdf
+	     	ps2pdf -dPDFSETTINGS=/prepress -dSubsetFonts=true -dEmbedAllFonts=true -dMaxSubsetPct=100 -dCompatibilityLevel=1.4 ${fn}.ps
+	    	exiftool -Author="" -Title="" -Creator="" -Subject="" -Keywords="" -Producer="" ${fn}.pdf -overwrite_original
+	    else
+		echo "quick mode"
+	    fi
+	fi
+else
+	echo clean mode
+fi 
+
+rm ${fn}.blg
+rm ${fn}.ps
+rm ${fn}.dvi
+rm ${fn}.log
+rm ${fn}.aux
+rm ${fn}.fdb_latexmk
+
+
+

@@ -1,0 +1,24 @@
+\input{../def/yf-formatting}
+
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+
+\input{../def/yf-math-def}
+
+\begin{document}
+
+\noindent These are the questions from Yufei's lecture.
+
+\extraspacing {\bf Question 1 (5\%).} Given two points $o, o'$, let us define that $o$ {\em dominates} $o'$ if the coordinate of $o$ is smaller than that of $o'$ on each dimension. By this definition, what is the skyline of the dataset shown in the figure below?
+
+\begin{center}
+    \includegraphics[height=60mm]{./artwork/ds.eps}
+\end{center}
+
+%\noindent {\bf Answer:} $\{o_1, o_2, o_8\}$.
+
+\extraspacing {\bf Question 2 (5\%).} Recall that the {\em SFS} algorithm works by first sorting all the data points according to a scoring function $f(x, y)$. Let the function be $f(x, y) = x$. For example, a point $(5, 4)$ has score 5. In other words, {\em SFS} processes the data points in ascending order of their scores. For each point $o$, its processing requires comparing $o$ to some other points. In the dataset shown in the above figure, when point $o_3$ is being processed, which point or points is $o_3$ compared to?
+
+%\extraspacing {\bf Answer:} $\{o_1, o_2\}$.
+
+\end{document}

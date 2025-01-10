@@ -1,0 +1,324 @@
+%\documentclass{...}
+\input{./def/yf-formatting}
+\input{./def/yf-math-def}
+
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx}
+%\usepackage{times}
+
+\def\real{\mathbb{R}}
+
+\begin{document}
+%\begin{sloppy}
+
+\title{Persistent B-tree Revisited: \\Building Optimal Persistence in Optimal
+I/Os}
+
+\date{}
+
+\maketitle
+
+\begin{abstract}
+  Points to talk about: Arge, Danner and Teh mentioned gave
+  a persistent B-tree for solving the planar point location problem
+  problem optimally. Their structure requires $O(N \log_B N)$ I/Os to build.
+
+  Our contributions: (i) settles an open problem, (ii) gives a simpler
+  solution to the end-point-dominance problem, (iii) first semi-dynamic
+  structure for solving the k-shooting problem, and (iv) first query-optimal
+  structure that can be built in optimal time.
+\end{abstract}
+
+\thispagestyle{empty}
+\pagebreak
+
+\section{Introduction} \label{sec:intro}
+
+A data structure is usually {\em ephemeral} because, after an insertion or a
+deletion, the structure evolves into its new version without having its
+previous version preserved. {\em Partial persistence}, proposed by
+Driscoll et al.\ \cite{dsst89}, is a technique that converts an ephemeral
+structure to its (partially) persistent counterpart. Specifically, a
+{\em persistent structure} can be thought of as a complete log of all the
+historical versions of an ephemeral structure, such that any of those versions
+can be queried efficiently. Such structures have proven useful in attacking a
+large variety of problems in internal memory (see, for example, \cite{dsst89,
+st86, ???}).
+
+In this paper, we focus on the {\em external memory} (EM) model
+which was introduced by Aggarwal and Vitter \cite{av88}, and has been
+successful in capturing the characteristics of I/O-bound algorithms. A machine
+of this model has memory of $M$ words and a disk that has been formatted into
+disjoint {\em blocks} of size $B$ words. The memory has the capacity of at
+least two blocks, that is, $M \ge 2B$. The computation time is measured as the
+number of I/Os performed, while space consumption is measured as the number of
+blocks occupied.
+
+Becker et al.\ \cite{bgo+96} are the first to show how to make the B-tree
+persistent in EM. Given $N$ updates (a mixture of insertions and deletions),
+their structure consumes linear space $O(N/B)$, and allows many types of queries
+to be answered in optimal\footnote{All optimality in this paper is claimed in
+the comparison model.} I/Os. As observed in \cite{adt03}, however, the
+persistent B-tree relies on what we call the {\em universal comparability
+assumption}: all the data items stored in the structure must be (i) mutually
+comparable, and (ii) comparable to all the possible query items. This
+implies that all the ephemeral B-trees are in fact indexing one,
+unique, total order. The assumption rules out the application of the persistent
+B-tree to several problems, an example of which is the {\em planar point
+location} problem, which as observed by Sarnak and Tarjan \cite{st86} can be
+elegantly settled in internal memory with a persistent binary tree.
+
+% For instance, given a query item $o$
+% and a timestamp $t$, the predecessor of $o$ in the (ephemeral) B-tree of time
+% $t$ can be retrieved in $O(\log_B N)$ I/Os. As another example, given items
+% $o, o'$ and a $t$ as defined before, all the items, which are in the range
+% $[o,
+% o']$ and were stored in the B-tree of time $t$, can be reported in the sorted
+% order by performing $O(\log_B N + K/B)$ I/Os, where $K$ is the number of
+% qualifying items. The structure can be constructed in $O(\frac{N}{B}
+% \log_{M/B}
+% \frac{N}{B})$ I/Os \cite{a03, gtvv93} , which is again optimal, as can be
+% established with a simple reduction from sorting (see \cite{av88} for the
+% lower
+% bound of sorting in EM).
+
+Arge, Danner and Teh \cite{adt03} presented an alternative version of the
+persistent B-tree that eliminates the universal comparability assumption.
+Their structure solves the planar point location problem by occupying linear
+space and answering a query in logarithmic I/Os. Its sub-optimality, however,
+lies in the construction time. In \cite{adt03}, an algorithm is given to build
+the structure in $O(N \log_B \frac{N}{M})$ I/Os, which exceeds the lower bound
+of sorting \cite{av88} by a factor of $\Omega(B)$. Arge, Danner and Teh left the
+discovery of an optimal construction algorithm as a ``challenging'' and ``major
+open problem'' \cite{adt03}, which remains elusive up to this day.
+
+\extraspacing{\bf Problem definitions.} Next we formally define the problem
+tackled in this paper. Let $S$ be a set of items, which is initially empty, and
+then modified by updates, each of which either inserts a new item or
+deletes an existing item. For convenience, we say that the $t$-th update
+happens at timestamp $t$. The {\em lifespan} of an item is defined to be
+$[t_{ins}, t_{del} - 1]$, where $t_{ins}$ ($t_{del}$) is the
+time when the item is inserted (deleted). Clearly, two items were ever present
+in $S$ together if and only if their lifespans have a non-empty intersection. At
+any moment, there is a total order on the items in $S$. No such requirement,
+however, exists on items that never appeared in $S$ at the same time. In other
+words, two items having disjoint lifespans may be incomparable.
+
+Denote by $S(t)$ the contents of $S$ at time $t$.
+Given two items $o, o'$ in $S(t)$, we say that $o$ is {\em smaller} than
+$o'$ if the former ranks earlier in the total order on $S(t)$, or {\em larger}
+otherwise. Given $N$ updates, the goal is to construct a data structure to
+support the following queries
+\begin{itemize}
+
+	\item {\bf Streamed predecessors search:} Given a timestamp $t \in [1, N]$
+and a query item $o$, report in {\em descending order} the items in $S(t)$ that
+are no larger than $o$, until the algorithm is manually terminated. Item $o$ may
+not belong to $S(t)$, but needs to be
+comparable to the items of $S(t)$, although $o$ can be incomparable to any
+item outside $S(t)$.
+
+\end{itemize}
+
+The ``manual termination'' in the above definition can occur due to
+arbitrary predicates, which allows us to use streamed-predecessors queries to
+achieve various purposes, some examples of which are:
+
+\begin{itemize}
+
+	\item {\bf \boldmath$k$-predecessors:} Given a timestamp $t \in [1,
+N]$, a query item $o$ and a value of $k$, report in descending order the $k$
+largest items in $S(t)$ that are no larger than $o$. To do so, simply run a
+streamed-predecessor query, and stop as soon as $k$ items have been reported.
+
+	\item {\bf Range searching:} Given a timestamp $t \in [1, N]$ and two items
+$o_1, o_2$, report in the sorted order all the items $S(t)$ that are
+no smaller than $o_1$ and no larger than $o_2$. To do so, run a
+streamed-predecessor query with $o_2$, and stop as soon as an item smaller
+than $o_1$ is retrieved.
+
+\end{itemize}
+
+Our setup of 1-predecessor search is exactly the problem tackled by the
+persistent B-tree of Arge, Danner and Teh
+\cite{adt03}.
+
+% While the above definitions make no assumption on the type of data in $S$, we
+% find it more intuitive to explain our techniques in a specific context. As in
+% \cite{adt03}, we consider a set $G$ of $N$ segments in $\real^2$ that are
+% disjoint, except possibly touching each other at the endpoints. The goal is to
+% preprocess $G$ to support the following queries:
+% \begin{itemize}
+%
+% 	\item {\bf \boldmath$K$-shooting:} Given a point $q$, report the
+% highest $K$ segments intersecting a vertical ray emanating from $q$ downwards.
+% The result segments need to be output in the top-down order. For $K = 1$, the
+% problem degenerates into the standard {\em vertical ray-shooting} problem.
+%
+% 	\item {\bf Segment intersection:} Given a vertical line segment $q$,
+% report all the segments of $G$ intersecting $q$ in the top-down order.
+%
+% \end{itemize}
+%
+% With a standard plane-sweep approach \cite{st86}, the $K$-shooting (segment
+% intersection) problem can be easily converted to the $K$-predecessor (range
+% searching) problem. More specifically, the lifespan of a
+% segment in $G$ is its projection on the x-dimension. $S(t)$ includes all the
+% segments in $G$ that intersect a vertical sweeping line $\ell$ crossing the
+% $x$
+% axis at $t$. The total order on $S(t)$ is the top-down order of the
+% intersections of those segments with $\ell$. A $3$-shooting (segment
+% intersection) query is illustrated in Figure~\ref{???}a (\ref{???}b).
+
+\extraspacing {\bf Previous results.} For convenience, we will use $K$ to
+denote the number of items reported in a streamed-predecessor query at the time
+it is terminated.
+
+The universal comparability assumption essentially demands that all the items
+in $\bigcup_t S(t)$ be (i) mutually comparable, and (ii) comparable
+to all the possible query items. Under this assumption, the persistent B-tree
+of Becker et al.\ \cite{bgo+96} can solve a streamed-predecessors query
+optimally. Namely, the structure has linear (i.e., $O(N/B)$) size, and answers a
+query in $O(\log_B N + K/B)$ I/Os. Using the distribution sweep technique
+\cite{gtvv93} or the buffer-tree technique
+\cite{a03}, the persistent B-tree can be constructed in $O(\frac{N}{B}
+\log_{M/B} \frac{N}{B})$ I/Os, which is again optimal, as can be established
+with a simple reduction from sorting. Varman and Verma \cite{vv97} presented a
+similar structure but improving the performance by a constant factor.
+
+As explained in \cite{adt03}, the methods of \cite{bgo+96, vv97} no longer work
+when the universal comparability assumption does not hold. The persistent B-tree
+of Arge, Danner and Teh \cite{adt03}, referred to as the {\em ADT-tree}
+from now on, remedies the drawback. Their solution uses linear space and
+guarantees the optimal query time $O(\log_B N + K/B)$ for streamed-predecessors
+search. Unfortunately, as mentioned before, the ADT-tree requires $O(N
+\log_B \frac{N}{M})$ I/Os to build \cite{adt03}, which is an $\Omega(B)$-factor
+away from being optimal.
+
+% The past decade has witnessed significant progress in the study of managing
+% segments in external memory. Closest to our paper is the work of \cite{aabv99,
+% abr08, av04}, which deals with the vertical ray-shooting problem in the
+% presence
+% of dynamic updates. The solutions there all incur suboptimal query cost, and
+% hence, are outperformed by the ADT-tree in the static setting. Also, it
+% remains unclear how those solutions can be adapted to solve the
+% $K$-predecessor
+% and segment intersection problems, where the difficulty appears to be
+% respecting
+% the required output ordering. Finally, all those structures are tailored made
+% for segment data, and are inapplicable to the $K$-predecessor and range
+% searching problems.
+
+\extraspacing {\bf Our results, methods and their applications.} Our main
+contribution is to settle the open problem left in \cite{adt03}. We show that
+it is possible to build an optimal persistent B-tree using optimal I/Os even in
+the absence of the universal comparability assumption. This is elaborated in the
+following theorem:
+
+\begin{theorem} \label{thm:intro-main}
+
+Given $N$ updates as defined earlier, we can construct a persistent B-tree
+in $O(\frac{N}{B} \log_{M/B} \frac{N}{B})$ I/Os, such that a
+streamed-predecessors query can be answered in $O(\log_B N + K/B)$ I/Os, where
+$K$ is the number of items reported when the query is terminated.
+
+After the structure has been constructed, each insertion and deletion can be
+performed in $O(\log_B |S|)$ I/Os, where $S$ is the set of items that have been
+inserted but not yet deleted. At any point, a streamed-predecessors query can
+be answered in
+$O(\log_B N_{now} + K/B)$ I/Os, where $N_{now}$ is the number of items stored
+in the structure currently.
+
+\end{theorem}
+
+There are two main ideas behind our technique of reducing the construction cost
+to match the lower bound. To explain the first idea, we need to mention that,
+to remove the universal comparability assumption, the ADT-tree
+\cite{adt03} adopts a {\em duplication-free} representation of the (ephemeral)
+B-trees. Specifically, in each B-tree, every item is stored only once, which
+means that some items reside at the internal levels. This is in contrast to
+having a copy of each item at the leaf level, and duplicating some items at the
+internal levels (the approach taken in the persistent B-tree of Becker et
+al.\ \cite{bgo+96}). While successfully overcoming the universal comparability
+assumption, the duplication-free representation has the drawback of allowing the
+number of internal nodes to go up to
+$\Omega(N/B)$ in the ADT-tree. In the structure of
+\cite{bgo+96}, this number can be kept to be $O(N/B^2)$, as turns out to be
+essential in building the tree efficiently. We remedy this drawback of the
+ADT-tree by describing how to create an ADT-tree with only
+$O(N/B^2)$ internal nodes. The core of our method is a new strategy of
+handling a node split, which decides the splitting item as the item with the
+maximum deletion time among a set of selected items. This strategy appears to
+be particularly suited for persistent structures, and is of independent
+interest.
+
+The second idea of the proposed technique is to use a large capacity of
+$\Theta(\frac{N}{M/B})$ for the leaf nodes of the persistent tree. Intuitively,
+this
+ensures that the tree can have $O(M/B)$ leaf nodes, so that we can afford to
+assign one memory block to each leaf node. We will see that this memory block
+is sufficient for us to carry out all the insertions in linear I/Os. Then, this
+method is recursively applied, yielding a recursive structure with depth
+$O(\log_{M/B} \frac{N}{B})$, which in a post-processing step can be efficiently
+turned into an ADT-structure. Overall, we end up paying linear I/Os at each
+level, thus achieving the optimal building cost.
+
+The streamed predecessors problem makes no assumption on the {\em type} of data
+items. Readers familiar with the database literature would notice quickly that
+the problem has significance in {\em transaction time databases} \cite{st99}.
+Furthermore, it can be specialized into several other problems where data have
+more concrete nature. Notable examples involve problems related to
+managing non-intersecting segments in 2d space, which arise when one needs to
+deal with, for example, a planar subdivision. Although the past decade has
+witnessed major progress in indexing such segments in external memory
+\cite{aabv99, abr08, av04}, Theorem~\ref{thm:intro-main} still points to some
+new results:
+\begin{itemize}
+
+	\item {\bf Static planar point-location.} The theorem gives the first
+optimal structure for answering point-location queries that can be
+constructed in optimal I/Os (the solutions of \cite{aabv99, abr08, av04} have
+suboptimal query time).
+
+	\item {\bf Semi-dynamic order-sensitive segment intersection.} Let $S$ be a
+set of non-intersecting segments. The goal of this problem is to maintain $S$ in
+a structure along with insertions, such that given a vertical segment $q$, we
+can report, in the bottom-up order, the segments in $S$ intersecting $q$.
+Theorem~\ref{thm:intro-main} solves the static version of this problem
+optimally. With the external logarithmic method \cite{av04}, we obtain a
+semi-dynamic structure that has linear space, supports an insertion in
+$O(\log^2_B |S|)$ I/Os, and answers a query in $O(\log^2_B |S| + K/B)$ I/Os
+($K$ is the number of reported segments), under the {\em tall-cache assumption}
+that $M \ge B^{1+\eps}$ \cite{av04}. It seems to be non-trivial to adapt the
+solutions of \cite{aabv99, abr08, av04} to achieve the same performance, with
+the difficulty being to respect the output order.
+
+\end{itemize}
+
+As a side product, we will show that the proposed technique leads to
+a simple solution to:
+\begin{itemize}
+
+	\item {\bf Batched planar point-location.} Let $S$ be a set of $N$
+non-intersecting segments that define a planar subdivision. Let $P$ be a set of
+$T$ points. The goal is to find, for each point in $P$, the
+cell of the subdivision that contains it.
+
+\end{itemize}
+This problem has been optimally settled in $O(\frac{N}{B} \log_{M/B}
+\frac{N}{B} + \frac{T}{B} \log_{M/B} \frac{T}{B})$ I/Os by Arge, Vengroff and
+Vitter \cite{avv07}. Their algorithm, which combines the external versions
+of the segment tree the fractional cascading, is quite complex. We will show
+that the problem can be alternative solved (in the optimal cost) by slightly
+modifying our algorithm for building a persistent tree. The final algorithm is
+considerably different from that of \cite{avv07} and thus reveals new
+insight
+into the problem.
+
+\section{Preliminary: the ADT-tree} \label{sec:pre}
+
+\bibliographystyle{abbrv}
+\bibliography{./ref}
+
+%\end{sloppy}
+\end{document}

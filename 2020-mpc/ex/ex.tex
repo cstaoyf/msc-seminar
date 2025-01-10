@@ -1,0 +1,62 @@
+%\documentclass{...}
+
+\input{./def/yf-formatting}
+
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{comment} 
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{latexsym}
+%\usepackage{times}
+
+\input{./def/yf-def}
+
+\newboolean{solver}\setboolean{solver}{false}
+%\newboolean{solver}\setboolean{solver}{true}
+\ifthenelse{\boolean{solver}}{\includecomment{sol}}{\excludecomment{sol}}
+
+
+\begin{document}
+
+\section*{Exercises}
+
+\extraspacing {\bf Problem 1.} Which of the following can be a property of a minimal sorting algorithm? 
+
+
+\vgap
+
+\noindent A.\ It performs $O(\log n)$ supersteps, where $n$ is the number of elements to sort. \\
+\noindent B.\ It requires a machine to send $O(n/p^{0.99})$ words in some superstep. \\
+\noindent C.\ It requires a machine to spend $O((n/p) \log (n/p))$ CPU time in some superstep. \\
+\noindent D.\ It requires a machine to use $O(n/p^{0.99})$ space in some superstep. 
+
+\begin{sol}
+   \extraspacing {\bf Solution.} C.
+\end{sol}
+
+
+\extraspacing {\bf Problem 2.} In the seminar, we introduced a minimal algorithm for sorting. Assuming that each machine has $n/p$ elements in its local storage at the beginning of the algorithm, answer the following questions: 
+\myitems{
+    \item [(a)] In Phase 1, how many elements are sampled from each machine in expectation? 
+    \item [(b)] Still in Phase 1, how many elements does each machine {\em receive} in expectation?
+}
+
+\begin{sol}
+   \extraspacing {\bf Solution.} (a) Since each element is sampled with probability $(p/n) \ln(np)$, the expected number of elements sampled is $(n/p) \cdot (p/n) \ln(np) = \ln(np)$. 
+   
+   \vgap 
+   
+   (b) Each machine receives the sample elements from all other machines. Therefore, it receives $(p-1) \ln(np)$ elements in expectation. 
+\end{sol}
+
+\extraspacing {\bf Problem 3.} In our argument for proving the lower bound on the load of the cartesian product problem, we had the sentence: ``Machine 1 sees $n + L$ elements overall $\Rightarrow$ it can produce at most $(\fr{n+L}{2})^2$ pairs.'' Give a proof of the sentence.
+
+\begin{sol}
+   \extraspacing {\bf Solution.} Let $x$ and $y$ be the number of red and blue elements Machine 1 sees, respectively. Thus, $x + y \le n + L$. The number of pairs that can be produced by Machine 1 is $xy$. We have: 
+   \myeqn{
+        \sqrt{xy} &\le& (x+y)/2 \hspace{10mm} \Rightarrow \nn \\
+        xy &\le& ((x+y)/2)^2 \hspace{10mm} \Rightarrow \nn \\ 
+        &=& \left(\fr{n+L}{2}\right)^2. \hspace{10mm} \nn 
+   }
+\end{sol}
+\end{document}

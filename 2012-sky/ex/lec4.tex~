@@ -1,0 +1,180 @@
+%\documentclass{...}
+
+\input{../def/yf-formatting}
+
+\usepackage{amsfonts, amsmath, amsthm}
+\usepackage{graphicx}
+%\usepackage{times}
+
+\input{../def/yf-math-def}
+
+\def\U{\mathcal{U}}
+\def\H{\mathcal{H}}
+
+\begin{document}
+
+\section*{Lecture Notes: Flajolet-Martin Sketch}
+
+\noindent Yufei Tao \\
+Chinese University of Hong Kong \\
+{\em taoyf@cse.cuhk.edu.hk}\\
+
+\noindent 12 Feb, 2012
+
+\section{Distinct element counting problem} \label{sec:dec}
+
+Let $S$ be a {\em multi-set} of $N$ integers, namely, two elements of $S$ may be identical. Each integer is in the range of $[0, D]$ where $D$ is some polynomial of $N$. The {\em distinct element counting problem} is to find out exactly how many distinct elements there are in $S$. We will use $F$ to denote the answer. For example, given $S = \{1, 5, 10, 5, 15, 1\}$, $F = 4$.
+
+\vgap
+
+Clearly, using $O(N)$ words of space, the problem can be solved easily in $O(N \log N)$ time by sorting, or $O(N)$ expected time with hashing. In many applications, however, the amount of space at our disposal can be much smaller. In this lecture, we consider that we are allowed only $O(\log N)$ {\em bits}. Hence, our goal is to obtain an approximate answer $\tilde{F}$ whose accuracy has a probabilistic guarantee.
+
+\vgap
+
+We will learn a structure proposed by Flajolet and Martin \cite{fm83} that can achieve this purpose by seeing each element of $S$ only {\em once}. We will name the structure the {\em FM-sketch} after the inventors. Let $w$ be the smallest integer such that $2^w \ge N$, that is, $\lceil w = \log N \rceil$. For simplicity, we assume that there is an ideal hash function $h$ which maps each integer $k \in S$ independently to a hash value $h(k)$ that is distributed uniformly in $[0, 2^w - 1]$.
+
+\section{FM-sketch} \label{sec:fm}
+
+Each integer $k$ in $[0, 2^w - 1]$ can be represented with $w$ bits. We will use $z_k$ to denote the number of leading 0's (counting from the left) in the binary form of the hash value $h(k)$ of $k$. For example, if $w = 5$ and $h(k) = 6 = (00110)_2$, then $z_k = 2$ because there are two 0's before the leftmost 1. The FM sketch is simply an integer $Z$ defined as:
+\begin{eqnarray}
+    Z = \max_{k \in S} z_k.
+	\label{eqn:fm-Z} 
+\end{eqnarray}
+Clearly, $Z$ can be obtained by seeing each element $k$ once: simply calculate $z_k$, update $Z$ accordingly, and then discard $k$. Note that the $z_k$ of all $k \in S$ are independent. Also obvious is the fact that $Z$ can be stored in $w = O(\log N)$ bits. After $Z$ has been computed, we simply return $$\tilde{F} = 2^Z$$ as our approximate answer.
+
+\section{Analysis} \label{sec:theory}
+
+This section will prove the following property of the FM sketch:
+
+\begin{proposition}  \label{prp:theory-fm}
+    For any integer $c > 3$, the probability that $\fr{1}{c} \le \fr{\tilde{F}}{F} \le c$ is at least $1 - \fr{3}{c}$.
+\end{proposition}
+
+Our proof is based on \cite{ams99}. We say that our algorithm is {\em correct} if $\fr{1}{c} \le \fr{\tilde{F}}{F} \le c$ (i.e., our estimate $\tilde{F}$ is off by at most a factor of $c$, from either above or below). The above proposition indicates that our algorithm is correct with at least a constant probability $1 - \fr{3}{c} > 0$.
+
+\begin{lemma} \label{lmm:theory-z_k>=r}
+    For any integer $r \in [0, w]$, $\Pr[z_k \ge r] = \fr{1}{2^r}$.
+\end{lemma}
+
+\begin{proof} 
+    Note that $z_k \ge r$ means that the hash value $h(k)$ of $k$ is between $\underbrace{0...0}_r \underbrace{0...0}_{w-r}$ and $\underbrace{0...0}_r \underbrace{1...1}_{w-r}$, namely, between 0 and $2^{w-r} - 1$. Remember that $h(k)$ is uniformly distributed from $0$ to $2^w - 1$. Hence:
+	\begin{eqnarray}
+	    \Pr[z_k \ge r] = \fr{2^{w-r}}{2^w} = \fr{1}{2^r}.
+		\nonumber 
+	\end{eqnarray}
+\end{proof}
+Let us fix an $r$. For each $k \in S$, define:
+\begin{eqnarray}
+    x_k(r) &=& \left\{
+	\begin{tabular}{ll}
+	    1 & if $z_k \ge r$ \\
+		0 & otherwise 
+	\end{tabular}\right.
+	\nonumber
+\end{eqnarray}
+By Lemma~\ref{lmm:theory-z_k>=r}, we know that $x_k(r)$ takes 1 with probability $1/2^r$. Hence:
+\begin{eqnarray}
+    \expect[x_k(r)] &=& 1/2^r \label{eqn:theory-exp-x_k} \\
+	\var[x_k(r)] &=& \fr{1}{2^r}\left(1 - \fr{1}{2^r} \right) \label{eqn:theory-var-x_k}
+\end{eqnarray}
+Also define:
+\begin{eqnarray}
+    X(r) &=& \sum_{\textrm{distinct $k \in S$}} x_k(r). \nonumber
+\end{eqnarray}
+Let:
+\begin{eqnarray}
+    r_1 &=& \textrm{the smallest $r$ such that $2^r > cF$} \nonumber \\
+	r_2 &=& \textrm{the smallest $r$ such that $2^r \ge \fr{F}{c}$} \nonumber
+\end{eqnarray}
+
+\begin{lemma} \label{lmm:theory-r1r2} 
+    Our algorithm is correct if $X(r_1) = 0$ and $X(r_2) \neq 0$.
+\end{lemma}
+
+\begin{proof} 
+    Our algorithm is correct if $Z$ as given in \eqref{eqn:fm-Z} satisfies $r_2 \le Z < r_1$, due to the definitions of $r_1$ and $r_2$. If $X(r_1) = 0$, it means that no $k \in S$ gives an $z_k \ge r_1$; this implies $Z < r_1$ (see again \eqref{eqn:fm-Z}). Likewise, if $X(r_2) \neq 0$, it means that at least one $k \in S$ gives an $z_k \ge r_2$; this implies $Z \ge r_2$. 
+\end{proof}
+
+Next, we will prove that the probability of having ``$X(r_1) = 0$ and $X(r_2) \neq 0$'' is at least $1 - 3/c$. Towards this, we will consider the complements of these two events, namely: $X(r_1) \ge 1$ and $X(r_2) = 0$. We will prove that $X(r_1) \ge 1$ can happen with probability at most $1/c$, whereas $X(r_2) = 0$ can happen with probability at most $2/c$. then it follows from the union bound that the probability of {\em at least} one of the two events happening is at most $3/c$. This is sufficient for establishing Proposition~\ref{prp:theory-fm}.
+
+\begin{lemma} 
+    $\Pr[X(r_1) \ge 1] < 1/c$.
+\end{lemma}
+
+\begin{proof} 
+    \begin{eqnarray}
+        \expect[X(r_1)] &=& \sum_{\textrm{distinct $k \in S$}} \expect[x_k(r_1)] \nonumber \\
+		\textrm{(by \eqref{eqn:theory-exp-x_k})} &=& F/2^{r_1} \nonumber \\
+		\textrm{(by definition of $r_1$)} &<& 1/c. \nonumber
+    \end{eqnarray}
+	Hence, by Markov inequality, we have:
+	\begin{eqnarray}
+	    \Pr[X(r_1) \ge 1] \le \expect[X(r_1)] < 1/c. \nonumber 
+	\end{eqnarray}
+\end{proof}
+
+\begin{lemma}
+    $\Pr[X(r_2) = 0] < 2/c$.
+\end{lemma}
+
+\begin{proof} 
+    Same as the proof of the previous lemma, we obtain:
+	\begin{eqnarray}
+	    \expect[X(r_2)] &=& F / 2^{r_2} \nonumber
+	\end{eqnarray}
+	As $X(r_2)$ is the sum of $F$ independent variables, each of which has variance $\fr{1}{2^r}(1 - \fr{1}{2^r})$ (see Equation~\ref{eqn:theory-var-x_k}), we know:
+	\begin{eqnarray}
+	    \var[X(r_2)] = \fr{F}{2^{r_2}} \left(1 - \fr{1}{2^{r_2}}\right) < \fr{F}{2^{r_2}}. \nonumber
+	\end{eqnarray}
+	Thus:
+	\begin{eqnarray}
+	    \Pr[X(r_2) = 0] &=& \Pr\big[X(r_2) - \expect[X(r_2)] = \expect[X(r_2)] \big] \nonumber \\
+		&\le& \Pr\Big[\big|X(r_2) - \expect[X(r_2)] \big| = \expect[X(r_2)]\Big] \nonumber \\
+		&\le& \Pr\Big[\big|X(r_2) - \expect[X(r_2)] \big| \ge \expect[X(r_2)] \Big] \nonumber \\
+		\textrm{(by Chebyshev inequality)} &\le& \fr{\var[X(r_2)]}{\left(\expect[X(r_2)]\right)^2} \nonumber \\
+		&<& \fr{F/2^{r_2}}{\left(F/2^{r_2}\right)^2} \nonumber \\
+		&=& \fr{2^{r_2}}{F} \nonumber
+	\end{eqnarray}
+	From the definition of $r_2$, we know that $2^{r_2} < 2F / c$ (otherwise, $r_2$ would not be the {\em smallest} $r$ satisfying $2^r \ge F/c$). Combining this with the above gives $\Pr[X(r_2) = 0] < 2/c$. 
+\end{proof}
+
+\section{Boosting the success probability} \label{sec:boost}
+
+Proposition~\ref{prp:theory-fm} shows that our estimate $\tilde{F}$ is accurate up to a factor $c>3$ with probability at least $1-3/c$. The success probability $1-3/c$ does not look very impressive: ideally, we would like to be able to succeed with a probability arbitrarily close to 1, namely, $1 - \delta$ where $\delta > 0$ can be arbitrarily small. It turns out that we are able to achieve this with a simple median trick for $c > 6$. 
+
+\vgap
+
+Let us build $s$ independent FM-sketches, each of which is constructed as explained in Section~\ref{sec:fm}. The value of $s$ will be determined later. From each FM-sketch, we obtain an estimate $\tilde{F}_i$ ($1 \le i \le s$) of $F$. We determine our final estimate $\tilde{F}$ as the median of $\tilde{F}_1, ..., \tilde{F}_s$. Now we prove that this trick really works: 
+
+\vgap
+
+\begin{theorem} \label{thm:boost-boost}
+    For each constant $c > 6$, there is an $s = O(\log \fr{1}{\delta})$ ensuring that $\fr{F}{c} \le \tilde{F} \le cF$ happens with probability at least $1 - \delta$.
+\end{theorem}
+
+\begin{proof} 
+    For each $i \in [1, s]$, define $x_i = 0$ if $\tilde{F}_i \in [F/c, cF]$, or $1$ otherwise. From Proposition~\ref{prp:theory-fm}, we know that $\Pr[x_i = 1]$ is at most $\rho = 3/c < 1/2$. Clearly, $\expect[x_i] = \rho$. Let $$X = \sum_{i=1}^s x_i.$$ Hence: $$\expect[X] = s \rho.$$
+
+	\vgap
+
+	If $X < s/2$, then $\fr{F}{c} \le \tilde{F} \le cF$ definitely holds. To see this, consider $\tilde{F} > cF$. Since $\tilde{F}$ is the median of $\tilde{F}_1, ..., \tilde{F}_s$, it follows that at least $s/2$ of these estimates are above $cF$, contradicting $X < s/2$. Likewise, $\tilde{F}$ cannot be smaller than $F/c$ either.
+
+	\vgap
+
+	We will show that $X < s/2$ happens with probability at least $1 - \delta$. Towards this, we argue that the complement event $X \ge s/2$ happens with probability at most $\delta$. As $x_1, ..., x_s$ are independent, we have:
+	\begin{eqnarray}
+	    \Pr[X \ge s/2] &=& \Pr[X - \expect[X] \ge s/2 - \expect[X]] \nonumber \\
+		\textrm{(as $\expect[X] = s\rho < s/2$)} &\le& \Pr[|X - \expect[X]| \ge s/2 - \expect[X]] \nonumber \\
+		&=& \Pr[|X - \expect[X]| \ge s/2 - s\rho] \nonumber \\
+		&=& \Pr\left[|X - \expect[X]| \ge \fr{1/2 - \rho}{\rho} \cdot s\rho \right] \nonumber \\
+		\textrm{(by Chernoff bound)} &\le& 2 e^{- \fr{(1/2 - \rho)^2}{3\rho^2} s \rho} \nonumber \\
+		&\le& 2 e^{- \fr{s(1/2 - \rho)^2}{3\rho}} \nonumber 
+	\end{eqnarray}
+	To make the above at most $\delta$, we need $$s \ge \fr{3\rho}{(1/2 - \rho)^2} \ln \fr{2}{\delta}.$$ Hence. setting $s = \lceil \fr{3\rho}{(1/2 - \rho)^2} \ln \fr{2}{\delta} \rceil = O(\log \fr{1}{\delta})$ fulfills the requirement.
+\end{proof}
+
+
+\bibliographystyle{abbrv}
+\bibliography{../ref}
+
+\end{document}
